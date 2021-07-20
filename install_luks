@@ -1,0 +1,11 @@
+[10:38, 10/16/2020] +49 176 78182487: cgdisk
+[10:38, 10/16/2020] +49 176 78182487: Create an ef00 type boot
+[10:38, 10/16/2020] +49 176 78182487: And the rest as root with default type
+[10:38, 10/16/2020] +49 176 78182487: mkfs.vfat on the first partition
+[10:38, 10/16/2020] +49 176 78182487: cryptsetup luksFormat on the second
+[10:39, 10/16/2020] +49 176 78182487: Then cryptsetup luksOpen $second root
+[10:39, 10/16/2020] +49 176 78182487: mkfs.btrfs /dev/mapper/root
+[10:39, 10/16/2020] +49 176 78182487: mount /dev/mapper/root /mnt
+[10:39, 10/16/2020] +49 176 78182487: mkdir /mnt/boot
+[10:40, 10/16/2020] +49 176 78182487: mount $first /mnt/boot
+[10:40, 10/16/2020] +49 176 78182487: nixos-generate-config --root /mnt
