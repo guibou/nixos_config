@@ -20,10 +20,14 @@
       flake = false;
     };
 
+    disko = {
+       url = "github:nix-community/disko";
+    };
+
     ts.url = "github:polarmutex/nixpkgs/update-treesitter";
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, ts, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, ts, disko, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -55,7 +59,7 @@
       nixosConfigurations = {
         narwal = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-	  specialArgs = { inherit nixpkgs; };
+	  specialArgs = { inherit nixpkgs disko; };
           modules = [
             ./nixos/configuration.nix
           ];
