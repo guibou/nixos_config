@@ -627,7 +627,7 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 let g:mkdp_browser='chromium'
 
 " Lenses updates
-autocmd InsertLeave * lua vim.lsp.codelens.refresh({ bufnr = 0})
+autocmd BufEnter,CursorHold,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
 
 tnoremap <Esc> <C-\><C-n>
 
