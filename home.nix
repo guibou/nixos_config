@@ -136,7 +136,6 @@
     # playstation portable emul
     # ppspp-sdl
 
-    awscli
     haskellPackages.eventlog2html
 
     #peek
@@ -483,6 +482,9 @@
 
       Host git.novadiscovery.net
       IdentityFile ~/.ssh/id_gecko
+
+      Host github.com
+      IdentityFile ~/.ssh/id_gecko
     '';
   };
 
@@ -560,6 +562,30 @@
       enable_audio_bell false
       visual_bell_duration 0.1
     '';
+  };
+
+  /*
+    aws eks update-kubeconfig --profile nova-jinko --name jk-preprod --region eu-central-1
+    aws eks update-kubeconfig --profile nova-jinko --name jk-prod --region eu-central-1
+
+    kubectl config set-context arn:aws:eks:eu-central-1:980984948228:cluster/jk-preprod --namespace jinko-preprod
+    kubectl config set-context arn:aws:eks:eu-central-1:980984948228:cluster/jk-prod --namespace jinko-prod
+  */
+  programs.awscli = {
+    enable = true;
+    settings = {
+      "nix-daemon" = {
+         region = "eu-central-1";
+       };
+      
+      "default" = {
+        region = "eu-central-1";
+      };
+
+      "nova-jinko" = {
+         region = "eu-central-1";
+       };
+    };
   };
 
   services.blueman-applet.enable = true;
