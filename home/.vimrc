@@ -1,12 +1,14 @@
 " Install vim-plug
-source ~/.vim/autoload/plug.vim
+source ~/.local/share/nvim/site/autoload/plug.vim
 call plug#begin('~/.vim/plugged')
 
 " fuzzy
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+" Does not build anymore
+" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-live-grep-args.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
@@ -413,7 +415,7 @@ require("telescope").setup {
 }
 -- require('telescope').load_extension('neoclip')
 require('telescope').load_extension('ui-select')
-require('telescope').load_extension('fzf')
+-- require('telescope').load_extension('fzf')
 
 -- Install PyF parser
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()

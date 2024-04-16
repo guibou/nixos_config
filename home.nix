@@ -480,6 +480,9 @@
       Hostname ovh-hybrid-runner-2.devops.novadiscovery.net
       User ubuntu
       IdentityFile ~/.ssh/nova-infra-prod
+
+      Host git.novadiscovery.net
+      IdentityFile ~/.ssh/id_gecko
     '';
   };
 

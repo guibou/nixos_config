@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ./sway.nix
     "${disko}/module.nix"
+    ./disko.nix
     # ./nvidia.nix
   ];
 
@@ -47,7 +48,7 @@
   systemd.oomd.enable = true;
 
   networking = {
-    hostName = "narwal"; # Define your hostname.
+    hostName = "gecko"; # Define your hostname.
     networkmanager = {
       enable = true;
 

@@ -57,7 +57,7 @@
 
 
       nixosConfigurations = {
-        narwal = nixpkgs.lib.nixosSystem {
+        gecko = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 	  specialArgs = { inherit nixpkgs disko; };
           modules = [
