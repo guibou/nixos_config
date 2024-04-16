@@ -363,10 +363,10 @@
   # mkswap /var/swapfile 
 
   # Swap is recommanded with systemd.oomd
-  swapDevices = [{
-    device = "/var/swapfile";
-    size = 8192;
-  }];
+  #swapDevices = [{
+  #  device = "/var/swapfile";
+  #  size = 8192;
+  #}];
 
   # services.redis.servers."".enable = true;
   services.postgresql = {
