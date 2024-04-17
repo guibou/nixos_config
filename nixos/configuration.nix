@@ -34,7 +34,6 @@
     #binfmt.emulatedSystems = ["armv6l-linux" "armv7l-linux"];
 
     tmp.cleanOnBoot = true;
-    tmp.useTmpfs = true;
 
     kernelPackages = pkgs.linuxPackages_latest;
 
