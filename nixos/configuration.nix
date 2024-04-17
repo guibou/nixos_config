@@ -87,9 +87,6 @@
     };
   };
 
-
-
-
   console = {
     # Not needed anymore, auto detected by the installer in hardware-configuration.nix
     # font = "latarcyrheb-sun32";
@@ -101,6 +98,8 @@
   #time.timeZone = "Europe/Paris";
   # time.timeZone = "Indian/Reunion";
   #time.timeZone = "Indian/Mauritius";
+
+  # "Indian/Reunion" does not work with firefox, I have no idea why.
   time.timeZone = "Asia/Dubai";
   # time.timeZone = "America/Los_Angeles";
 
@@ -141,9 +140,11 @@
 
   services = {
     pipewire = {
-      enable = false;
+      enable = true;
       alsa.enable = true;
       pulse.enable = true;
+
+      wireplumber.enable = true;
     };
 
     logind = { lidSwitch = "ignore"; };
@@ -201,10 +202,10 @@
   };
 
   # diasble for pipewire
-  sound = { enable = true; };
+  # sound = { enable = true; };
 
   # Enable for pipewire;
-  # security.rtkit.enable = true;
+  security.rtkit.enable = true;
 
   users.mutableUsers = false;
 
@@ -316,7 +317,7 @@
     };
     cpu.intel.updateMicrocode = true;
     pulseaudio = {
-      enable = true;
+      enable = false;
       # Disabled for pipewire
       # enable = false;
 

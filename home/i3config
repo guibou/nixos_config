@@ -169,9 +169,10 @@ bar {
 
 bindsym XF86MonBrightnessDown exec "brightnessctl s 4%-; notify-brightness-change"
 bindsym XF86MonBrightnessUp exec "brightnessctl s +4%; notify-brightness-change"
-bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +2%; notify-volume-change; pkill i3status -SIGUSR1"
-bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle; notify-volume-change; pkill i3status -SIGUSR1"
-bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -2%; notify-volume-change; pkill i3status -SIGUSR1"
+
+bindsym XF86AudioRaiseVolume exec "volume-change set-sink-volume @DEFAULT_SINK@ +2%"
+bindsym XF86AudioMute exec "volume-change set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym XF86AudioLowerVolume exec "volume-change set-sink-volume @DEFAULT_SINK@ -2%"
 
 mode "lock" {
 	bindsym $mod+l exec "i3lock -c 404040"; mode "default"
