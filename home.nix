@@ -179,6 +179,7 @@
     hyperfine
   ];
 
+  # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
   services.flameshot = {
     enable = true;
     settings = {
