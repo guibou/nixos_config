@@ -510,10 +510,13 @@
     enable = true;
 
     extraPackages = with pkgs; [
-      jq gcc tree-sitter nodejs yarn
+      jq tree-sitter nodejs yarn
 
       # Faster filewatch
       fswatch
+
+      # Build some extensions
+      gcc cmake
     ];
     
     package = neovim;

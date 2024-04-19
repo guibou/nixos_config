@@ -10,7 +10,7 @@
     ./sway.nix
     "${disko}/module.nix"
     ./disko.nix
-    # ./nvidia.nix
+    ./camera.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -34,8 +34,6 @@
     #binfmt.emulatedSystems = ["armv6l-linux" "armv7l-linux"];
 
     tmp.cleanOnBoot = true;
-
-    kernelPackages = pkgs.linuxPackages_latest;
 
     # save batter in sleep
     # This was needed by XPS 13, not anymore on lenovo X1 Gen 8
