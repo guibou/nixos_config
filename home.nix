@@ -628,6 +628,7 @@
       export ROOT="${config.home.homeDirectory}/.config/home-manager/home"
       mkdir -p .config/i3
       ln -sf "$ROOT/i3config" .config/i3/config
+      ln -sf "$ROOT/swayconfig" .config/sway/config
       ln -sf "$ROOT/i3status.conf" .i3status.conf
       i3-msg restart
 

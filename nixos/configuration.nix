@@ -198,8 +198,7 @@
 
   };
 
-  # diasble for pipewire
-  # sound = { enable = true; };
+  sound = { enable = true; };
 
   # Enable for pipewire;
   security.rtkit.enable = true;
