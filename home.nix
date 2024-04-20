@@ -10,6 +10,10 @@
     # diablo3 = pkgs.callPackage ./home/diabloIII.nix { };
   in
   {
+    imports = [
+      (import ./home/neovim.nix { inherit neovim foxTheme dark; })
+    ];
+
   # I like strong control over my unfree predicates
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -504,36 +508,6 @@
     ".gdbinit".source = pkgs.runCommand ".gdbinit" { } ''
       echo "add-auto-load-safe-path /" > $out
     '';
-  };
-
-  programs.neovim = {
-    enable = true;
-
-    extraPackages = with pkgs; [
-      jq tree-sitter nodejs yarn
-
-      # Faster filewatch
-      fswatch
-
-      # Build some extensions
-      gcc cmake
-    ];
-    
-    package = neovim;
-
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-
-    plugins = with pkgs.vimPlugins; [ vim-plug ];
-
-    extraConfig = ''
-      source /home/guillaume/.config/home-manager/home/.vimrc
-
-      set bg=${if dark then "dark" else "light"}
-      :colorscheme ${foxTheme}
-    '';
-
   };
 
   programs.fzf = {
