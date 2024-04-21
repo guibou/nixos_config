@@ -146,6 +146,7 @@
     sqlite-interactive
 
     nix-tree
+    ncdu
 
     #xournalpp
     #texlive.combined.scheme-full
@@ -226,6 +227,12 @@
   #};
 
   services.pasystray.enable = true;
+
+
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.firefox.enable = true;
   programs.htop = {

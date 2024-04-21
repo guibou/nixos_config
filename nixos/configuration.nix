@@ -7,7 +7,9 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./sway.nix
+    # Disable system wide sway, maybe I'll give it another try in the future
+    # using home-manager setup
+    # ./sway.nix
     "${disko}/module.nix"
     ./disko.nix
     ./camera.nix
@@ -100,19 +102,6 @@
   time.timeZone = "Asia/Dubai";
   # time.timeZone = "America/Los_Angeles";
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    wget
-    ncdu
-    iotop
-    exfat
-    brightnessctl
-    vulkan-tools
-    ntfs3g
-    neovim
-  ];
-
   documentation.man.enable = true;
 
   fonts.packages = with pkgs; [ noto-fonts monaspace (nerdfonts.override { fonts = [ "BitstreamVeraSansMono" ]; })  ];
@@ -121,7 +110,6 @@
 
   programs = {
     bash.enableCompletion = true;
-    command-not-found.enable = true;
     zsh.enable = true;
     ssh.startAgent = true;
     #gnome-terminal.enable = true;
