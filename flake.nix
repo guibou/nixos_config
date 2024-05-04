@@ -2,7 +2,6 @@
   description = "Home Manager configuration of @guibou";
 
   inputs = {
-    # nixos.url = "/etc/nixos";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -12,7 +11,6 @@
 
     neovim-flake = {
       url = "github:neovim/neovim?dir=contrib";
-      #inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nightfox-nvim = {
@@ -21,27 +19,15 @@
     };
 
     disko = {
-       url = "github:nix-community/disko";
+      url = "github:nix-community/disko";
     };
-
-    ts.url = "github:polarmutex/nixpkgs/update-treesitter";
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, ts, disko, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      neovim = (neovim-flake.packages.${system}.neovim).override {
-        tree-sitter = ts.legacyPackages.${system}.tree-sitter;
-        #libvterm-neovim = pkgs.libvterm-neovim.overrideAttrs (old: rec {
-        #  version = "0.3.3";
-
-        #  src = pkgs.fetchurl {
-        #    url = "https://launchpad.net/libvterm/trunk/v0.3/+download/libvterm-${version}.tar.gz";
-        #    sha256 = "sha256-CRVvQ90hKL00fL7r5Q2aVx0yxk4M8Y0hEZeUav9yJuA=";
-        #  };
-        #});
-      };
+      neovim = (neovim-flake.packages.${system}.neovim).override { };
 
       mkConfig = dark: home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -50,7 +36,8 @@
 
         extraSpecialArgs = { inherit neovim dark nightfox-nvim; };
       };
-    in {
+    in
+    {
       homeConfigurations.dark = mkConfig true;
       homeConfigurations.light = mkConfig false;
       homeConfigurations."guillaume" = mkConfig false;
@@ -59,7 +46,7 @@
       nixosConfigurations = {
         gecko = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-	  specialArgs = { inherit nixpkgs disko; };
+          specialArgs = { inherit nixpkgs disko; };
           modules = [
             ./nixos/configuration.nix
           ];
