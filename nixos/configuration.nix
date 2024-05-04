@@ -108,12 +108,12 @@
     timesyncd.enable = true; # NTP sync
     blueman.enable = true;
 
+    # Enable touchpad support.
+    libinput.enable = true;
+
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
-
-      # Enable touchpad support.
-      libinput.enable = true;
 
       xkb = {
         variant = "dvorak-alt-intl";
@@ -182,7 +182,7 @@
     # ocean that rocks and sharks are cutting every days ending by "day".
     registry.nixpkgs.flake = nixpkgs;
 
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
 
     settings = {
       sandbox = true;
