@@ -560,6 +560,9 @@
     aws eks update-kubeconfig --profile nova-jinko --name jk-preprod --region eu-central-1
     aws eks update-kubeconfig --profile nova-jinko --name jk-prod --region eu-central-1
 
+
+    aws eks update-kubeconfig --profile nova-staging --name jk-staging --region eu-central-1 --alias jk-staging
+
     kubectl config set-context arn:aws:eks:eu-central-1:980984948228:cluster/jk-preprod --namespace jinko-preprod
     kubectl config set-context arn:aws:eks:eu-central-1:980984948228:cluster/jk-prod --namespace jinko-prod
   */
