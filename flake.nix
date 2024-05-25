@@ -9,9 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-flake = {
-      url = "github:neovim/neovim?dir=contrib";
-    };
+    neovim-flake.url = "github:nix-community/neovim-nightly-overlay";
 
     nightfox-nvim = {
       url = "github:/EdenEast/nightfox.nvim";
@@ -21,6 +19,12 @@
     disko = {
       url = "github:nix-community/disko";
     };
+  };
+
+  # Contains everything cached from nix-community, including neovim
+  nixConfig = {
+    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
   outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, ... }:
