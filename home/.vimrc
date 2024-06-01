@@ -396,12 +396,12 @@ require('nightfox').setup({
 require("trouble").setup {}
 -- require("neoclip").setup()
 
-local trouble = require("trouble.providers.telescope")
+local trouble_source_telescope = require("trouble.sources.telescope")
 require("telescope").setup {
     defaults = {
         layout_strategy = 'vertical',
-        i = { ["<c-t>"] = trouble.open_with_trouble },
-        n = { ["<c-t>"] = trouble.open_with_trouble },
+        i = { ["<c-t>"] = trouble_source_telescope.open },
+        n = { ["<c-t>"] = trouble_source_telescope.open },
     },
     extensions = {
         live_grep_args = {

@@ -14,15 +14,6 @@
       (import ./home/neovim.nix { inherit neovim foxTheme dark; })
     ];
 
-  # I like strong control over my unfree predicates
-  # nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "steam-original"
-      "steam"
-      "steam-runtime"
-    ];
-
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.packages = with pkgs; [
@@ -60,8 +51,6 @@
     nethogs
 
     # Games
-    # I'm not gaming these days
-    # steam
     # diablo3.diablo3_nodxtn
     #trackMania
     # N64 emulation
@@ -474,6 +463,9 @@
 
       difftool.jqzlib.cmd = ''
           diff <(${pkgs.qpdf}/bin/zlib-flate -uncompress < $LOCAL | jq "") <(${pkgs.qpdf}/bin/zlib-flate -uncompress < $REMOTE | jq "")
+        '';
+      difftool.imgdiff.cmd = ''
+          ${pkgs.imagemagick}/bin/compare $LOCAL $REMOTE png:- | montage -geometry +4+4 $LOCAL - $REMOTE png:- > /tmp/cheval.png; eog /tmp/cheval.png
         '';
     };
   };

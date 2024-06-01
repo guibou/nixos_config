@@ -76,6 +76,7 @@
   # services.nix-serve.enable = true;
 
   programs = {
+    steam.enable = true;
     bash.enableCompletion = true;
     zsh.enable = true;
     ssh.startAgent = true;
@@ -216,9 +217,6 @@
     opengl = {
       enable = true;
       driSupport = true;
-
-      # Not playing with 32bits things, so don't care for now.
-      driSupport32Bit = false;
     };
 
     bluetooth.enable = true;
