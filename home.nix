@@ -1,18 +1,18 @@
-{pkgs, config, dark, neovim, nightfox-nvim, lib, ...}:
-  let
-    foxTheme = if dark then "nordfox" else "dawnfox";
+{ pkgs, config, dark, neovim, nightfox-nvim, lib, ... }:
+let
+  foxTheme = if dark then "nordfox" else "dawnfox";
 
-    #trackMania = pkgs.writeScriptBin "trackMania" ''
-    #  cd /home/guillaume/.wine/drive_c/Program\ Files/TmNationsForever/
-    #  ${pkgs.wineWowPackages.staging}/bin/wine TmForever.exe
-    #'';
+  #trackMania = pkgs.writeScriptBin "trackMania" ''
+  #  cd /home/guillaume/.wine/drive_c/Program\ Files/TmNationsForever/
+  #  ${pkgs.wineWowPackages.staging}/bin/wine TmForever.exe
+  #'';
 
-    # diablo3 = pkgs.callPackage ./home/diabloIII.nix { };
-  in
-  {
-    imports = [
-      (import ./home/neovim.nix { inherit neovim foxTheme dark; })
-    ];
+  # diablo3 = pkgs.callPackage ./home/diabloIII.nix { };
+in
+{
+  imports = [
+    (import ./home/neovim.nix { inherit neovim foxTheme dark; })
+  ];
 
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
@@ -98,7 +98,7 @@
     jq
     nixfmt-rfc-style
     ripgrep
-    
+
     # CCLS for C++ dev pulls a lot of dependencies
     # (ccls.override{llvmPackages = llvmPackages_latest;})
 
@@ -141,32 +141,32 @@
     #texlive.combined.scheme-full
 
     (pkgs.writeScriptBin "volume-change"
-    ''
-      PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.libnotify pkgs.pcre pkgs.gnugrep pkgs.coreutils-full]}
-      set -x
+      ''
+        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.libnotify pkgs.pcre pkgs.gnugrep pkgs.coreutils-full]}
+        set -x
   
-      pactl $@
+        pactl $@
 
-      current=$(pactl get-sink-volume @DEFAULT_SINK@ | pcregrep -o1 '([0-9]+)%' | head -n1)
-      icon=$(pactl get-sink-mute @DEFAULT_SINK@ | pcregrep no > /dev/null && echo "high" || echo "muted")
-      echo $current
-      notify-send -t 2000 -r 1234 -h int:value:$current \
-                  -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/audio-volume-$icon.svg \
-                  "Volume [$current%]"
+        current=$(pactl get-sink-volume @DEFAULT_SINK@ | pcregrep -o1 '([0-9]+)%' | head -n1)
+        icon=$(pactl get-sink-mute @DEFAULT_SINK@ | pcregrep no > /dev/null && echo "high" || echo "muted")
+        echo $current
+        notify-send -t 2000 -r 1234 -h int:value:$current \
+                    -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/audio-volume-$icon.svg \
+                    "Volume [$current%]"
 
-      pkill i3status -SIGUSR1
-    '')
+        pkill i3status -SIGUSR1
+      '')
 
     (pkgs.writeScriptBin "notify-brightness-change"
-    ''
-      PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.libnotify pkgs.pcre pkgs.gnugrep]}
-      set -x
-      current=$(brightnessctl | pcregrep -o1 '([0-9]+)%')
-      echo $current
-      notify-send -t 2000 -r 12345 -h int:value:$current \
-                  -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/brightnesssettings.svg \
-                  "Brightness [$current%]"
-    '')
+      ''
+        PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.libnotify pkgs.pcre pkgs.gnugrep]}
+        set -x
+        current=$(brightnessctl | pcregrep -o1 '([0-9]+)%')
+        echo $current
+        notify-send -t 2000 -r 12345 -h int:value:$current \
+                    -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/brightnesssettings.svg \
+                    "Brightness [$current%]"
+      '')
 
     nix-output-monitor
     btop
@@ -180,17 +180,17 @@
       General = {
         disabledTrayIcon = true;
         showStartupLaunchMessage = false;
-        
-        checkForUpdates=false;
-        copyPathAfterSave=true;
-        saveAfterCopy=true;
-        savePath= "/home/guillaume/Screenshots";
-        showDesktopNotification=false;
-        showHelp=false;
-        showSidePanelButton=false;
+
+        checkForUpdates = false;
+        copyPathAfterSave = true;
+        saveAfterCopy = true;
+        savePath = "/home/guillaume/Screenshots";
+        showDesktopNotification = false;
+        showHelp = false;
+        showSidePanelButton = false;
       };
       Shortcuts = {
-        TYPE_COPY="Ctrl+C";
+        TYPE_COPY = "Ctrl+C";
       };
     };
   };
@@ -228,14 +228,14 @@
     enable = true;
     settings = {
       show_program_path = 0;
-      highlight_base_name=1;
-      hide_userland_threads=1;
+      highlight_base_name = 1;
+      hide_userland_threads = 1;
       show_cpu_frequency = 1;
       show_cpu_temperature = 1;
-      column_meters_0="AllCPUs";
-      column_meter_modes_0="1";
-      column_meters_1="Tasks LoadAverage Uptime NetworkIO DiskIO Memory Swap";
-      column_meter_modes_1="2 2 2 2 2 1 1";
+      column_meters_0 = "AllCPUs";
+      column_meter_modes_0 = "1";
+      column_meters_1 = "Tasks LoadAverage Uptime NetworkIO DiskIO Memory Swap";
+      column_meter_modes_1 = "2 2 2 2 2 1 1";
     };
   };
 
@@ -282,79 +282,82 @@
       theme = "norm";
     };
 
-    initExtra = let
-      mkGhcUtils = versionM:
+    initExtra =
       let
-        version = if versionM == null
-        then
-          ""
-        else
-          versionM;
-        packageSet = if versionM == null
-        then
-          "haskellPackages"
-        else
-          "haskell.packages.ghc${version}";
+        mkGhcUtils = versionM:
+          let
+            version =
+              if versionM == null
+              then
+                ""
+              else
+                versionM;
+            packageSet =
+              if versionM == null
+              then
+                "haskellPackages"
+              else
+                "haskell.packages.ghc${version}";
 
+          in
+
+          ''
+            ghc${version}_with () {
+              nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ haskell-language-server $* ]))"
+            }
+
+            ghc${version}_nohls_with () {
+              nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))"
+            }
+
+            ghci${version}_with () {
+              nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))" --command ghci
+            }
+
+            cabalBuild${version} () {
+               nix build --impure --expr '(with import ${pkgs.path} {}; ${packageSet}.developPackage { root = ./.; })'
+            }
+
+            cabalEnv${version} () {
+                 nix develop --impure --expr '(with import ${pkgs.path} {}; (${packageSet}.developPackage { root = ./. ;}).overrideAttrs(old: {
+                    nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.cabal-install pkgs.haskellPackages.haskell-language-server];
+                    }))'
+            }
+          '';
       in
-
       ''
-      ghc${version}_with () {
-        nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ haskell-language-server $* ]))"
-      }
+        autoload -U compinit && compinit
 
-      ghc${version}_nohls_with () {
-        nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))"
-      }
+        # skydive roulette
+        [ $[ $RANDOM % 1500 ] -eq 0 ] && ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
 
-      ghci${version}_with () {
-        nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))" --command ghci
-      }
+        COMPLETION_WAITING_DOTS="true"
+        ENABLE_CORRECTION="true"
 
-      cabalBuild${version} () {
-         nix build --impure --expr '(with import ${pkgs.path} {}; ${packageSet}.developPackage { root = ./.; })'
-      }
+        LESS="-XR"
+        export BROWSER="firefox"
 
-      cabalEnv${version} () {
-           nix develop --impure --expr '(with import ${pkgs.path} {}; (${packageSet}.developPackage { root = ./. ;}).overrideAttrs(old: {
-              nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.cabal-install pkgs.haskellPackages.haskell-language-server];
-              }))'
-      }
-      '';
-    in
+        icat () {
+          kitty +kitten icat $*
+        }
+
+        # I don't know why, but RPROMPT seems to be set to something by
+        # default
+        export RPROMPT=
+
+        if [[ -n $KITTY_INSTALLATION_DIR ]]; then
+          export KITTY_SHELL_INTEGRATION="enabled"
+          autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+          kitty-integration
+          unfunction kitty-integration
+        fi
       ''
-      autoload -U compinit && compinit
-
-      # skydive roulette
-      [ $[ $RANDOM % 1500 ] -eq 0 ] && ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
-
-      COMPLETION_WAITING_DOTS="true"
-      ENABLE_CORRECTION="true"
-
-      LESS="-XR"
-      export BROWSER="firefox"
-
-      icat () {
-        kitty +kitten icat $*
-      }
-
-      # I don't know why, but RPROMPT seems to be set to something by
-      # default
-      export RPROMPT=
-
-      if [[ -n $KITTY_INSTALLATION_DIR ]]; then
-        export KITTY_SHELL_INTEGRATION="enabled"
-        autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-        kitty-integration
-        unfunction kitty-integration
-      fi
-    ''
-    + mkGhcUtils "90"
-    + mkGhcUtils "92"
-    + mkGhcUtils "94"
-    + mkGhcUtils "96"
-    + mkGhcUtils "98"
-    + mkGhcUtils null;
+      + mkGhcUtils "90"
+      + mkGhcUtils "92"
+      + mkGhcUtils "94"
+      + mkGhcUtils "96"
+      + mkGhcUtils "98"
+      + mkGhcUtils null;
 
   };
   programs.direnv = {
@@ -363,17 +366,20 @@
     enableZshIntegration = true;
   };
 
-  xdg.configFile."direnv/direnvrc".text = ''
-    : ''${XDG_CACHE_HOME:=$HOME/.cache}
-    declare -A direnv_layout_dirs
-    direnv_layout_dir() {
-        echo "''${direnv_layout_dirs[$PWD]:=$(
-            echo -n "$XDG_CACHE_HOME"/direnv/layouts/''${PWD##*/}-
-            echo -n "$PWD" | shasum | cut -d ' ' -f 1
-        )}"
-    }
-  '';
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+
+    configFile."direnv/direnvrc".text = ''
+      : ''${XDG_CACHE_HOME:=$HOME/.cache}
+      declare -A direnv_layout_dirs
+      direnv_layout_dir() {
+          echo "''${direnv_layout_dirs[$PWD]:=$(
+              echo -n "$XDG_CACHE_HOME"/direnv/layouts/''${PWD##*/}-
+              echo -n "$PWD" | shasum | cut -d ' ' -f 1
+          )}"
+      }
+    '';
+  };
 
   gtk.cursorTheme.package = pkgs.xorg.xcursorthemes;
   gtk.cursorTheme.name = "whiteglass";
@@ -414,10 +420,10 @@
   };
 
   /*
-  programs.chromium = {
+    programs.chromium = {
     enable = true;
     commandLineArgs = pkgs.lib.optionals dark ["--enable-features=WebContentsForceDark"];
-  };
+    };
   */
 
   services.cbatticon = { enable = true; };
@@ -452,16 +458,16 @@
       };
       difftool.sort.cmd = "diff <(sort $LOCAL) <(sort $REMOTE)";
       difftool.jq.cmd = ''
-          diff <(jq $JQ_ARGS $LOCAL) <(jq $JQ_ARGS $REMOTE);
-          jq "$JQ_ARGS | keys" $LOCAL;
-        '';
+        diff <(jq $JQ_ARGS $LOCAL) <(jq $JQ_ARGS $REMOTE);
+        jq "$JQ_ARGS | keys" $LOCAL;
+      '';
 
       difftool.jqzlib.cmd = ''
-          diff <(${pkgs.qpdf}/bin/zlib-flate -uncompress < $LOCAL | jq "") <(${pkgs.qpdf}/bin/zlib-flate -uncompress < $REMOTE | jq "")
-        '';
+        diff <(${pkgs.qpdf}/bin/zlib-flate -uncompress < $LOCAL | jq "") <(${pkgs.qpdf}/bin/zlib-flate -uncompress < $REMOTE | jq "")
+      '';
       difftool.imgdiff.cmd = ''
-          ${pkgs.imagemagick}/bin/compare $LOCAL $REMOTE png:- | montage -geometry +4+4 $LOCAL - $REMOTE png:- > /tmp/cheval.png; eog /tmp/cheval.png
-        '';
+        ${pkgs.imagemagick}/bin/compare $LOCAL $REMOTE png:- | montage -geometry +4+4 $LOCAL - $REMOTE png:- > /tmp/cheval.png; eog /tmp/cheval.png
+      '';
     };
   };
 
@@ -523,25 +529,25 @@
     "org/gnome/desktop/interface" = { color-scheme = if dark then "prefer-dark" else "prefer-light"; };
   };
 
-  programs.kitty = 
-  {
-    #inherit package;
-    enable = true;
-    extraConfig = ''
-      include ${nightfox-nvim}/extra/${foxTheme}/kitty.conf
-      font_size 12
-      # font_family Bitstream Vera Sans Mono Nerd Font
+  programs.kitty =
+    {
+      #inherit package;
+      enable = true;
+      extraConfig = ''
+        include ${nightfox-nvim}/extra/${foxTheme}/kitty.conf
+        font_size 12
+        # font_family Bitstream Vera Sans Mono Nerd Font
 
-      # Monaspace
-      font_family      Monaspace Krypton Regular
-      bold_font        Monaspace Krypton Bold
-      italic_font      Monaspace Krypton Regular Italic
-      bold_italic_font Monaspace Krypton Bold Italic
+        # Monaspace
+        font_family      Monaspace Krypton Regular
+        bold_font        Monaspace Krypton Bold
+        italic_font      Monaspace Krypton Regular Italic
+        bold_italic_font Monaspace Krypton Bold Italic
 
-      enable_audio_bell false
-      visual_bell_duration 0.1
-    '';
-  };
+        enable_audio_bell false
+        visual_bell_duration 0.1
+      '';
+    };
 
   /*
     aws eks update-kubeconfig --profile nova-jinko --name jk-preprod --region eu-central-1
@@ -557,16 +563,16 @@
     enable = true;
     settings = {
       "nix-daemon" = {
-         region = "eu-central-1";
-       };
-      
+        region = "eu-central-1";
+      };
+
       "default" = {
         region = "eu-central-1";
       };
 
       "nova-jinko" = {
-         region = "eu-central-1";
-       };
+        region = "eu-central-1";
+      };
     };
   };
 
@@ -581,7 +587,7 @@
   home.stateVersion = "20.09";
 
   home.activation = {
-    reloadNvimColorScheme = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    reloadNvimColorScheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Force all nvim to the new colorscheme
       for path in $(${pkgs.lib.getExe pkgs.neovim-remote} --nostart --serverlist)
       do
