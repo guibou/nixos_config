@@ -588,11 +588,6 @@
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'set bg=${if dark then "dark" else "light"}'
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'colorscheme ${foxTheme}'
       done
-
-      # TODO: check if this is useful with nixos home-manager
-      # Nice log output
-      PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
-      nvd diff $oldGenPath $newGenPath
     '';
 
     # This was using .config and inHomeConfig, but it is broken in recent nix

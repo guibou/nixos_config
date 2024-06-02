@@ -165,6 +165,14 @@
 
   system = {
     stateVersion = "18.03"; # Did you read the comment?
+
+    activationScripts = {
+      # Show diff between current and new system
+      nixosDiff = ''
+        PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
+        nvd diff /run/current-system "$systemConfig"
+      '';
+    };
   };
 
   virtualisation = {
