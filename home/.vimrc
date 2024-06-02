@@ -653,8 +653,8 @@ set norelativenumber
 set signcolumn=yes:2
 
 " Some quick shortcut to file I care about
-noremap <Leader>qv <cmd>:e ~/.config/home-manager/home/.vimrc<cr>
-noremap <Leader>qh <cmd>:e ~/.config/home-manager/home.nix<cr>
+noremap <Leader>qv <cmd>:e ~/nixos_config/home/.vimrc<cr>
+noremap <Leader>qh <cmd>:e ~/nixos_config/home.nix<cr>
 
 set formatexpr=
 

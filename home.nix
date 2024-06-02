@@ -369,16 +369,35 @@ in
   xdg = {
     enable = true;
 
-    configFile."direnv/direnvrc".text = ''
-      : ''${XDG_CACHE_HOME:=$HOME/.cache}
-      declare -A direnv_layout_dirs
-      direnv_layout_dir() {
-          echo "''${direnv_layout_dirs[$PWD]:=$(
-              echo -n "$XDG_CACHE_HOME"/direnv/layouts/''${PWD##*/}-
-              echo -n "$PWD" | shasum | cut -d ' ' -f 1
-          )}"
-      }
-    '';
+    configFile =
+      let
+        link = path: config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos_config/home/${path}";
+      in
+      {
+        # Enable direnv
+        "direnv/direnvrc".text = ''
+          : ''${XDG_CACHE_HOME:=$HOME/.cache}
+          declare -A direnv_layout_dirs
+          direnv_layout_dir() {
+              echo "''${direnv_layout_dirs[$PWD]:=$(
+                  echo -n "$XDG_CACHE_HOME"/direnv/layouts/''${PWD##*/}-
+                  echo -n "$PWD" | shasum | cut -d ' ' -f 1
+              )}"
+          }
+        '';
+        "i3/config" = {
+          source = link "i3config";
+          onChange = "i3-msg restart";
+        };
+        "i3status/config" = {
+          source = link "i3status.conf";
+          onChange = "i3-msg restart";
+        };
+
+        "mpv/scripts/sub-cut.lua".source = link "mpv_sub-cut.lua";
+
+        #"sway/config" = link "swayconfig";
+      };
   };
 
   gtk.cursorTheme.package = pkgs.xorg.xcursorthemes;
@@ -595,20 +614,5 @@ in
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'colorscheme ${foxTheme}'
       done
     '';
-
-    # This was using .config and inHomeConfig, but it is broken in recent nix
-    # TODO: restore this, now that nix is fixed
-    updateLinks = ''
-      export ROOT="${config.home.homeDirectory}/.config/home-manager/home"
-      mkdir -p .config/i3
-      ln -sf "$ROOT/i3config" .config/i3/config
-      ln -sf "$ROOT/swayconfig" .config/sway/config
-      ln -sf "$ROOT/i3status.conf" .i3status.conf
-      i3-msg restart
-
-      mkdir -p .config/mpv/scripts
-      ln -sf "$ROOT/mpv_sub-cut.lua" .config/mpv/scripts/sub-cut.lua
-    '';
-
   };
 }

@@ -22,7 +22,7 @@
     plugins = with pkgs.vimPlugins; [ vim-plug ];
 
     extraConfig = ''
-      source /home/guillaume/.config/home-manager/home/.vimrc
+      source /home/guillaume/nixos_config/home/.vimrc
 
       set bg=${if dark then "dark" else "light"}
       :colorscheme ${foxTheme}
