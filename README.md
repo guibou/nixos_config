@@ -33,7 +33,6 @@ On user, run:
 # TODO
 
 - Should I setup a cachix for my custom packages (kernel? neovim?)
-- I should use the home-manager IN system configuration, to have both installed immediately by the system
 - I would like a `nix run github:guibou/nixos_config#nvim` runable setup.
 
 # Boot security warning, should I worry

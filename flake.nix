@@ -30,31 +30,37 @@
   outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
       neovim = (neovim-flake.packages.${system}.neovim).override { };
-
-      mkConfig = dark: home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        modules = [ ./home.nix ];
-
-        extraSpecialArgs = { inherit neovim dark nightfox-nvim; };
-      };
     in
     {
-      homeConfigurations.dark = mkConfig true;
-      homeConfigurations.light = mkConfig false;
-      homeConfigurations."guillaume" = mkConfig false;
+      nixosConfigurations =
+        let
+          myNixos = dark:
+            nixpkgs.lib.nixosSystem {
+              inherit system;
+              specialArgs = { inherit nixpkgs disko; };
+              modules = [
+                ./nixos/configuration.nix
 
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
 
-      nixosConfigurations = {
-        gecko = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit nixpkgs disko; };
-          modules = [
-            ./nixos/configuration.nix
-          ];
+                  home-manager.users.guillaume = import ./home.nix;
+
+                  # Optionally, use home-manager.extraSpecialArgs to pass
+                  # arguments to home.nix
+                  home-manager.extraSpecialArgs = {
+                    inherit neovim dark nightfox-nvim;
+                  };
+                }
+              ];
+            };
+        in
+        {
+          gecko = myNixos false;
+          gecko_dark = myNixos true;
         };
-      };
     };
 }

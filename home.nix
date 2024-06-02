@@ -375,11 +375,6 @@
   '';
   xdg.enable = true;
 
-  programs.home-manager = {
-    enable = true;
-    path = lib.mkForce "https://github.com/rycee/home-manager/archive/master.tar.gz";
-  };
-
   gtk.cursorTheme.package = pkgs.xorg.xcursorthemes;
   gtk.cursorTheme.name = "whiteglass";
   gtk.cursorTheme.size = 16;
@@ -594,12 +589,14 @@
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'colorscheme ${foxTheme}'
       done
 
+      # TODO: check if this is useful with nixos home-manager
       # Nice log output
       PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
       nvd diff $oldGenPath $newGenPath
     '';
 
     # This was using .config and inHomeConfig, but it is broken in recent nix
+    # TODO: restore this, now that nix is fixed
     updateLinks = ''
       export ROOT="${config.home.homeDirectory}/.config/home-manager/home"
       mkdir -p .config/i3
