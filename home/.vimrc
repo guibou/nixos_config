@@ -386,13 +386,11 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_c = {{
+    lualine_c = {
         'branch',
         {'diagnostics',
-        sources = {'nvim_diagnostic'},
-        always_visible = true,
+        sources = {'nvim_workspace_diagnostic'},
         symbols = symbols}
-    }
     },
     lualine_b = {},
 
@@ -411,7 +409,6 @@ require('lualine').setup {
         'branch',
         {'diagnostics',
         sources = {'nvim_workspace_diagnostic'},
-        always_visible = true,
         symbols = symbols}
     }
     },
