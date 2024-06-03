@@ -7,13 +7,11 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-" Does not build anymore
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'nvim-telescope/telescope-live-grep-args.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 Plug 'junegunn/fzf'
-" Plug 'monkoose/fzf-hoogle.vim'
 Plug 'junegunn/fzf.vim'
 
 " LSP
@@ -24,7 +22,7 @@ Plug 'glepnir/lspsaga.nvim'
 
 " Listing of LSP error
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'folke/lsp-trouble.nvim' " , {'branch': 'dev'}
+Plug 'folke/lsp-trouble.nvim'
 
 " Misc
 Plug 'liuchengxu/vim-which-key'
@@ -47,16 +45,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'ryanoasis/vim-devicons'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'chrisbra/unicode.vim'
-
-" Completion
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
 
 " illuminate symbols under cursor
 Plug 'RRethy/vim-illuminate'
@@ -198,20 +186,22 @@ local default_caps = {
     },
   },
 }
+
+-- Setup completion from lsp
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    
+    vim.lsp.completion.enable(true, args.data.client_id, 0, {autotrigger=true})
+  end,
+})
+
 lspconfig.yamlls.setup {}
 lspconfig.hls.setup({
     single_file_support = true,
     cmd = {
         "haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.6.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.6.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.5.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.4.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.6.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-       -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.5.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        --"/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.5.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.4.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.4/haskell-language-server-2.4.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
         "--lsp",
         -- "--debug", "--logfile", "/tmp/hls.log"
         -- "+RTS", "--nonmoving-gc", "-RTS"
@@ -253,106 +243,6 @@ lspconfig.hls.setup({
     }
 })
 
-local filetypes = {
-  "gitcommit",
-  "markdown",
-  "plaintex",
-  "rst",
-  "tex",
-  "rust",
-  "python",
-  "html",
-  "haskell",
-}
-
--- lspconfig.ltex.setup(
--- {
---     filetypes = filetypes,
---     settings = {
---         ltex = {
---             -- enabled = filetypes, 
---             additionalRules = {
---                 languageModel = "~/ngrams/",
---                 checkFrequency = "edit",
---                 motherTongue = "fr_FR",
---             },
--- 
--- 
--- 
--- 
---             -- disabledRules = {
---             --   en_US = ["MORFOLOGIK_RULE"]
---             -- }
---         }
---     }
--- })
-
-local cmp = require 'cmp'
-
-cmp.setup({
-    snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        end,
-    },
-    mapping = {
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-        ['<C-e>'] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-        }),
-        ['<C-n>'] = cmp.mapping({
-            c = function()
-                if cmp.visible() then
-                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-                else
-                    vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
-                end
-            end,
-            i = function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-                else
-                    fallback()
-                end
-            end
-        }),
-        ['<C-p>'] = cmp.mapping({
-            c = function()
-                if cmp.visible() then
-                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-                else
-                    vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
-                end
-            end,
-            i = function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-                else
-                    fallback()
-                end
-            end
-        }),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        --  { name = 'vsnip' }, -- For vsnip users.
-        -- { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
-    }, {
-        { name = 'buffer' },
-    })
-})
-
 local hooks = require "ibl.hooks"
 -- create the highlight groups in the highlight setup hook, so they are reset
 -- every time the colorscheme changes
@@ -386,15 +276,10 @@ require('nightfox').setup({
         styles = {
             comments = "italic",
         },
-    },
-    groups = {
-        -- LspCodeLens = { fg = "${cyan}", style = "italic"},
     }
 })
 
--- require('neogit').setup {}
 require("trouble").setup {}
--- require("neoclip").setup()
 
 local trouble_source_telescope = require("trouble.sources.telescope")
 require("telescope").setup {
@@ -454,7 +339,6 @@ require "nvim-treesitter.configs".setup {
       },
     },
 }
--- require('hologram').setup{ auto_display = true }
 
 require('gitsigns').setup {
     numhl = false,
@@ -621,9 +505,7 @@ set list listchars=tab:\ \ ▸,trail:·,precedes:←,extends:→,nbsp:␣
 set linebreak
 autocmd BufEnter *.hs setlocal shiftwidth=2
 
-set omnifunc=v:lua.vim.lsp.omnifunc
-
-let g:mkdp_browser='chromium'
+let g:mkdp_browser='firefox'
 
 " Lenses updates
 autocmd BufEnter,CursorHold,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
