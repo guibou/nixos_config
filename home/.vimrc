@@ -535,7 +535,5 @@ set signcolumn=yes:2
 noremap <Leader>qv <cmd>:e ~/nixos_config/home/.vimrc<cr>
 noremap <Leader>qh <cmd>:e ~/nixos_config/home.nix<cr>
 
-set formatexpr=
-
 "s Nice diff with commont parts in lines
 set diffopt+=linematch:50
