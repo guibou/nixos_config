@@ -109,11 +109,10 @@
     timesyncd.enable = true; # NTP sync
     blueman.enable = true;
 
-    # Enable touchpad support.
-    libinput.enable = true;
-
     # Enable the X11 windowing system.
     xserver = {
+      # Enable touchpad support.
+      libinput.enable = true;
       enable = true;
 
       xkb = {
@@ -191,7 +190,7 @@
     # ocean that rocks and sharks are cutting every days ending by "day".
     registry.nixpkgs.flake = nixpkgs;
 
-    package = pkgs.nixVersions.latest;
+    # package = pkgs.nixVersions.latest;
 
     settings = {
       sandbox = true;
@@ -231,4 +230,6 @@
   };
 
   powerManagement.enable = true;
+
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
 }

@@ -82,7 +82,7 @@ in
       ]))
 
     jq
-    nixfmt-rfc-style
+    #nixfmt-rfc-style
     ripgrep
 
     # CCLS for C++ dev pulls a lot of dependencies
