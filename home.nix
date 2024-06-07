@@ -77,22 +77,8 @@ in
 
     # GHC(i) with some defaults
     (haskellPackages.ghcWithPackages (ps:
-      with ps; [
-        #(haskell.lib.dontCheck (pkgs.haskell.lib.unmarkBroken (ps.callHackageDirect {
-
-        #  pkg = "PyF";
-        #  ver = "0.11.1.0";
-        #  sha256 = "sha256-EuSog8IpsdQrciKoDGUBHK2iH7S/9ltnkUUxzKtpPXQ=";
-        #} {})))
-        #ps.containers
-        #ps.selda
-        #ps.vector
-        #ps.aeson
-        #ps.optics
-        #ps.generic-optics
+      [
         ps.haskell-language-server
-        #ps.cabal-fmt
-        #ps.streaming-bytestring
       ]))
 
     jq
@@ -239,34 +225,7 @@ in
     };
   };
 
-  programs.lazygit = {
-    enable = false;
-    settings = {
-      gui.theme = {
-        lightTheme = !dark;
-      };
-    };
-  };
-
   programs.mpv = { enable = true; };
-
-  # I'm not thinking about using it
-  #programs.bat = {
-  #  enable = true;
-  #  config = { theme = "Solarized (light)"; };
-  #};
-
-  #programs.gnome-terminal = {
-  #  enable = true;
-  #  showMenubar = false;
-
-  #  profile."Default" = {
-  #    # colors.palette = "Tango";
-  #    default = true;
-  #    showScrollbar = false;
-  #    visibleName = "Default";
-  #  };
-  #};
 
   programs.autorandr = {
     enable = true;
@@ -437,13 +396,6 @@ in
       };
     };
   };
-
-  /*
-    programs.chromium = {
-    enable = true;
-    commandLineArgs = pkgs.lib.optionals dark ["--enable-features=WebContentsForceDark"];
-    };
-  */
 
   services.cbatticon = { enable = true; };
 
