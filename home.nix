@@ -129,8 +129,6 @@ in
     (pkgs.writeScriptBin "volume-change"
       ''
         PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.libnotify pkgs.pcre pkgs.gnugrep pkgs.coreutils-full]}
-        set -x
-  
         pactl $@
 
         current=$(pactl get-sink-volume @DEFAULT_SINK@ | pcregrep -o1 '([0-9]+)%' | head -n1)
@@ -139,14 +137,11 @@ in
         notify-send -t 2000 -r 1234 -h int:value:$current \
                     -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/audio-volume-$icon.svg \
                     "Volume [$current%]"
-
-        pkill i3status -SIGUSR1
       '')
 
     (pkgs.writeScriptBin "notify-brightness-change"
       ''
         PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.libnotify pkgs.pcre pkgs.gnugrep]}
-        set -x
         current=$(brightnessctl | pcregrep -o1 '([0-9]+)%')
         echo $current
         notify-send -t 2000 -r 12345 -h int:value:$current \
