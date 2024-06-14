@@ -183,6 +183,23 @@
         "type": "github"
       }
     },
+    "ipu6-softisp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1717860048,
+        "narHash": "sha256-27vUFHlIitNQz7gJT2sby5V6LjFQJyhgHAu4ekG1LYo=",
+        "ref": "canon",
+        "rev": "cf602ab9b2d14a6f3e9c81c5fd8186f6c3d255f4",
+        "revCount": 11,
+        "type": "git",
+        "url": "https://code.tvl.fyi/depot.git:/users/flokli/ipu6-softisp.git"
+      },
+      "original": {
+        "ref": "canon",
+        "type": "git",
+        "url": "https://code.tvl.fyi/depot.git:/users/flokli/ipu6-softisp.git"
+      }
+    },
     "neovim-flake": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -290,6 +307,7 @@
       "inputs": {
         "disko": "disko",
         "home-manager": "home-manager",
+        "ipu6-softisp": "ipu6-softisp",
         "neovim-flake": "neovim-flake",
         "nightfox-nvim": "nightfox-nvim",
         "nixpkgs": "nixpkgs_3"

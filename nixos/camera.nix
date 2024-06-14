@@ -3,12 +3,13 @@
 
 { config, pkgs, nixpkgs, lib, disko, ... }:
 {
-  hardware = {
-    ipu6 = {
-      enable = true;
-      platform = "ipu6ep";
-    };
-  };
+  # Kernel 6.9
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # kernelPackages = pkgs.linuxPackages_latest;
+  hardware.enableAllFirmware = true;
+
+  services.pipewire = {
+    enable = true;
+    wireplumber.enable = true;
+  };
 }
