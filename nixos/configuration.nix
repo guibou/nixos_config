@@ -77,7 +77,7 @@
 
   programs = {
     steam.enable = true;
-    bash.enableCompletion = true;
+    bash.completion.enable = true;
     zsh.enable = true;
     ssh.startAgent = true;
   };
