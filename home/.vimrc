@@ -117,6 +117,9 @@ noremap <Leader>gp <cmd>:Gitsigns prev_hunk<cr>
 noremap <Leader>gn <cmd>:Gitsigns next_hunk<cr>
 noremap <Leader>gU <cmd>:Gitsigns reset_hunk<cr>
 noremap <Leader>gs <cmd>:Gitsigns stage_hunk<cr>
+noremap <Leader>gtd <cmd>:Gitsigns toggle_deleted<cr>
+noremap <Leader>gbo <cmd>:Gitsigns change_base origin/dev<cr>
+noremap <Leader>gbh <cmd>:Gitsigns change_base HEAD<cr>
 
 set clipboard=unnamed,unnamedplus
 set mouse=a
