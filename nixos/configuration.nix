@@ -2,7 +2,6 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     "${disko}/module.nix"
     ./disko.nix
@@ -56,8 +55,6 @@
   };
 
   console = {
-    # Not needed anymore, auto detected by the installer in hardware-configuration.nix
-    # font = "latarcyrheb-sun32";
     keyMap = "dvorak";
   };
 
@@ -222,11 +219,6 @@
 
   hardware = {
     cpu.intel.updateMicrocode = true;
-    opengl = {
-      enable = true;
-      driSupport = true;
-    };
-
     bluetooth.enable = true;
   };
 
