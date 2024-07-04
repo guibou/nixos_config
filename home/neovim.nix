@@ -12,6 +12,11 @@
       # Build some extensions
       gcc cmake
     ];
+
+    extraLuaPackages = ps: with ps; [
+      # for image support
+      magick
+    ];
     
     package = neovim;
 

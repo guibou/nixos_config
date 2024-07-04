@@ -59,8 +59,10 @@ Plug 'arkav/lualine-lsp-progress'
 Plug 'tversteeg/registers.nvim'
 
 
+"" Images
 " Clip image directry into neovim
 Plug 'HakonHarnes/img-clip.nvim'
+Plug '3rd/image.nvim'
 
 call plug#end()
 
@@ -486,6 +488,19 @@ watchfiles._watchfunc = function(path, opts, callback)
     return default_watchfunc(path, opts, callback)
   end
 end
+
+require("image").setup({
+  backend = "kitty",
+  integrations = {
+    markdown = {
+      enabled = true,
+      clear_in_insert_mode = false,
+      download_remote_images = true,
+      only_render_image_at_cursor = false,
+      filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+    }
+  }
+})
 
 EOF
 
