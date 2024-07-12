@@ -29,7 +29,6 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'nvim-lualine/lualine.nvim'
 "
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'direnv/direnv.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Languages
@@ -215,35 +214,16 @@ lspconfig.hls.setup({
     -- https://github.com/neovim/neovim/pull/22405
     capabilities = default_caps,
 
-    -- root_dir = lspconfig.util.root_pattern(
-    --     "*.cabal",
-    --     "stack.yaml",
-    --     "cabal.project",
-    --     -- , "package.yaml"
-    --     "hie.yaml"
-    -- ),
-
     settings = {
         haskell = {
-            -- completionSnippetsOn = true,
             checkProject = true,
             -- checkParents = "NeverCheck",
 
             plugin = {
-                 -- Used to disable the snippet
-                 ["ghcide-completions"] = {
-                     config = {
-                         ---snippetsOn = false;
-                     }
-                 },
                  ["hlint"] = {
-                     diagnosticsOn = false;
+                     globalOn = false;
                  },
             },
-            -- I don't know what this thing is, but hey, maybe a good thing
-            -- flags = {
-            --     allow_incremental_sync = false;
-            -- }
         }
     }
 })
@@ -368,6 +348,49 @@ require("lspsaga").setup({
   }
 })
 
+statusline = {
+  lualine_a = {'mode'},
+  lualine_c = {
+      'branch',
+      {'diagnostics',
+      sources = {'nvim_workspace_diagnostic'},
+      symbols = symbols}
+  },
+  lualine_b = {},
+
+  lualine_z = {},
+  lualine_y = {},
+  lualine_x = {
+      {'lsp_progress',
+         display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
+      },
+      'searchcount'
+  }
+}
+
+winbar = {
+  lualine_b = {{'filetype', icon_only = true}, {
+      'filename',
+      path=1,
+      on_click = function(_nb_of_clicks, _button, _modifiers)
+          local filename = vim.fn.getreg('%')
+          print('copying filename to clipboard: ' .. filename)
+          vim.cmd("call provider#clipboard#Call('set', [ ['" .. filename .. "'], 'v','\"'])")
+      end,
+      }},
+  lualine_c = {
+  { function() return require('lspsaga.symbolwinbar'):get_winbar() end }
+      },
+  lualine_a = {},
+  lualine_x = {{
+      'diagnostics',
+      sources = {'nvim_diagnostic'},
+      symbols = symbols}
+  },
+  lualine_z = {},
+  lualine_y = {'location'}
+}
+
 
 require('lualine').setup {
   options = {
@@ -389,86 +412,11 @@ require('lualine').setup {
       winbar = 1000,
     }
   },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_c = {
-        'branch',
-        {'diagnostics',
-        sources = {'nvim_workspace_diagnostic'},
-        symbols = symbols}
-    },
-    lualine_b = {},
-
-    lualine_z = {},
-    lualine_y = {},
-    lualine_x = {
-        {'lsp_progress',
-           display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
-        },
-        'searchcount'
-    }
-  },
-  sections_inactive = {
-    lualine_a = {'mode'},
-    lualine_c = {{
-        'branch',
-        {'diagnostics',
-        sources = {'nvim_workspace_diagnostic'},
-        symbols = symbols}
-    }
-    },
-    lualine_b = {},
-
-    lualine_z = {},
-    lualine_y = {},
-    lualine_x = {
-        {'lsp_progress',
-           display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
-        },
-        'searchcount'
-    }
-  },
+  sections = statusline,
+  sections_inactive = statusline,
   tabline = {},
-  winbar = {
-    lualine_b = {{'filetype', icon_only = true}, {
-        'filename',
-        path=1,
-        on_click = function(_nb_of_clicks, _button, _modifiers)
-            local filename = vim.fn.getreg('%')
-            print('copying filename to clipboard: ' .. filename)
-            vim.cmd("call provider#clipboard#Call('set', [ ['" .. filename .. "'], 'v','\"'])")
-        end,
-        }},
-    lualine_c = {
-    { function() return require('lspsaga.symbolwinbar'):get_winbar() end }
-        },
-    lualine_a = {},
-    lualine_x = {{
-        'diagnostics',
-        sources = {'nvim_diagnostic'},
-        symbols = symbols}
-    },
-    --lualine_x = {'encoding', 'fileformat', 'filetype'},
-    --lualine_y = {'progress'},
-    lualine_z = {},
-    lualine_y = {'location'}
-  },
-  inactive_winbar = {
-    lualine_b = {{'filetype', icon_only = true}, {'filename', path = 1}},
-    lualine_c = {
-    { function() return require('lspsaga.symbolwinbar'):get_winbar() end }
-        },
-    lualine_a = {},
-    lualine_x = {{
-        'diagnostics',
-        sources = {'nvim_diagnostic'},
-        symbols = symbols}
-    },
-    --lualine_x = {'encoding', 'fileformat', 'filetype'},
-    --lualine_y = {'progress'},
-    lualine_z = {},
-    lualine_y = {'location'}
-      },
+  winbar = winbar,
+  inactive_winbar = winbar,
   extensions = {}
 }
 
@@ -523,7 +471,9 @@ autocmd BufEnter *.hs setlocal shiftwidth=2
 let g:mkdp_browser='firefox'
 
 " Lenses updates
-autocmd BufEnter,CursorHold,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
+" I don't really like the behavior and most of the time it is noise
+" TODO: work on a good update strategy. With CursorHold, it blinks
+" autocmd BufEnter,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
 
 tnoremap <Esc> <C-\><C-n>
 
