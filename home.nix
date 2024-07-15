@@ -22,7 +22,7 @@ in
     hicolor-icon-theme
     ack
     brightnessctl
-    gnome.eog
+    eog
     ffmpeg
     file
 
@@ -365,10 +365,10 @@ in
   gtk = {
     enable = true;
     iconTheme.name = "Adwaita";
-    iconTheme.package = pkgs.gnome.gnome-themes-extra;
+    iconTheme.package = pkgs.gnome-themes-extra;
     theme = {
       name = if dark then "Adwaita-dark" else "Adwaita";
-      package = pkgs.gnome.gnome-themes-extra;
+      package = pkgs.gnome-themes-extra;
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = dark;

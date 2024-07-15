@@ -21,8 +21,11 @@
       "fs.inotify.max_queued_events" = 1000000;
     };
     loader = {
-      systemd-boot.enable = true;
-      systemd-boot.consoleMode = "max";
+      systemd-boot = {
+        enable = true;
+        consoleMode = "max";
+        configurationLimit = 30;
+      };
       efi.canTouchEfiVariables = false;
     };
 
@@ -133,8 +136,6 @@
     # - f (on the keyboard, not your layout) to run the OOM killer
     # - s(ync) / u(mount) / b(boot)
   };
-
-  sound = { enable = true; };
 
   # Enable for pipewire;
   security.rtkit.enable = true;
