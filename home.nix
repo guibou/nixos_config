@@ -514,6 +514,9 @@ in
 
         enable_audio_bell false
         visual_bell_duration 0.1
+
+        # Default is 2k, I want MORE!
+        scrollback_lines 100000
       '';
     };
 
