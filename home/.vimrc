@@ -96,7 +96,7 @@ noremap <Leader>s <cmd>Telescope git_status<cr>
 noremap <Leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
 noremap <Leader>C <cmd>Telescope colorscheme enable_preview=true<cr>
 
-noremap <Leader>cD <cmd>Telescope lsp_references<cr>
+noremap <Leader>cD <cmd>Telescope lsp_incoming_calls<cr>
 
 noremap <Leader>cd <cmd>Telescope lsp_definitions<cr>
 noremap <Leader>cl :lua vim.lsp.codelens.run()<cr>
