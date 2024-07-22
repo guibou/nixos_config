@@ -1,0 +1,7 @@
+set $menu dmenu_run
+set $nagbar i3-nag
+set $msg i3-msg
+set $tray_output_value primary
+set $flameshot "flameshot gui"
+
+include /home/guillaume/.config/i3/config

@@ -7,8 +7,8 @@
     ./disko.nix
     ./x1-carbon.nix
     ./timezone-run.nix
-    #./sway.nix
-    ./xorg.nix
+    ./sway.nix
+    # ./xorg.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -67,10 +67,6 @@
   # services.nix-serve.enable = true;
 
   programs = {
-    i3lock = {
-      enable = true;
-      package = pkgs.i3lock-color;
-    };
     steam.enable = true;
     bash.completion.enable = true;
     zsh = {
@@ -108,19 +104,6 @@
     libinput.enable = true;
 
   };
-
-  services.displayManager =
-    {
-      autoLogin = {
-        # it freeze once logged
-        enable = false;
-        user = "guillaume";
-      };
-
-      gdm = {
-        enable = true;
-      };
-    };
 
   # Enable for pipewire;
   security.rtkit.enable = true;

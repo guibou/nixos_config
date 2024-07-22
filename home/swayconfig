@@ -1,12 +1,17 @@
-include /home/guillaume/.config/i3/config
-
 input type:keyboard {
     xkb_layout us
     xkb_variant dvorak-alt-intl
 }
 
+set $menu wmenu-run
+set $nagbar swaynag
+set $msg swaymsg
+set $tray_output_value *
+set $flameshot "flameshot gui --raw | wl-copy"
+
+include /home/guillaume/nixos_config/home/i3config
+
 # xwayland disable
 
-
-# Allows the primary selection to end in clipboard
-exec_always wl-paste --primary --watch wl-copy
+# Setup some stuffs?
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway

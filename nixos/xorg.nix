@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   # Enable the X11 windowing system.
   services.xserver = {
@@ -14,6 +14,19 @@
       extraPackages = with pkgs; [ dmenu i3status ];
     };
   };
+
+  services.displayManager =
+    {
+      autoLogin = {
+        # it freeze once logged
+        enable = false;
+        user = "guillaume";
+      };
+
+      gdm = {
+        # enable = true;
+      };
+    };
 
   services.displayManager.defaultSession = "none+i3";
 
@@ -32,7 +45,7 @@
             in
             {
               "i3/config" = {
-                source = link "i3config";
+                source = link "i3configtoplevel";
                 onChange = "i3-msg restart";
               };
               "i3status/config" = {
@@ -41,6 +54,34 @@
               };
             };
         };
+
+        services.picom = { enable = true; };
+        home.packages = with pkgs; [
+          # Manual screen editing
+          # I'm doing everything most of the time with autorandr, but when I want to
+          # do a special configuration, I'm blocked because of that and that's sad.
+          arandr
+
+          (pkgs.writeScriptBin "lock-action"
+            ''
+              PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
+              i3-lock -c 404040
+
+              # I turn notifications OFF so they do not risk poping over my screen
+              set-notification-pause true
+
+              # I set volume OFF so it does not continue or pop on out of suspend
+              pactl set-sink-mute @DEFAULT_SINK@ 1
+            '')
+
+        ];
+
+
+        programs.i3lock = {
+          enable = true;
+          package = pkgs.i3lock-color;
+        };
+
         programs.autorandr = {
           enable = true;
           hooks.postswitch = {

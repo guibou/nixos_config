@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 dunst_status=""
 tailscale_status=""
@@ -6,10 +7,10 @@ bluetooth_status=""
 ps_controller_status=""
 title=""
 
-red=$(xrdb -get color1)
-yellow=$(xrdb -get color11)
-green=$(xrdb -get color10)
-foreground=$(xrdb -get foreground)
+red=$(cat ~/.config/theme.conf | grep 'color1 ' | cut -f 3 -d' ')
+yellow=$(cat ~/.config/theme.conf | grep 'color11 ' | cut -f 3 -d' ')
+green=$(cat ~/.config/theme.conf | grep 'color10 ' | cut -f 3 -d' ')
+foreground=$(cat ~/.config/theme.conf | grep 'foreground ' | cut -f 3 -d' ')
 
 update() {
   status=$(dunstctl is-paused)
@@ -61,17 +62,18 @@ update() {
     ps_controler_status='{"name":"ps_controler","instance":"ps_controler","color":"'"$color"'","markup":"none","full_text":"  '"$status%"'"},'
   fi
 
-  title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(xtitle | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
+  #title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(xtitle | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
+  title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":""}'
 }
 
 # Override header
 echo '{"version":1,"click_events": true}'
 
-first_comma=""
+first_comma=","
 
 # Run in a background process, ignore the first line, copy the second one
 # directly and then wrap
-( i3status | (read line && read line && echo "$line" && while :
+( i3status | (read line && read line && echo "$line" && read line && echo "$line" && while :
 do
   read line
   update
@@ -79,7 +81,7 @@ do
   first_comma=","
 done) ) &
 
-(i3-msg -t subscribe -m '["window"]' | (while read line; do killall -USR1 i3status ; done;)) &
+# (i3-msg -t subscribe -m '["window"]' | (while read line; do killall -USR1 i3status ; done;)) &
 
 
 # TODO: maybe this can leak background process

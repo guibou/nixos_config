@@ -34,10 +34,6 @@ in
       '';
     };
 
-    xresources.extraConfig = ''
-      #include "${nightfox-nvim}/extra/${currentTheme}/${currentTheme}.Xresources"
-    '';
-
     gtk = {
       iconTheme.name = "Adwaita";
       iconTheme.package = pkgs.gnome-themes-extra;
@@ -88,6 +84,14 @@ in
 
     xdg = {
       configFile = {
+        "theme.conf" = {
+          source = pkgs.runCommand "make-theme.conf" {
+
+          }
+          ''
+          cat ${nightfox-nvim}/extra/${currentTheme}/${currentTheme}.Xresources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > $out
+          '';
+        };
         /*
         # TODO: kitty auto theme switch does not work as expected, so for now I
         # just force the theme files

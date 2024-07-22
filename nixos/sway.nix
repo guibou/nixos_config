@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   programs = {
@@ -11,7 +11,6 @@
         wl-clipboard
         wmenu
         i3status
-        # autosway
       ];
     };
   };
@@ -22,21 +21,21 @@
     enable = true;
     config = { common = { default = "wlr"; }; };
     wlr.enable = true;
-
-    # I seriously have no idea what I'm doing
-    #extraPortals = [
-    #  pkgs.xdg-desktop-portal-gtk
-    #  pkgs.xdg-desktop-portal-wlr
-    #];
-
-    #wlr.settings.screencast = {
-    #  output_name = "eDP-1";
-    #  chooser_type = "simple";
-    #  chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-    #};
   };
 
-  services.displayManager.defaultSession = "sway";
+  # services.displayManager.defaultSession = "sway";
+
+  # autologin on sway
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.sway}/bin/sway";
+        user = "guillaume";
+      };
+      default_session = initial_session;
+    };
+  };
 
   home-manager.users.guillaume = {
     imports = [
@@ -46,8 +45,9 @@
         };
 
         home.activation = {
-          reloadSway = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            sway-msg restart
+          reloadsway = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            # TODO: this does not work for some reasons
+            # swaymsg reload
           '';
         };
         xdg = {
@@ -58,6 +58,11 @@
             {
               "sway/config" = {
                 source = link "swayconfig";
+                onChange = "swaymsg restart";
+              };
+              "i3status/config" = {
+                source = link "i3status.conf";
+                onChange = "swaymsg restart";
               };
               "networkmanager-dmenu/config.ini".text = ''
                 [dmenu]
@@ -72,21 +77,22 @@
             enableWlrSupport = true;
           };
         };
+
+        home.packages = [
+          (pkgs.writeScriptBin "lock-action"
+            ''
+              PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
+              swaylock -c 404040
+
+              # I turn notifications OFF so they do not risk poping over my screen
+              set-notification-pause true
+
+              # I set volume OFF so it does not continue or pop on out of suspend
+              pactl set-sink-mute @DEFAULT_SINK@ 1
+            '')
+
+        ];
       })
     ];
   };
 }
-
-/*
-
-  for dunst, I had to run:
-
-  ```
-  dbus-update-activation-environment WAYLAND_DISPLAY
-  ```
-
-  https://discourse.nixos.org/t/dunst-crashes-if-run-as-service/27671/2
-
-*/
-
-

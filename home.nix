@@ -131,10 +131,6 @@ in
     # when occasianally I mount ntfs drives
     ntfs3g
 
-    # Manual screen editing
-    # I'm doing everything most of the time with autorandr, but when I want to
-    # do a special configuration, I'm blocked because of that and that's sad.
-    arandr
 
     (pkgs.writeScriptBin "diff-image"
       ''
@@ -210,19 +206,6 @@ in
 
         # Refresh i3 status
         killall -USR1 i3status
-      '')
-
-    # What to do when I want to lock screen
-    (pkgs.writeScriptBin "lock-action"
-      ''
-        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
-        i3lock-color --pass-volume-keys -c 404040
-
-        # I turn notifications OFF so they do not risk poping over my screen
-        set-notification-pause true
-
-        # I set volume OFF so it does not continue or pop on out of suspend
-        pactl set-sink-mute @DEFAULT_SINK@ 1
       '')
 
 
@@ -423,8 +406,6 @@ in
 
   # services.network-manager-applet.enable = true;
   # services.gnome-keyring.enable = true;
-
-  services.picom = { enable = true; };
 
   services.dunst = {
     enable = true;
