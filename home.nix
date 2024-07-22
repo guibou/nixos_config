@@ -386,10 +386,14 @@ in
 
     settings = {
       global = {
+        fullscreen = "delay";
         markup = "full";
         geometry = "300x50-15+49";
         word_wrap = "yes";
         browser = "${pkgs.firefox}/bin/firefox";
+      };
+      urgency_critical = {
+        fullscreen = "show";
       };
     };
   };
