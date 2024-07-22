@@ -5,7 +5,9 @@
     ./hardware-configuration.nix
     "${disko}/module.nix"
     ./disko.nix
-    ./camera.nix
+    # Disabling camera logic for now, it still does not work
+    # I've coducemnted most of my researches here: https://github.com/NixOS/nixpkgs/issues/225743
+    # ./camera.nix
     # Work specific config
     ./nova.nix
   ];
