@@ -286,26 +286,6 @@ in
 
   programs.mpv = { enable = true; };
 
-  programs.autorandr = {
-    enable = true;
-    hooks.postswitch = {
-      "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
-      "change-sound" = ''
-         case "$AUTORANDR_CURRENT_PROFILE" in
-                   default)
-                        # Set to standard HP
-                        # Got the name using wpctl status --name
-                        wpctl set-default $(pw-cli info alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink | head -n1 | awk '{print $2}')
-                     ;;
-                   *)
-                        # Anything else, switch to HDMI output
-                        wpctl set-default $(pw-cli info  alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__HDMI1__sink | head -n1 | awk '{print $2}')
-                     ;;
-        esac
-      '';
-    };
-  };
-
   home.shell = {
     enableBashIntegration = true;
     enableNushellIntegration = true;
@@ -419,14 +399,6 @@ in
                         )}"
                     }
         '';
-        "i3/config" = {
-          source = link "i3config";
-          onChange = "i3-msg restart";
-        };
-        "i3status/config" = {
-          source = link "i3status.conf";
-          onChange = "i3-msg restart";
-        };
         "jjui/config.toml" = {
           source = link "jjui.toml";
         };
@@ -650,9 +622,6 @@ in
     reloadNvimColorScheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Force all nvim to the new colorscheme
       pkill -SIGUSR1 nvim || echo "no vim was started"
-
-      ${pkgs.hsetroot}/bin/hsetroot -solid $(xrdb -get system.background)
-      i3-msg restart
     '';
   };
 

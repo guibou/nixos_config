@@ -5,4 +5,8 @@ input type:keyboard {
     xkb_variant dvorak-alt-intl
 }
 
-xwayland disable
+# xwayland disable
+
+
+# Allows the primary selection to end in clipboard
+exec_always wl-paste --primary --watch wl-copy

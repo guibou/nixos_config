@@ -7,6 +7,8 @@
     ./disko.nix
     ./x1-carbon.nix
     ./timezone-run.nix
+    #./sway.nix
+    ./xorg.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -105,27 +107,10 @@
     # Enable touchpad support.
     libinput.enable = true;
 
-    # Enable the X11 windowing system.
-    xserver = {
-      enable = true;
-
-      xkb = {
-        variant = "dvorak-alt-intl";
-        layout = "us";
-      };
-
-      # TODO: this could be moved to home-manager
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [ dmenu i3status ];
-      };
-    };
   };
 
   services.displayManager =
     {
-      defaultSession = "none+i3";
-
       autoLogin = {
         # it freeze once logged
         enable = false;
