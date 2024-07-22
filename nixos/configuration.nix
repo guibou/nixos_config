@@ -6,6 +6,8 @@
     "${disko}/module.nix"
     ./disko.nix
     ./camera.nix
+    # Work specific config
+    ./nova.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
