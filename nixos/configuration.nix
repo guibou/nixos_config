@@ -118,6 +118,24 @@
     xserver = {
       enable = true;
 
+      # Hint: use xinput list / xinput disable to first try the disabling
+      config = ''
+        # Try to disable the two devices (mouse) which may be responsible
+        # For the heratic behavior of my touchpad
+        Section "InputClass"
+           Identifier         "disable PS2 generic mouse"
+           MatchIsTouchscreen "on"
+           MatchProduct       "PS/2 Generic Mouse"
+           Option             "Ignore" "on"
+        EndSection
+        Section "InputClass"
+           Identifier         "disable VEN mouse"
+           MatchIsTouchscreen "on"
+           MatchProduct       "VEN_04F3:00 04F3:3242 Mouse"
+           Option             "Ignore" "on"
+        EndSection
+      '';
+
       xkb = {
         variant = "dvorak-alt-intl";
         layout = "us";
