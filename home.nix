@@ -311,6 +311,7 @@ in
       + mkGhcUtils "94"
       + mkGhcUtils "96"
       + mkGhcUtils "98"
+      + mkGhcUtils "910"
       + mkGhcUtils null;
 
   };

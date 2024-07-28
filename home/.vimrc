@@ -364,7 +364,6 @@ statusline = {
       {'lsp_progress',
          display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
       },
-      'searchcount'
   }
 }
 
@@ -387,8 +386,8 @@ winbar = {
       sources = {'nvim_diagnostic'},
       symbols = symbols}
   },
-  lualine_z = {},
-  lualine_y = {'location'}
+  lualine_y = {'searchcount'},
+  lualine_z = {'progress', 'location'}
 }
 
 
