@@ -12,11 +12,13 @@
 }
 
 /*
-tailscale up --reset --login-server https://relay-prod.jinko.ai --operator="$SUDO_USER"
 
-tailscale up --login-server https://relay-prod.jinko.ai --exit-node "relay-prod.relay.novainsilico.home.arpa" --operator="$SUDO_USER"
 
-tailscale up --login-server https://relay-prod.jinko.ai --exit-node "relay-af-prod.relay.novainsilico.home.arpa"
+# RESET
+sudo tailscale up --force-reauth --reset --login-server https://relay-prod.jinko.ai --operator=guillaume
 
-tailscale down
+tailscale up --login-server https://relay-prod.jinko.ai --exit-node "relay-prod.relay.novainsilico.home.arpa" 
+tailscale up --login-server https://relay-prod.jinko.ai --exit-node "relay-af-prod.relay.novainsilico.home.arpa" 
+
+
 */

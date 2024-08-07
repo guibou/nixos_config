@@ -5,10 +5,10 @@
 {
   hardware = {
     ipu6 = {
-      enable = false;
+      enable = true;
       platform = "ipu6ep";
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_testing;
 }
