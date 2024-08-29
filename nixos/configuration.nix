@@ -96,6 +96,13 @@
       pulse.enable = true;
 
       wireplumber.enable = true;
+
+      # I have no idea what I'm doing, but it may fixs final fantasy on proton / steam
+      extraConfig.pipewire.adjust-sample-rate = {
+        "context.properties" = {
+          "default.clock.min-quantum" = 1024;
+        };
+      };
     };
 
     logind = { lidSwitch = "ignore"; };
