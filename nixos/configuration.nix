@@ -5,11 +5,9 @@
     ./hardware-configuration.nix
     "${disko}/module.nix"
     ./disko.nix
-    # Disabling camera logic for now, it still does not work
-    # I've coducemnted most of my researches here: https://github.com/NixOS/nixpkgs/issues/225743
-    # ./camera.nix
     # Work specific config
     ./nova.nix
+    ./xps-9315.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -28,7 +26,7 @@
       systemd-boot = {
         enable = true;
         consoleMode = "max";
-        configurationLimit = 30;
+        configurationLimit = 20;
       };
       efi.canTouchEfiVariables = false;
     };
@@ -36,10 +34,6 @@
     # Boot is not on tmpfs because I had problem when installing large package
     # But cleaning tmp on boot allows the cruft to not stay.
     tmp.cleanOnBoot = true;
-
-    # save batter in sleep
-    # That's XPS only
-    kernelParams = [ "mem_sleep_default=deep" ];
   };
 
   # TODO: this is in order to kill programs, such as ghc, when it uses too much memory.
@@ -127,24 +121,6 @@
     xserver = {
       enable = true;
 
-      # Hint: use xinput list / xinput disable to first try the disabling
-      config = ''
-        # Try to disable the two devices (mouse) which may be responsible
-        # For the heratic behavior of my touchpad
-        Section "InputClass"
-           Identifier         "disable PS2 generic mouse"
-           MatchIsTouchscreen "on"
-           MatchProduct       "PS/2 Generic Mouse"
-           Option             "Ignore" "on"
-        EndSection
-        Section "InputClass"
-           Identifier         "disable VEN mouse"
-           MatchIsTouchscreen "on"
-           MatchProduct       "VEN_04F3:00 04F3:3242 Mouse"
-           Option             "Ignore" "on"
-        EndSection
-      '';
-
       xkb = {
         variant = "dvorak-alt-intl";
         layout = "us";
@@ -156,15 +132,25 @@
         extraPackages = with pkgs; [ dmenu i3lock i3status ];
       };
 
-      displayManager.gdm.enable = true;
+      displayManager = {
+        gdm = {
+           enable = true;
+        };
+      };
     };
-
-    # Note: DELL XPS system rescue keys
-    # - Press <Alt>, then <Fn>, then R key
-    # - release R key, and press
-    # - f (on the keyboard, not your layout) to run the OOM killer
-    # - s(ync) / u(mount) / b(boot)
   };
+
+  services.displayManager = 
+      {
+        defaultSession = "none+i3";
+
+        autoLogin = {
+          # it freeze once logged
+          enable = false;
+          user = "guillaume";
+
+        };
+      };
 
   # Enable for pipewire;
   security.rtkit.enable = true;
