@@ -162,7 +162,6 @@ in
         disabledTrayIcon = true;
         showStartupLaunchMessage = false;
 
-        checkForUpdates = false;
         copyPathAfterSave = true;
         saveAfterCopy = true;
         savePath = "/home/guillaume/Screenshots";

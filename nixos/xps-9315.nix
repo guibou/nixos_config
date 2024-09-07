@@ -1,9 +1,10 @@
-{...}:
+{pkgs, ...}:
 {
   imports = [
     # Setup for the xys-9315 camera IPU6
     # However, this is unsucessful since begenning 
-    ./camera.nix
+    # Disabled, This is just too much pain and no results
+    # ./camera.nix
   ];
 
   # Tentative fix in order to fix the annoying touchpad, scroll is broken sometime
@@ -33,6 +34,13 @@
   # That's XPS only
   boot.kernelParams = [ "mem_sleep_default=deep" ];
 
+  # Microphone fix
+  # Persistence of alsa setup
+  # See also the trick with alsactl init in https://discourse.nixos.org/t/dell-xps-13-9320-microphone-not-working/40932/3
+  hardware.alsa.enablePersistence = true;
+
+  # things seems to work better on recent kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
 
 # Note: DELL XPS system rescue keys
