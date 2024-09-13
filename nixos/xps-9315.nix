@@ -3,8 +3,7 @@
   imports = [
     # Setup for the xys-9315 camera IPU6
     # However, this is unsucessful since begenning 
-    # Disabled, This is just too much pain and no results
-    # ./camera.nix
+    ./camera.nix
   ];
 
   # Tentative fix in order to fix the annoying touchpad, scroll is broken sometime

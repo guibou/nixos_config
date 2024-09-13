@@ -9,7 +9,4 @@
       platform = "ipu6ep";
     };
   };
-
-  # boot.kernelPackages = pkgs.linuxPackages_testing;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
