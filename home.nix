@@ -137,7 +137,7 @@ in
         dunstify -t 2000 -r 1234 -h int:value:$current -a changeVolume \
                     -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/audio-volume-$icon.svg \
                     "Volume" \
-                    "$(pactl get-default-sink | cut -d. -f4 | sed 's/__sink//' | sed 's/__/ /') [$current%]"
+                    "$(pactl get-default-sink | cut -d. -f4 | sed 's/__sink//' | sed 's/__/ /')"
       '')
 
     (pkgs.writeScriptBin "notify-brightness-change"
@@ -147,7 +147,7 @@ in
         echo $current
         dunstify -t 2000 -r 12345 -h int:value:$current -a changeBrightness \
                     -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/brightnesssettings.svg \
-                    "Brightness [$current%]"
+                    "Brightness"
       '')
 
     nix-output-monitor
@@ -176,35 +176,13 @@ in
     };
   };
 
-  # Disable: I'm not using this anymore
-  #systemd.user.services.xautolock-session = {
-  #  Unit = {
-  #    Description = "xautolock, session locker service";
-  #    After = [ "graphical-session-pre.target" ];
-  #    PartOf = [ "graphical-session.target" ];
-  #  };
-
-  #  Install = { WantedBy = [ "graphical-session.target" ]; };
-
-  #  Service = {
-  #    ExecStart = pkgs.lib.concatStringsSep " " ([
-  #      "${pkgs.xautolock}/bin/xautolock"
-  #      "-time 1"
-  #      "-locker '${pkgs.i3lock}/bin/i3lock -c 404040 -i /home/guillaume/cool_shoots/wallpaper.png'"
-  #      "-detectsleep"
-  #    ]);
-  #  };
-  #};
-
-  services.pasystray.enable = true;
-
-
   programs.nix-index = {
     enable = true;
     enableZshIntegration = true;
   };
 
   programs.firefox.enable = true;
+
   programs.htop = {
     enable = true;
     settings = {
@@ -383,14 +361,14 @@ in
   services.network-manager-applet.enable = true;
   # services.gnome-keyring.enable = true;
 
-  # Disable with sway
-  # services.picom = { enable = true; };
+  services.picom = { enable = true; };
 
   services.dunst = {
     enable = true;
   };
 
-  services.cbatticon = { enable = true; };
+  # alert for battery events
+  services.poweralertd.enable = true;
 
   programs.git = {
     lfs.enable = true;
