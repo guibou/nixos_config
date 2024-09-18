@@ -128,23 +128,24 @@ in
 
     (pkgs.writeScriptBin "volume-change"
       ''
-        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.libnotify pkgs.pcre pkgs.gnugrep pkgs.coreutils-full]}
+        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.dunst pkgs.pcre pkgs.gnugrep pkgs.coreutils-full pkgs.gnused]}
         pactl $@
 
         current=$(pactl get-sink-volume @DEFAULT_SINK@ | pcregrep -o1 '([0-9]+)%' | head -n1)
         icon=$(pactl get-sink-mute @DEFAULT_SINK@ | pcregrep no > /dev/null && echo "high" || echo "muted")
         echo $current
-        notify-send -t 2000 -r 1234 -h int:value:$current \
+        dunstify -t 2000 -r 1234 -h int:value:$current -a changeVolume \
                     -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/audio-volume-$icon.svg \
-                    "Volume [$current%]"
+                    "Volume" \
+                    "$(pactl get-default-sink | cut -d. -f4 | sed 's/__sink//' | sed 's/__/ /') [$current%]"
       '')
 
     (pkgs.writeScriptBin "notify-brightness-change"
       ''
-        PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.libnotify pkgs.pcre pkgs.gnugrep]}
+        PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.dunst pkgs.pcre pkgs.gnugrep]}
         current=$(brightnessctl | pcregrep -o1 '([0-9]+)%')
         echo $current
-        notify-send -t 2000 -r 12345 -h int:value:$current \
+        dunstify -t 2000 -r 12345 -h int:value:$current -a changeBrightness \
                     -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/brightnesssettings.svg \
                     "Brightness [$current%]"
       '')
@@ -348,6 +349,10 @@ in
           onChange = "i3-msg restart";
         };
 
+        "dunst/dunstrc.d/conf.conf" = {
+          source = link "dunstrc";
+        };
+
         "mpv/scripts/sub-cut.lua".source = link "mpv_sub-cut.lua";
 
         #"sway/config" = link "swayconfig";
@@ -383,19 +388,6 @@ in
 
   services.dunst = {
     enable = true;
-
-    settings = {
-      global = {
-        fullscreen = "delay";
-        markup = "full";
-        geometry = "300x50-15+49";
-        word_wrap = "yes";
-        browser = "${pkgs.firefox}/bin/firefox";
-      };
-      urgency_critical = {
-        fullscreen = "show";
-      };
-    };
   };
 
   services.cbatticon = { enable = true; };

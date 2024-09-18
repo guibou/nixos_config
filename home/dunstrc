@@ -1,0 +1,24 @@
+[global]
+enable_posix_regex = true
+fullscreen = delay
+markup = full
+width = 300
+origin = top-right
+word_wrap = true
+background = "#222"
+foreground = "#e9d8ee"
+frame_color = "#e9d8ee"
+highlight = "#e0d8ee"
+
+# browser = "${pkgs.firefox}/bin/firefox"
+
+[urgency_critical]
+fullscreen = show
+
+[change-brightness]
+appname = "changeBrightness"
+fullscreen = show
+
+[change-volume]
+appname = "changeVolume"
+fullscreen = show
