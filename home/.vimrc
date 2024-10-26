@@ -203,6 +203,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 lspconfig.yamlls.setup {}
+lspconfig.pyright.setup {}
 lspconfig.hls.setup({
     single_file_support = true,
     cmd = {
@@ -255,6 +256,22 @@ require("ibl").setup {
         }
     },
     exclude = { buftypes = { "terminal", "help", "vim-plug", "nofile" }},
+    scope = {
+      enabled = true,
+      char = "▎",
+      highlight = 
+      {
+         "IndentBlanklineIndent1",
+         "IndentBlanklineIndent2",
+         "IndentBlanklineIndent3",
+         "IndentBlanklineIndent4",
+         "IndentBlanklineIndent5",
+         "IndentBlanklineIndent6",
+      },
+      include = {
+          node_type = { haskell = { "do", "local_binds" } },
+      },
+    },
 }
 
 require('nightfox').setup({

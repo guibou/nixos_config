@@ -69,7 +69,7 @@
   documentation.man.enable = true;
 
   # TODO: Reevaluate if this cannot be moved to home-manager
-  fonts.packages = with pkgs; [ noto-fonts monaspace (nerdfonts.override { fonts = [ "BitstreamVeraSansMono" ]; }) ];
+  fonts.packages = with pkgs; [ awesome noto-fonts monaspace (nerdfonts.override { fonts = [ "BitstreamVeraSansMono" ]; }) ];
 
   # services.nix-serve.enable = true;
 
@@ -240,4 +240,10 @@
 
   powerManagement.enable = true;
   services.upower.enable = true;
+
+  # Most of the critical part of the system are on my main user, sudo is only
+  # used to `nixos-rebuild switch` on a new system.
+  # So, an attacker who have access to my user session unlocked will gain
+  # NOTHING by using sudo.
+  security.sudo.wheelNeedsPassword = false;
 }
