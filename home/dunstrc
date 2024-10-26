@@ -15,6 +15,9 @@ format = "<b>%s %p</b>\n%b"
 
 [urgency_critical]
 fullscreen = show
+background = "#c02222"
+foreground = "#f0f0f0"
+frame_color = "#303030"
 
 [change-brightness]
 appname = "changeBrightness"
