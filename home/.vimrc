@@ -490,7 +490,7 @@ let g:mkdp_browser='firefox'
 " Lenses updates
 " I don't really like the behavior and most of the time it is noise
 " TODO: work on a good update strategy. With CursorHold, it blinks
-" autocmd BufEnter,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
+autocmd BufEnter,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
 
 tnoremap <Esc> <C-\><C-n>
 
