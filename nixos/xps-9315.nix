@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   imports = [
     # Setup for the xys-9315 camera IPU6
@@ -7,15 +7,15 @@
   ];
 
   boot.blacklistedKernelModules = [
-        # Tentative fix in order to fix the annoying touchpad, scroll is broken sometime
-        # Note: does not fix the bug
-        "psmouse"
+    # Tentative fix in order to fix the annoying touchpad, scroll is broken sometime
+    # Note: does not fix the bug
+    "psmouse"
 
-        # From: https://discussion.fedoraproject.org/t/intel-mipi-ipu6-camera-issue-on-fedora-41-firmware-fails-with-code-2/134842/9,
-        # May solve the camera loading issues
-        "intel-ipu6"
-        "intel-ipu6-isys"
-];
+    # From: https://discussion.fedoraproject.org/t/intel-mipi-ipu6-camera-issue-on-fedora-41-firmware-fails-with-code-2/134842/9,
+    # May solve the camera loading issues
+    "intel-ipu6"
+    "intel-ipu6-isys"
+  ];
 
   # Was suppose to fix the problem but:
   # a) Does not fix it
