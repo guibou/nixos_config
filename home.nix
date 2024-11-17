@@ -12,6 +12,7 @@ in
 {
   imports = [
     (import ./home/neovim.nix { inherit neovim foxTheme dark; })
+    ./home/nova.nix
   ];
 
   home.username = "guillaume";
@@ -493,33 +494,6 @@ in
         scrollback_lines 100000
       '';
     };
-
-  /*
-    aws eks update-kubeconfig --profile nova-jinko --name jk-preprod --region eu-central-1
-    aws eks update-kubeconfig --profile nova-jinko --name jk-prod --region eu-central-1
-
-
-    aws eks update-kubeconfig --profile nova-staging --name jk-staging --region eu-central-1 --alias jk-staging
-
-    kubectl config set-context arn:aws:eks:eu-central-1:980984948228:cluster/jk-preprod --namespace jinko-preprod
-    kubectl config set-context arn:aws:eks:eu-central-1:980984948228:cluster/jk-prod --namespace jinko-prod
-  */
-  programs.awscli = {
-    enable = true;
-    settings = {
-      "nix-daemon" = {
-        region = "eu-central-1";
-      };
-
-      "default" = {
-        region = "eu-central-1";
-      };
-
-      "nova-jinko" = {
-        region = "eu-central-1";
-      };
-    };
-  };
 
   services.blueman-applet.enable = true;
 
