@@ -69,6 +69,8 @@ Plug 'tversteeg/registers.nvim'
 Plug 'HakonHarnes/img-clip.nvim'
 Plug '3rd/image.nvim'
 
+Plug 'echasnovski/mini.indentscope'
+
 call plug#end()
 
 " set completeopt=menuone,noselect
@@ -248,37 +250,37 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
   vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD blend=nocombine]]
 end)
 
-require("ibl").setup {
-    indent = {
-        char = "▏",
-        highlight = 
-        {
-           "IndentBlanklineIndent1",
-           "IndentBlanklineIndent2",
-           "IndentBlanklineIndent3",
-           "IndentBlanklineIndent4",
-           "IndentBlanklineIndent5",
-           "IndentBlanklineIndent6",
-        }
-    },
-    exclude = { buftypes = { "terminal", "help", "vim-plug", "nofile" }},
-    scope = {
-      enabled = true,
-      char = "▎",
-      highlight = 
-      {
-         "IndentBlanklineIndent1",
-         "IndentBlanklineIndent2",
-         "IndentBlanklineIndent3",
-         "IndentBlanklineIndent4",
-         "IndentBlanklineIndent5",
-         "IndentBlanklineIndent6",
-      },
-      include = {
-          node_type = { haskell = { "do", "local_binds" } },
-      },
-    },
-}
+-- require("ibl").setup {
+--     indent = {
+--         char = "▏",
+--         highlight = 
+--         {
+--            "IndentBlanklineIndent1",
+--            "IndentBlanklineIndent2",
+--            "IndentBlanklineIndent3",
+--            "IndentBlanklineIndent4",
+--            "IndentBlanklineIndent5",
+--            "IndentBlanklineIndent6",
+--         }
+--     },
+--     exclude = { buftypes = { "terminal", "help", "vim-plug", "nofile" }},
+--     scope = {
+--       enabled = false,
+--       char = "▎",
+--       highlight = 
+--       {
+--          "IndentBlanklineIndent1",
+--          "IndentBlanklineIndent2",
+--          "IndentBlanklineIndent3",
+--          "IndentBlanklineIndent4",
+--          "IndentBlanklineIndent5",
+--          "IndentBlanklineIndent6",
+--       },
+--       include = {
+--           node_type = { haskell = { "do", "local_binds" } },
+--       },
+--     },
+-- }
 
 require('nightfox').setup({
     options = {
@@ -476,6 +478,17 @@ require("image").setup({
 local neogit = require('neogit')
 neogit.setup {}
 
+require('mini.indentscope').setup(
+{
+    symbol = "▎",
+    draw = {
+        animation = require('mini.indentscope').gen_animation.none(),
+    };
+    options = {
+        border = "none",
+    },
+})
+
 EOF
 
 " Folding: I don't like it
@@ -531,3 +544,4 @@ noremap <Leader>qh <cmd>:e ~/nixos_config/home.nix<cr>
 
 "s Nice diff with commont parts in lines
 set diffopt+=linematch:50
+

@@ -492,6 +492,8 @@ in
 
         # Default is 2k, I want MORE!
         scrollback_lines 100000
+
+        cursor_trail 3
       '';
     };
 
