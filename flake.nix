@@ -2,23 +2,21 @@
   description = "Home Manager configuration of @guibou";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "git+https://github.com/nix-community/home-manager?shallow=1&ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-flake.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-flake.url = "git+https://github.com/nix-community/neovim-nightly-overlay?shallow=1&ref=master";
 
     nightfox-nvim = {
-      url = "github:/EdenEast/nightfox.nvim";
+      url = "git+https://github.com/EdenEast/nightfox.nvim?shallow=1&ref=main";
       flake = false;
     };
 
-    disko = {
-      url = "github:nix-community/disko";
-    };
+    disko.url = "git+https://github.com/nix-community/disko?shallow=1&ref=master";
   };
 
   # Contains everything cached from nix-community, including neovim
