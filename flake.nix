@@ -17,6 +17,11 @@
     };
 
     disko.url = "git+https://github.com/nix-community/disko?shallow=1&ref=master";
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Contains everything cached from nix-community, including neovim
@@ -25,7 +30,7 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
@@ -36,7 +41,7 @@
           myNixos = dark:
             nixpkgs.lib.nixosSystem {
               inherit system;
-              specialArgs = { inherit nixpkgs disko; };
+              specialArgs = { inherit nixpkgs disko nur; };
               modules = [
                 ./nixos/configuration.nix
 
@@ -58,6 +63,7 @@
                   # arguments to home.nix
                   home-manager.extraSpecialArgs = {
                     inherit neovim dark nightfox-nvim;
+                    nur = nur.legacyPackages.${system};
                   };
                 }
               ];

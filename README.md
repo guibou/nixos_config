@@ -15,14 +15,22 @@ On user, run:
 
 - `nix run github:nix-community/home-manager# -- switch --flake ./path/to/this/repo`
 
+# What should be done manually once system is reinstalled
+
+- Cloning repo ;)
+- vim `:PackerInstall`
+- Open `firefox` and click everywhere for "first session", enable addons and
+  log to useful site (in the correct workspace)
+- Add credentials into `kubectl` configuration.
+
 # Things not handled by nix
 
-- Firefox addons
+- [X] Firefox addons & settings
 
-  - bitwarden
-  - dictionnaries
-  - multi container mode
-  - addblocker
+  - [X] bitwarden
+  - [X] dictionnaries
+  - [X] multi container mode
+  - [X] addblocker
 
 - My vim setup, right now, I need to manually install packer and run `:PackerInstall` in vim.
 

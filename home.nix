@@ -13,6 +13,7 @@ in
   imports = [
     (import ./home/neovim.nix { inherit neovim foxTheme dark; })
     ./home/nova.nix
+    ./home/firefox.nix
   ];
 
   home.username = "guillaume";
@@ -181,8 +182,6 @@ in
     enable = true;
     enableZshIntegration = true;
   };
-
-  programs.firefox.enable = true;
 
   programs.htop = {
     enable = true;

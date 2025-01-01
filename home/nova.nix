@@ -24,4 +24,25 @@
       };
     };
   };
+
+  programs.firefox.profiles.guillaume = {
+    bookmarks = [
+      {
+        name = "Logs - Prod";
+        url = "https://app.datadoghq.eu/logs?query=kube_namespace%3Ajinko-prod%20service%3Awebservice";
+      }
+      {
+        name = "H24 screen";
+        url = "https://app.datadoghq.eu/dashboard/pbt-sg7-kgq/h24-screen-any-env?fromUser=false&refresh_mode=sliding";
+      }
+      {
+        name = "Epics";
+        url = "https://git.novadiscovery.net/groups/jinko/-/epics/?state=opened&page=1&sort=start_date_desc&author_username=guillaume.bouchard";
+      }
+      {
+        name = "Issue board";
+        url = "https://git.novadiscovery.net/groups/jinko/-/boards/10?assignee_username=guillaume.bouchard";
+      }
+    ];
+  };
 }
