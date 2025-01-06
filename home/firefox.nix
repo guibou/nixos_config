@@ -33,6 +33,7 @@
           bitwarden
           ublock-origin
           multi-account-containers
+          french-dictionary
         ];
       };
 
