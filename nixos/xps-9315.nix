@@ -39,7 +39,8 @@
 
   # save batter in sleep
   # That's XPS only
-  boot.kernelParams = [ "mem_sleep_default=deep" ];
+  # Note: removed, seems to not be required anymore
+  # boot.kernelParams = [ "mem_sleep_default=deep" ];
 
   # Microphone fix
   # Persistence of alsa setup

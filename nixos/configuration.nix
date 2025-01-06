@@ -13,8 +13,6 @@
   # Use the systemd-boot EFI boot loader.
   boot = {
     kernel.sysctl = {
-      # vulkan driver asks for this
-      "dev.i915.perf_stream_paranoid" = 0;
       "kernel.sysrq" = 1;
 
       # neovim file watcher require that...
