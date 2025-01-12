@@ -132,23 +132,23 @@
 
       displayManager = {
         gdm = {
-           enable = true;
+          enable = true;
         };
       };
     };
   };
 
-  services.displayManager = 
-      {
-        defaultSession = "none+i3";
+  services.displayManager =
+    {
+      defaultSession = "none+i3";
 
-        autoLogin = {
-          # it freeze once logged
-          enable = false;
-          user = "guillaume";
+      autoLogin = {
+        # it freeze once logged
+        enable = false;
+        user = "guillaume";
 
-        };
       };
+    };
 
   # Enable for pipewire;
   security.rtkit.enable = true;

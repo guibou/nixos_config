@@ -45,7 +45,8 @@
   # Microphone fix
   # Persistence of alsa setup
   # See also the trick with alsactl init in https://discourse.nixos.org/t/dell-xps-13-9320-microphone-not-working/40932/3
-  hardware.alsa.enablePersistence = true;
+  # The option does not exists anymore
+  # hardware.alsa.enablePersistence = true;
 
   # things seems to work better on recent kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
