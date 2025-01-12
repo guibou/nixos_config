@@ -478,13 +478,12 @@ in
       extraConfig = ''
         include ${nightfox-nvim}/extra/${foxTheme}/kitty.conf
         font_size 12
-        # font_family Bitstream Vera Sans Mono Nerd Font
 
         # Monaspace
-        font_family      Monaspace Krypton Regular
-        bold_font        Monaspace Krypton Bold
-        italic_font      Monaspace Krypton Regular Italic
-        bold_italic_font Monaspace Krypton Bold Italic
+        font_family      Monaspace Neon Var
+        bold_font        Monaspace Xenon Var
+        italic_font      Monaspace Radon Var
+        bold_italic_font Monaspace Krypton Var
 
         enable_audio_bell false
         visual_bell_duration 0.1

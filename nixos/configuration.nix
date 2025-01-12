@@ -67,7 +67,7 @@
   documentation.man.enable = true;
 
   # TODO: Reevaluate if this cannot be moved to home-manager
-  fonts.packages = with pkgs; [ awesome noto-fonts nerd-fonts.monaspace nerd-fonts.bitstream-vera-sans-mono ];
+  fonts.packages = with pkgs; [ awesome noto-fonts monaspace nerd-fonts.bitstream-vera-sans-mono ];
 
   # services.nix-serve.enable = true;
 

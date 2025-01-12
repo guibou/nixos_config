@@ -71,6 +71,9 @@ Plug '3rd/image.nvim'
 
 Plug 'echasnovski/mini.indentscope'
 
+" Monaspace combo
+Plug 'jackplus-xyz/monaspace.nvim'
+
 call plug#end()
 
 " set completeopt=menuone,noselect
@@ -488,6 +491,8 @@ require('mini.indentscope').setup(
         border = "none",
     },
 })
+
+require("monaspace").setup()
 
 EOF
 
