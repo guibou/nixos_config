@@ -155,6 +155,8 @@ in
     nix-output-monitor
     btop
     hyperfine
+
+    difftastic
   ];
 
   # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
@@ -410,6 +412,8 @@ in
       difftool.imgdiff.cmd = ''
         ${pkgs.imagemagick}/bin/compare $LOCAL $REMOTE png:- | montage -geometry +4+4 $LOCAL - $REMOTE png:- > /tmp/cheval.png; eog /tmp/cheval.png
       '';
+
+      difftool.difft.cmd = "difft $LOCAL $REMOTE";
     };
   };
 
