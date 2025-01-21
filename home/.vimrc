@@ -71,9 +71,6 @@ Plug '3rd/image.nvim'
 
 Plug 'echasnovski/mini.indentscope'
 
-" Monaspace combo
-Plug 'jackplus-xyz/monaspace.nvim'
-
 call plug#end()
 
 " set completeopt=menuone,noselect
@@ -182,6 +179,10 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
+
+lspconfig.asm_lsp.setup{
+    single_file_support = true,
+}
 
 lspconfig.nil_ls.setup{
    settings = {
@@ -507,8 +508,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     })
   end
 })
-
-require("monaspace").setup()
 
 EOF
 
