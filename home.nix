@@ -125,6 +125,9 @@ in
     nix-tree
     ncdu
 
+    # Navigate json interactively
+    fx
+
     #xournalpp
     #texlive.combined.scheme-full
 
@@ -268,7 +271,7 @@ in
         COMPLETION_WAITING_DOTS="true"
         ENABLE_CORRECTION="true"
 
-        LESS="-XR"
+        LESS="-XRj.5"
         export BROWSER="firefox"
 
         icat () {

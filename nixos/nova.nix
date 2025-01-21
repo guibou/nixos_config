@@ -18,8 +18,8 @@
   };
 
   nix.extraOptions = ''
-    extra-substituters = s3://devops-ci-infra-prod-caching-nix?region=eu-central-1&profile=nova-nix-cache-ro
+    extra-substituters = s3://devops-ci-infra-prod-caching-nix?region=eu-central-1&profile=nova-nix-cache-ro&priority=100
     extra-trusted-public-keys = jinkotwo:04t6bF1/peQlZWVpYPN0BraxIV2pdlN2005Vi0hUvso=
-    '';
+  '';
 
 }
