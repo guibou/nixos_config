@@ -29,7 +29,7 @@
 
           # TODO: session restore + addons automatic accept + remove all "startup popup"
         };
-        extensions = with nur.repos.rycee.firefox-addons; [
+        extensions.packages = with nur.repos.rycee.firefox-addons; [
           bitwarden
           ublock-origin
           multi-account-containers

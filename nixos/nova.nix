@@ -6,10 +6,8 @@
 
   /*
     # RESET
-    sudo tailscale up --force-reauth --reset --login-server https://relay-prod.jinko.ai --operator=guillaume
-  
-    tailscale up --login-server https://relay-prod.jinko.ai --exit-node "relay-prod.relay.novainsilico.home.arpa" 
-    tailscale up --login-server https://relay-prod.jinko.ai --exit-node "relay-af-prod.relay.novainsilico.home.arpa" 
+    sudo tailscale up --force-reauth --reset --login-server https://relay.prod.novinfra.net --operator="$USER"
+    tailscale up --login-server https://relay.prod.novinfra.net --exit-node "relay-af-prod.relay.novainsilico.home.arpa"
   */
   services.tailscale = {
     enable = true;

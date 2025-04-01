@@ -99,7 +99,6 @@ in
     pgbadger
 
     v4l-utils
-    sshuttle
 
     parallel
     xclip
@@ -160,6 +159,15 @@ in
     hyperfine
 
     difftastic
+    (jjui.overrideAttrs (old:
+      {
+        srcs = fetchTarball {
+          url = "https://github.com/idursun/jjui/archive/39984ab681eefb39e298c8883aeea4a39197c774.tar.gz";
+          sha256 = "sha256:1sn5762sj97ky9ab6ic0ch7lffs0vba48yaxk5cyq0vvhcy3v80b";
+        };
+
+        vendorHash = "sha256-84VMhT+Zbub9sw+lAKEZba1aXcRaTIbnYhJ7zJt118Y=";
+      }))
   ];
 
   # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
@@ -215,7 +223,7 @@ in
     enableCompletion = false;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ ];
       theme = "norm";
     };
 
@@ -295,6 +303,7 @@ in
       + mkGhcUtils "96"
       + mkGhcUtils "98"
       + mkGhcUtils "910"
+      + mkGhcUtils "912"
       + mkGhcUtils null;
 
   };
@@ -391,6 +400,7 @@ in
     };
 
     extraConfig = {
+      init.defaultBranch = "main";
       core = {
         askPass = "";
         editor = "vim";
@@ -431,19 +441,6 @@ in
     enable = true;
 
     extraConfig = ''
-      Host ovh-hybrid-runner-1
-      Hostname ovh-hybrid-runner-1.devops.novadiscovery.net
-      User ubuntu
-      IdentityFile ~/.ssh/nova-infra-prod
-
-      Host ovh-hybrid-runner-2
-      Hostname ovh-hybrid-runner-2.devops.novadiscovery.net
-      User ubuntu
-      IdentityFile ~/.ssh/nova-infra-prod
-
-      Host git.novadiscovery.net
-      IdentityFile ~/.ssh/id_gecko
-
       Host github.com
       IdentityFile ~/.ssh/id_gecko
     '';
@@ -501,6 +498,16 @@ in
         cursor_trail 3
       '';
     };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        email = "guillaum.bouchard@gmail.com";
+        name = "Guillaume Bouchard";
+      };
+    };
+  };
 
   services.blueman-applet.enable = true;
 

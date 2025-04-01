@@ -67,9 +67,13 @@ Plug 'tversteeg/registers.nvim'
 "" Images
 " Clip image directry into neovim
 Plug 'HakonHarnes/img-clip.nvim'
-Plug '3rd/image.nvim'
+" Plug '3rd/image.nvim'
+Plug 'folke/snacks.nvim'
 
 Plug 'echasnovski/mini.indentscope'
+
+" Completion
+Plug 'saghen/blink.cmp', { 'do': 'nix run .#build-plugin' }
 
 call plug#end()
 
@@ -105,8 +109,10 @@ noremap <Leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
 noremap <Leader>C <cmd>Telescope colorscheme enable_preview=true<cr>
 
 noremap <Leader>cD <cmd>Telescope lsp_incoming_calls<cr>
-
 noremap <Leader>cd <cmd>Telescope lsp_definitions<cr>
+
+noremap <Leader>ci <cmd>Telescope lsp_implementations<cr>
+
 noremap <Leader>cl :lua vim.lsp.codelens.run()<cr>
 noremap <Leader>cr :Lspsaga rename<cr>
 noremap <Leader>ch :lua vim.lsp.buf.hover()<cr>
@@ -157,6 +163,7 @@ local lspconfig = require 'lspconfig'
 lspconfig.rust_analyzer.setup {}
 lspconfig.pyright.setup {}
 lspconfig.ccls.setup {}
+lspconfig.julials.setup{}
 
 -- Setup lspconfig.
 
@@ -177,6 +184,18 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = true,
   severity_sort = true,
+})
+
+
+blink = require("blink.cmp")
+blink.setup({
+  completion = {
+       documentation = {
+            -- Controls whether the documentation window will automatically show when selecting a completion item
+            auto_show = true,
+        },
+    },
+    signature = { enabled = true }
 })
 
 
@@ -209,17 +228,48 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     
-    vim.lsp.completion.enable(true, args.data.client_id, 0, {autotrigger=true})
+    -- vim.lsp.completion.enable(true, args.data.client_id, 0, {autotrigger=true})
     vim.lsp.inlay_hint.enable(true, { 0 })
   end,
 })
 
 lspconfig.yamlls.setup {}
 lspconfig.pyright.setup {}
+
+-- Vue support in ts_ls
+lspconfig.volar.setup {
+-- add filetypes for typescript, javascript and vue
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+  init_options = {
+    vue = {
+      -- disable hybrid mode
+      hybridMode = false,
+    },
+  },
+    }
+-- lspconfig.ts_ls.setup{
+--   init_options = {
+--     plugins = {
+--       {
+--         name = "@vue/typescript-plugin",
+--         location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+--         languages = {"javascript", "typescript", "vue"},
+--       },
+--     },
+--   },
+--   filetypes = {
+--     "javascript",
+--     "typescript",
+--     "vue",
+--   },
+-- }
 lspconfig.hls.setup({
     single_file_support = true,
     cmd = {
         "haskell-language-server",
+        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.6/haskell-language-server-2.9.0.1/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
+       -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.10.1/haskell-language-server-2.10.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
+        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.6/haskell-language-server-2.9.0.1/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
         "--lsp",
         -- "--debug", "--logfile", "/tmp/hls.log"
         -- "+RTS", "--nonmoving-gc", "-RTS"
@@ -455,7 +505,8 @@ require("registers").setup()
 local watchfiles = require('vim.lsp._watchfiles')
 local default_watchfunc = watchfiles._watchfunc
 watchfiles._watchfunc = function(path, opts, callback)
-  if path == "/home/guillaume"
+  vim.api.nvim_echo({{"WATCHING: ".. path}}, true, {})
+  if path == "/home/guillaume" or path == "/nix/store" or path == "/nix" or path == "/"
   then
       vim.api.nvim_echo({{"ignored watch_file: ".. path}}, true, {})
       return function()
@@ -466,17 +517,21 @@ watchfiles._watchfunc = function(path, opts, callback)
   end
 end
 
-require("image").setup({
-  backend = "kitty",
-  integrations = {
-    markdown = {
-      enabled = true,
-      clear_in_insert_mode = false,
-      download_remote_images = true,
-      only_render_image_at_cursor = false,
-      filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
-    }
-  }
+-- require("image").setup({
+--   backend = "kitty",
+--   integrations = {
+--     markdown = {
+--       enabled = true,
+--       clear_in_insert_mode = false,
+--       download_remote_images = true,
+--       only_render_image_at_cursor = false,
+--       filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+--     }
+--   }
+-- })
+
+require("snacks").setup({
+image = {}
 })
 
 local neogit = require('neogit')

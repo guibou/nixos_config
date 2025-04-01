@@ -202,7 +202,12 @@
     # ocean that rocks and sharks are cutting every days ending by "day".
     registry.nixpkgs.flake = nixpkgs;
 
-    package = pkgs.nixVersions.latest;
+    package = pkgs.nixVersions.latest.overrideAttrs (old: {
+      src = pkgs.fetchurl {
+        url = "https://github.com/apoelstra/nix/archive/2025-03--gc-speedup2.tar.gz";
+        sha256 = "sha256-hO9WEnFMA9FY6PtdjAmBMPpeiUSz2cOKHh76enOj5w0=";
+      };
+    });
 
     settings = {
       sandbox = true;

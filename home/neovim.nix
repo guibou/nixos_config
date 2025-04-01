@@ -17,12 +17,23 @@
       gcc
       cmake
 
-      # ASM
+      # LSP
       asm-lsp
+      typescript-language-server
+      vue-language-server
+
+      # images support (latext)
+      ghostscript
+      texliveFull
+
+      # fs notifications
+      inotify-tools
+
+      pyright
     ];
 
     extraLuaPackages = ps: with ps; [
-      # for image support
+      # for image/math support
       magick
     ];
 

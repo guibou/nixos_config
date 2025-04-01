@@ -36,6 +36,8 @@ On user, run:
 
 - Credentials (ssh keys, aws keys). For now I copy everything from bitwarden manually, that's a pain.
 
+SEE: sops nix
+
 - kubectl configuration.
 
 # TODO
