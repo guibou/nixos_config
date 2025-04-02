@@ -73,7 +73,6 @@ in
     # hyperfine
     (pkgs.haskell.lib.doJailbreak nix-diff)
     (pkgs.haskell.lib.unmarkBroken (pkgs.haskell.lib.doJailbreak haskellPackages.profiteur))
-    #haskellPackages.ghc-prof-flamegraph
     patchelf
     unzip
 
@@ -135,11 +134,25 @@ in
         PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.dunst pkgs.pcre pkgs.gnugrep pkgs.coreutils-full pkgs.gnused]}
         pactl $@
 
-        current=$(pactl get-sink-volume @DEFAULT_SINK@ | pcregrep -o1 '([0-9]+)%' | head -n1)
-        icon=$(pactl get-sink-mute @DEFAULT_SINK@ | pcregrep no > /dev/null && echo "high" || echo "muted")
-        echo $current
-        dunstify -t 2000 -r 1234 -h int:value:$current -a changeVolume \
-                    -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/audio-volume-$icon.svg \
+        # Get the volume percentage
+        volume=$(pactl get-sink-volume @DEFAULT_SINK@ | pcregrep -o1 '([0-9]+)%' | head -n1)
+        
+        # Get the mute status
+        mute_status=$(pactl get-sink-mute @DEFAULT_SINK@ | pcregrep no)
+        
+        # Determine the volume level and store it in the icon variable
+        if [ -z "$mute_status" ]; then
+            icon="muted"
+        elif [ "$volume" -le 30 ]; then
+            icon="low"
+        elif [ "$volume" -le 60 ]; then
+            icon="medium"
+        else
+            icon="high"
+        fi
+
+        dunstify -t 2000 -r 1234 -h int:value:$volume -a changeVolume \
+                    -i ${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic/status/audio-volume-$icon-symbolic.svg \
                     "Volume" \
                     "$(pactl get-default-sink | cut -d. -f4 | sed 's/__sink//' | sed 's/__/ /')"
       '')
@@ -150,7 +163,7 @@ in
         current=$(brightnessctl | pcregrep -o1 '([0-9]+)%')
         echo $current
         dunstify -t 2000 -r 12345 -h int:value:$current -a changeBrightness \
-                    -i ${pkgs.flat-remix-icon-theme}/share/icons/Flat-Remix-Violet-Dark/apps/scalable/brightnesssettings.svg \
+                    -i ${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic/status/display-brightness-symbolic.svg \
                     "Brightness"
       '')
 

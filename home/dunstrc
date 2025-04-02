@@ -5,9 +5,9 @@ markup = full
 width = 300
 origin = top-right
 word_wrap = true
-background = "#222"
-foreground = "#e9d8ee"
-frame_color = "#e9d8ee"
+background = "#ccc"
+foreground = "#301934"
+frame_color = "#301934"
 highlight = "#e0d8ee"
 format = "<b>%s %p</b>\n%b"
 

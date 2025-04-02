@@ -3,7 +3,7 @@
   imports = [
     # Setup for the xys-9315 camera IPU6
     # However, this is unsucessful since begenning 
-    ./camera.nix
+    # ./camera.nix
   ];
 
   #boot.blacklistedKernelModules = [

@@ -24,7 +24,9 @@
 
       # images support (latext)
       ghostscript
-      texliveFull
+      # Let's disable latex support, I don't really use it most of the time and
+      # it brings so much dependencies.
+      # texliveFull
 
       # fs notifications
       inotify-tools
