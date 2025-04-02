@@ -30,24 +30,33 @@
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
-                  subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                  subvolumes =
+                    let
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                        # Helps a lot nix gc
+                        "autodefrag"
+                      ];
+                    in
+                    {
+                      "/root" = {
+                        mountpoint = "/";
+                        inherit mountOptions;
+                      };
+                      "/home" = {
+                        mountpoint = "/home";
+                        inherit mountOptions;
+                      };
+                      "/nix" = {
+                        mountpoint = "/nix";
+                        inherit mountOptions;
+                      };
+                      "/swap" = {
+                        mountpoint = "/.swapvol";
+                        swap.swapfile.size = "8G";
+                      };
                     };
-                    "/home" = {
-                      mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "/nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "/swap" = {
-                      mountpoint = "/.swapvol";
-                      swap.swapfile.size = "8G";
-                    };
-                  };
                 };
               };
             };
