@@ -519,6 +519,9 @@ in
         email = "guillaum.bouchard@gmail.com";
         name = "Guillaume Bouchard";
       };
+      ui = {
+        merge-editor = "meld";
+      };
     };
   };
 
