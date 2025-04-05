@@ -228,7 +228,21 @@ in
 
   programs.autorandr = {
     enable = true;
-    hooks.postswitch = { "notify-i3" = "${pkgs.i3}/bin/i3-msg restart"; };
+    hooks.postswitch = {
+      "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
+      "change-sound" = ''
+         case "$AUTORANDR_CURRENT_PROFILE" in
+                   default)
+                        # Set to standard HP
+                        wpctl set-default 93
+                     ;;
+                   *)
+                        # Anything else, switch to HDMI output
+                        wpctl set-default 92
+                     ;;
+        esac
+      '';
+    };
   };
 
   programs.zsh = {
