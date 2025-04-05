@@ -525,6 +525,8 @@ in
       };
       ui = {
         merge-editor = "meld";
+        diff-editor = "meld";
+        diff.tool = [ "difft" "--color=always" "--display" "inline" "$left" "$right" ];
       };
     };
   };
