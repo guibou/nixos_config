@@ -260,26 +260,30 @@ in
           in
 
           ''
-            ghc${version}_with () {
-              nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ haskell-language-server $* ]))"
-            }
+                    ghc${version}_with () {
+                  nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ haskell-language-server $* ]))"
+                  }
 
-            ghc${version}_nohls_with () {
-              nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))"
-            }
+                  ghc${version}_nohls_with () {
+                  nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))"
+                  }
 
-            ghci${version}_with () {
-              nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))" --command ghci
-            }
+                  ghci${version}_with () {
+                  nix shell --impure --expr "(with import ${pkgs.path} {};${packageSet}.ghcWithPackages (ps: with ps; [ $* ]))" --command ghci
+                  }
 
-            cabalBuild${version} () {
-               nix build --impure --expr '(with import ${pkgs.path} {}; ${packageSet}.developPackage { root = ./.; })'
-            }
+                  cabalBuild${version} () {
+                  nix build --impure --expr '(with import ${pkgs.path} {};
+                  ${packageSet}.developPackage { root = ./.;
+                })'
+                }
 
-            cabalEnv${version} () {
-                 nix develop --impure --expr '(with import ${pkgs.path} {}; (${packageSet}.developPackage { root = ./. ;}).overrideAttrs(old: {
-                    nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.cabal-install pkgs.haskellPackages.haskell-language-server];
-                    }))'
+                cabalEnv${version} () {
+                nix develop --impure --expr '(with import ${pkgs.path} {};
+                (${packageSet}.developPackage { root = ./.;
+              }).overrideAttrs(old: {
+              nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.cabal-install pkgs.haskellPackages.haskell-language-server];
+            }))'
             }
           '';
       in
@@ -296,7 +300,7 @@ in
         export BROWSER="firefox"
 
         icat () {
-          kitty +kitten icat $*
+        kitty +kitten icat $*
         }
 
         # I don't know why, but RPROMPT seems to be set to something by
@@ -304,10 +308,10 @@ in
         export RPROMPT=
 
         if [[ -n $KITTY_INSTALLATION_DIR ]]; then
-          export KITTY_SHELL_INTEGRATION="enabled"
-          autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-          kitty-integration
-          unfunction kitty-integration
+        export KITTY_SHELL_INTEGRATION="enabled"
+        autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+        kitty-integration
+        unfunction kitty-integration
         fi
       ''
       + mkGhcUtils "90"
@@ -337,13 +341,13 @@ in
         # Enable direnv
         "direnv/direnvrc".text = ''
           : ''${XDG_CACHE_HOME:=$HOME/.cache}
-          declare -A direnv_layout_dirs
-          direnv_layout_dir() {
-              echo "''${direnv_layout_dirs[$PWD]:=$(
-                  echo -n "$XDG_CACHE_HOME"/direnv/layouts/''${PWD##*/}-
-                  echo -n "$PWD" | shasum | cut -d ' ' -f 1
-              )}"
-          }
+                    declare -A direnv_layout_dirs
+                    direnv_layout_dir() {
+                        echo "''${direnv_layout_dirs[$PWD]:=$(
+                            echo -n "$XDG_CACHE_HOME"/direnv/layouts/''${PWD##*/}-
+                            echo -n "$PWD" | shasum | cut -d ' ' -f 1
+                        )}"
+                    }
         '';
         "i3/config" = {
           source = link "i3config";
