@@ -174,12 +174,11 @@ in
     difftastic
     (jjui.overrideAttrs (old:
       {
+        name = "jjui-0.8.3";
         srcs = fetchTarball {
-          url = "https://github.com/idursun/jjui/archive/39984ab681eefb39e298c8883aeea4a39197c774.tar.gz";
-          sha256 = "sha256:1sn5762sj97ky9ab6ic0ch7lffs0vba48yaxk5cyq0vvhcy3v80b";
         };
 
-        vendorHash = "sha256-84VMhT+Zbub9sw+lAKEZba1aXcRaTIbnYhJ7zJt118Y=";
+        vendorHash = "sha256-YlOK+NvyH/3uvvFcCZixv2+Y2m26TP8+ohUSdl3ppro=";
       }))
   ];
 
