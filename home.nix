@@ -172,16 +172,7 @@ in
     hyperfine
 
     difftastic
-    (jjui.overrideAttrs (old:
-      {
-        name = "jjui-0.8.3";
-        # https://github.com/idursun/jjui/issues/48#event-17148842649
-        srcs = fetchTarball {
-          url = "https://github.com/idursun/jjui/archive/6126a7ff98da3160bc0635624053e4d65f80ea1c.tar.gz";
-          sha256 = "sha256:0g2ycbcl10jbmw1yxqq4w2cf7qpb01i1p1gx2vs9y28imar31gj8";
-        };
-        vendorHash = "sha256-YlOK+NvyH/3uvvFcCZixv2+Y2m26TP8+ohUSdl3ppro=";
-      }))
+    jjui
   ];
 
   # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
