@@ -38,9 +38,7 @@ Plug 'mechatroner/rainbow_csv'
 
 " Git
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive'
-" Plug 'rbong/vim-flog'
-"
+
 " Neogit
 Plug 'nvim-lua/plenary.nvim'
 Plug 'sindrets/diffview.nvim'
