@@ -226,11 +226,12 @@ in
          case "$AUTORANDR_CURRENT_PROFILE" in
                    default)
                         # Set to standard HP
-                        wpctl set-default 93
+                        # Got the name using wpctl status --name
+                        wpctl set-default $(pw-cli info alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink | head -n1 | awk '{print $2}')
                      ;;
                    *)
                         # Anything else, switch to HDMI output
-                        wpctl set-default 92
+                        wpctl set-default $(pw-cli info  alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__HDMI1__sink | head -n1 | awk '{print $2}')
                      ;;
         esac
       '';
