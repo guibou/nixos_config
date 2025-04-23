@@ -11,14 +11,12 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCM
 Plug 'nvim-telescope/telescope-live-grep-args.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf.vim'
+" Plug 'ibhagwan/fzf-lua'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
-
-" Some nicer UIs for lsp, such as call graph and peek
-Plug 'glepnir/lspsaga.nvim'
 
 " Listing of LSP error
 Plug 'kyazdani42/nvim-web-devicons'
@@ -39,11 +37,6 @@ Plug 'mechatroner/rainbow_csv'
 " Git
 Plug 'lewis6991/gitsigns.nvim'
 
-" Neogit
-Plug 'nvim-lua/plenary.nvim'
-Plug 'sindrets/diffview.nvim'
-Plug 'NeogitOrg/neogit'
-
 " Theme
 Plug 'ryanoasis/vim-devicons'
 Plug 'EdenEast/nightfox.nvim'
@@ -54,13 +47,7 @@ Plug 'RRethy/vim-illuminate'
 
 Plug 'guibou/PyF', { 'rtp': 'tree-sitter-pyf/vim-plugin/after' }
 
-Plug 'lambdalisue/suda.vim'
-
 Plug 'arkav/lualine-lsp-progress'
-
-" Register menu help
-Plug 'tversteeg/registers.nvim'
-
 
 "" Images
 " Clip image directry into neovim
@@ -112,17 +99,16 @@ noremap <Leader>cd <cmd>Telescope lsp_definitions<cr>
 noremap <Leader>ci <cmd>Telescope lsp_implementations<cr>
 
 noremap <Leader>cl :lua vim.lsp.codelens.run()<cr>
-noremap <Leader>cr :Lspsaga rename<cr>
-noremap <Leader>ch :lua vim.lsp.buf.hover()<cr>
-noremap <Leader>ch :Lspsaga hover_doc<cr>
+noremap <Leader>cr :lua vim.lsp.buf.rename()<cr>
+noremap <Leader>ch :lua vim.lsp.buf.hover { border = "rounded" }<cr>
 noremap <Leader>ct <cmd>Telescope lsp_type_definitions<cr>
 noremap <Leader>cs <cmd>Telescope lsp_dynamic_workspace_symbols<cr>
 " noremap <Leader>ct :TroubleToggle<cr>
 " noremap <Leader>cT :Trouble lsp_references<cr>
 noremap <Leader>cf :lua vim.lsp.buf.format()<cr>
-noremap <Leader>ee :lua vim.diagnostic.open_float()<cr>
-noremap <Leader>en :lua vim.diagnostic.goto_next()<cr>
-noremap <Leader>ep :lua vim.diagnostic.goto_prev()<cr>
+noremap <Leader>ee :lua vim.diagnostic.open_float { border = "rounded" }<cr>
+noremap <Leader>en :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" } }<cr>
+noremap <Leader>ep :lua vim.diagnostic.jump { count = -1, float = {border = "rounded" } }<cr>
 
 " Git things
 noremap <Leader>gh <cmd>:Gitsigns preview_hunk<cr>
@@ -227,7 +213,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     
     -- vim.lsp.completion.enable(true, args.data.client_id, 0, {autotrigger=true})
-    vim.lsp.inlay_hint.enable(true, { 0 })
+    -- I'm not fan of inlay hint, especially how it behaves badly when 
+    -- vim.lsp.inlay_hint.enable(true, { 0 })
   end,
 })
 
@@ -411,21 +398,6 @@ require('gitsigns').setup {
     -- current_line_blame = true,
 }
 
-require("lspsaga").setup({
-  lightbulb = {
-    enable = false;
-  },
-  symbol_in_winbar = {
-    enable = false;
-    respect_root = false;
-    show_file = false;
-  },
-  diagnostic = {
-    on_insert_follow = false;
-    on_insert = false;
-  }
-})
-
 statusline = {
   lualine_a = {'mode'},
   lualine_c = {
@@ -439,9 +411,9 @@ statusline = {
   lualine_z = {},
   lualine_y = {},
   lualine_x = {
-      {'lsp_progress',
-         display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
-      },
+       {'lsp_progress',
+          display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
+       },
   }
 }
 
@@ -455,9 +427,7 @@ winbar = {
           vim.cmd("call provider#clipboard#Call('set', [ ['" .. filename .. "'], 'v','\"'])")
       end,
       }},
-  lualine_c = {
-  { function() return require('lspsaga.symbolwinbar'):get_winbar() end }
-      },
+      lualine_c = { },
   lualine_a = {},
   lualine_x = {{
       'diagnostics',
@@ -497,8 +467,6 @@ require('lualine').setup {
   extensions = {}
 }
 
-require("registers").setup()
-
 -- Completly dummy watchfile
 local watchfiles = require('vim.lsp._watchfiles')
 local default_watchfunc = watchfiles._watchfunc
@@ -531,9 +499,6 @@ end
 require("snacks").setup({
 image = {}
 })
-
-local neogit = require('neogit')
-neogit.setup {}
 
 require('mini.indentscope').setup(
 {

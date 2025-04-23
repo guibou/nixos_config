@@ -70,7 +70,7 @@
     };
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     # Disable husky
     # I have no idea what it is, but some of my collegue setup that as commit
     # hook and it eat my commit message everytime I'm trying to redact one, and

@@ -247,7 +247,7 @@ in
       theme = "norm";
     };
 
-    initExtra =
+    initContent =
       let
         mkGhcUtils = versionM:
           let
