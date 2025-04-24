@@ -72,6 +72,7 @@
   # services.nix-serve.enable = true;
 
   programs = {
+    i3lock.enable = true;
     steam.enable = true;
     bash.completion.enable = true;
     zsh.enable = true;
@@ -127,7 +128,7 @@
       # TODO: this could be moved to home-manager
       windowManager.i3 = {
         enable = true;
-        extraPackages = with pkgs; [ dmenu i3lock i3status ];
+        extraPackages = with pkgs; [ dmenu i3status ];
       };
 
       displayManager = {
