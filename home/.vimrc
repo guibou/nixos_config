@@ -47,7 +47,7 @@ Plug 'RRethy/vim-illuminate'
 
 Plug 'guibou/PyF', { 'rtp': 'tree-sitter-pyf/vim-plugin/after' }
 
-Plug 'arkav/lualine-lsp-progress'
+Plug 'linrongbin16/lsp-progress.nvim'
 
 "" Images
 " Clip image directry into neovim
@@ -411,11 +411,12 @@ statusline = {
   lualine_z = {},
   lualine_y = {},
   lualine_x = {
-       {'lsp_progress',
-          display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }
-       },
+      function()
+        return require('lsp-progress').progress()
+      end
   }
 }
+require('lsp-progress').setup({})
 
 winbar = {
   lualine_b = {{'filetype', icon_only = true}, {
@@ -466,6 +467,14 @@ require('lualine').setup {
   inactive_winbar = winbar,
   extensions = {}
 }
+
+-- listen lsp-progress event and refresh lualine
+vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  group = "lualine_augroup",
+  pattern = "LspProgressStatusUpdated",
+  callback = require("lualine").refresh,
+})
 
 -- Completly dummy watchfile
 local watchfiles = require('vim.lsp._watchfiles')
