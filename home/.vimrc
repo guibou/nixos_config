@@ -142,14 +142,10 @@ set updatetime=100
 set signcolumn=yes
 
 lua << EOF
-local lspconfig = require 'lspconfig'
-
-lspconfig.rust_analyzer.setup {}
-lspconfig.pyright.setup {}
-lspconfig.ccls.setup {}
-lspconfig.julials.setup{}
-
--- Setup lspconfig.
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('pyright')
+vim.lsp.enable('ccls')
+vim.lsp.enable('julials')
 
 -- local symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
 local symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
@@ -183,11 +179,12 @@ blink.setup({
 })
 
 
-lspconfig.asm_lsp.setup{
+vim.lsp.enable('asm')
+vim.lsp.config('asm', {
     single_file_support = true,
-}
+})
 
-lspconfig.nil_ls.setup{
+vim.lsp.config('nil_ls', {
    settings = {
         ['nil'] = {
           formatting = {
@@ -195,7 +192,7 @@ lspconfig.nil_ls.setup{
           },
         }
    }
-}
+})
 
 local default_caps = {
   workspace = {
@@ -206,23 +203,22 @@ local default_caps = {
   },
 }
 
--- Setup completion from lsp
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
-    local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    
-    -- vim.lsp.completion.enable(true, args.data.client_id, 0, {autotrigger=true})
-    -- I'm not fan of inlay hint, especially how it behaves badly when 
-    -- vim.lsp.inlay_hint.enable(true, { 0 })
+    -- Inlay hint
+    vim.lsp.inlay_hint.enable(true, { 0 })
+
+    -- Setup color
+    vim.lsp.document_color.enable(true, 0, {style = 'virtual'})
   end,
 })
 
-lspconfig.yamlls.setup {}
-lspconfig.pyright.setup {}
+vim.lsp.enable('yamlls')
+vim.lsp.enable('pyright')
+vim.lsp.enable('cssls')
 
 -- Vue support in ts_ls
-lspconfig.volar.setup {
+vim.lsp.config('volar', {
 -- add filetypes for typescript, javascript and vue
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
   init_options = {
@@ -231,7 +227,7 @@ lspconfig.volar.setup {
       hybridMode = false,
     },
   },
-    }
+    })
 -- lspconfig.ts_ls.setup{
 --   init_options = {
 --     plugins = {
@@ -248,7 +244,8 @@ lspconfig.volar.setup {
 --     "vue",
 --   },
 -- }
-lspconfig.hls.setup({
+vim.lsp.enable('hls')
+vim.lsp.config('hls', {
     single_file_support = true,
     cmd = {
         "haskell-language-server",
@@ -272,6 +269,12 @@ lspconfig.hls.setup({
                  ["hlint"] = {
                      globalOn = false;
                  },
+                 ["importLens"] = {
+                    inlayHintsOn = true;
+                 };
+                 ["explicit-fields"] = {
+                    inlayHintsOn = false;
+                 };
             },
         }
     }
@@ -557,9 +560,9 @@ autocmd BufEnter *.hs setlocal shiftwidth=2
 let g:mkdp_browser='firefox'
 
 " Lenses updates
-" I don't really like the behavior and most of the time it is noise
-" TODO: work on a good update strategy. With CursorHold, it blinks
-autocmd BufEnter,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
+" I'm not fan of code lens. In haskell, it does not bring much benefit and is
+" replaced by inlay hint on most use case I like.
+" autocmd BufEnter,InsertLeave *.hs lua vim.lsp.codelens.refresh({ bufnr = 0})
 
 tnoremap <Esc> <C-\><C-n>
 
