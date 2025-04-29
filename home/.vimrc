@@ -94,6 +94,7 @@ noremap <Leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
 noremap <Leader>C <cmd>Telescope colorscheme enable_preview=true<cr>
 
 noremap <Leader>cD <cmd>Telescope lsp_incoming_calls<cr>
+noremap <Leader>cR <cmd>Telescope lsp_references<cr>
 noremap <Leader>cd <cmd>Telescope lsp_definitions<cr>
 
 noremap <Leader>ci <cmd>Telescope lsp_implementations<cr>
@@ -184,6 +185,7 @@ vim.lsp.config('asm', {
     single_file_support = true,
 })
 
+vim.lsp.enable('nil_ls')
 vim.lsp.config('nil_ls', {
    settings = {
         ['nil'] = {
@@ -206,7 +208,9 @@ local default_caps = {
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     -- Inlay hint
-    vim.lsp.inlay_hint.enable(true, { 0 })
+    -- Disabled, most of the time, I don't like the result, it does not update
+    -- correctly when editing and confuses me.
+    -- vim.lsp.inlay_hint.enable(true, { 0 })
 
     -- Setup color
     vim.lsp.document_color.enable(true, 0, {style = 'virtual'})
@@ -218,6 +222,7 @@ vim.lsp.enable('pyright')
 vim.lsp.enable('cssls')
 
 -- Vue support in ts_ls
+vim.lsp.enable('volar')
 vim.lsp.config('volar', {
 -- add filetypes for typescript, javascript and vue
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },

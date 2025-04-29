@@ -364,6 +364,9 @@ in
           source = link "i3status.conf";
           onChange = "i3-msg restart";
         };
+        "jjui/config.toml" = {
+          source = link "jjui.toml";
+        };
 
         "dunst/dunstrc.d/conf.conf" = {
           source = link "dunstrc";
@@ -533,6 +536,10 @@ in
       ui = {
         merge-editor = "meld";
         diff-editor = "meld";
+      };
+      merge-tools.kitty = {
+        program = "kitten";
+        diff-args = [ "diff" "$left" "$right" ];
       };
     };
   };

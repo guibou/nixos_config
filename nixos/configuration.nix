@@ -252,4 +252,11 @@
   # So, an attacker who have access to my user session unlocked will gain
   # NOTHING by using sudo.
   security.sudo.wheelNeedsPassword = false;
+
+
+  # This environment variable prevents the AWS cli from trying to fetch
+  # metadata at the initialisation, and allow us to win 6 seconds of
+  # waiting at each nix command.
+  # See https://github.com/aws/aws-cli/issues/5623
+  systemd.services.nix-daemon.serviceConfig.Environment = [ "AWS_EC2_METADATA_DISABLED=true" ];
 }
