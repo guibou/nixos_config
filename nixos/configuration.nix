@@ -238,7 +238,7 @@
       # No more implicit registry
       flake-registry = [ ];
 
-      lazy-trees = true;
+      # lazy-trees = true;
     };
   };
 
