@@ -22,6 +22,8 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
   };
 
   # Contains everything cached from nix-community, including neovim
@@ -30,7 +32,7 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, determinate, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
@@ -44,6 +46,7 @@
               specialArgs = { inherit nixpkgs disko nur; };
               modules = [
                 ./nixos/configuration.nix
+                determinate.nixosModules.default
 
                 home-manager.nixosModules.home-manager
                 {

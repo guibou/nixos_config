@@ -161,7 +161,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command exec /home/guillaume/nixos_config/i3status_wrapper.sh
         position top
         tray_output primary
 #		mode hide
@@ -173,11 +173,11 @@ bindsym XF86MonBrightnessUp exec "brightnessctl s +4%; notify-brightness-change"
 bindsym XF86AudioRaiseVolume exec "volume-change set-sink-volume @DEFAULT_SINK@ +2%"
 bindsym XF86AudioMute exec "volume-change set-sink-mute @DEFAULT_SINK@ toggle"
 bindsym XF86AudioLowerVolume exec "volume-change set-sink-volume @DEFAULT_SINK@ -2%"
+bindsym XF86AudioPlay exec "set-notification-pause toggle"
 
 mode "lock" {
-	bindsym $mod+l exec "i3lock -c 404040"; mode "default"
-	# bindsym $mod+s exec "i3lock -c 404040; autorandr mobile; systemctl suspend;"; mode "default"
-	bindsym $mod+s exec "i3lock -c 404040; systemctl suspend;"; mode "default"
+	bindsym $mod+l exec "lock-action"; mode "default"
+	bindsym $mod+s exec "lock-action; systemctl suspend;"; mode "default"
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"

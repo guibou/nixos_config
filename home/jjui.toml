@@ -2,5 +2,6 @@
 "new main" = { args = ["new", "dev@origin"] }
 "tug" = { key = ["ctrl+t"], args = ["bookmark", "move", "--from", "closest_bookmark($change_id)", "--to", "closest_pushable($change_id)"] }
 "push new" = { args = ["git", "push", "--allow-new"], show = "diff"}
+"diff kitty" = { args = ["show", "$change_id", "--tool", "kitty"], show = "diff"}
 "rebase dev" = { args = ["rebase", "--source", "$change_id", "--destination", "dev@origin"] }
 "resolve" = { args = ["resolve", "-r", "$change_id"] }

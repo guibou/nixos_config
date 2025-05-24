@@ -129,6 +129,16 @@ in
     #xournalpp
     #texlive.combined.scheme-full
 
+    # Because that's sometime useful, in order to restart i3status
+    killall
+
+    (pkgs.writeScriptBin "diff-image"
+      ''
+        ${pkgs.imagemagick}/bin/compare $1 $2 png:- | montage -geometry +4+4 $1 - $2 png:- | kitty icat --stdin
+      ''
+    )
+
+
     (pkgs.writeScriptBin "volume-change"
       ''
         PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.dunst pkgs.pcre pkgs.gnugrep pkgs.coreutils-full pkgs.gnused]}
@@ -156,6 +166,29 @@ in
                     "Volume" \
                     "$(pactl get-default-sink | cut -d. -f4 | sed 's/__sink//' | sed 's/__/ /')"
       '')
+
+    (pkgs.writeScriptBin "set-notification-pause"
+      ''
+        PATH=${pkgs.lib.makeBinPath [pkgs.dunst pkgs.killall]}
+        dunstctl set-paused $1
+
+        # Refresh i3 status
+        killall -USR1 i3status
+      '')
+
+    # What to do when I want to lock screen
+    (pkgs.writeScriptBin "lock-action"
+      ''
+        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
+        i3lock-color --pass-volume-keys -c 404040
+
+        # I turn notifications OFF so they do not risk poping over my screen
+        set-notification-pause true
+
+        # I set volume OFF so it does not continue or pop on out of suspend
+        pactl set-sink-mute @DEFAULT_SINK@ 1
+      '')
+
 
     (pkgs.writeScriptBin "notify-brightness-change"
       ''
@@ -540,6 +573,11 @@ in
       merge-tools.kitty = {
         program = "kitten";
         diff-args = [ "diff" "$left" "$right" ];
+      };
+      merge-tools.images = {
+        program = "diff-image";
+        diff-args = [ "$left" "$right" ];
+        diff-invocation-mode = "file-by-file";
       };
     };
   };

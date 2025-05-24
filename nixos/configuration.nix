@@ -72,7 +72,10 @@
   # services.nix-serve.enable = true;
 
   programs = {
-    i3lock.enable = true;
+    i3lock = {
+       enable = true;
+       package = pkgs.i3lock-color;
+     };
     steam.enable = true;
     bash.completion.enable = true;
     zsh.enable = true;
@@ -204,12 +207,13 @@
     registry.nixpkgs.flake = nixpkgs;
 
     # I tested this patchset in order to improve GC performance
-    package = pkgs.nixVersions.latest; /*.override {
+    # package = pkgs.nixVersions.latest;
+    /*.override {
       patchedSrc = pkgs.fetchurl {
         url = "https://github.com/apoelstra/nix/archive/2025-03--gc-speedup2.tar.gz";
         sha256 = "sha256-hO9WEnFMA9FY6PtdjAmBMPpeiUSz2cOKHh76enOj5w0=";
       };
-    };
+      };
     */
 
     settings = {
@@ -233,6 +237,8 @@
 
       # No more implicit registry
       flake-registry = [ ];
+
+      lazy-trees = true;
     };
   };
 
