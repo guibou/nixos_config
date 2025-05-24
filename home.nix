@@ -132,6 +132,11 @@ in
     # Because that's sometime useful, in order to restart i3status
     killall
 
+    # For network manager, replaces the appled
+    networkmanager_dmenu
+    bluez
+    dmenu-bluetooth
+
     (pkgs.writeScriptBin "diff-image"
       ''
         ${pkgs.imagemagick}/bin/compare $1 $2 png:- | montage -geometry +4+4 $1 - $2 png:- | kitty icat --stdin
@@ -432,7 +437,7 @@ in
     };
   };
 
-  services.network-manager-applet.enable = true;
+  # services.network-manager-applet.enable = true;
   # services.gnome-keyring.enable = true;
 
   services.picom = { enable = true; };
@@ -582,7 +587,7 @@ in
     };
   };
 
-  services.blueman-applet.enable = true;
+  # services.blueman-applet.enable = true;
 
   systemd.user.targets.tray = {
     Unit = {
