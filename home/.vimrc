@@ -253,13 +253,14 @@ vim.lsp.enable('hls')
 vim.lsp.config('hls', {
     single_file_support = true,
     cmd = {
-        "haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.6/haskell-language-server-2.9.0.1/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-       -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.10.1/haskell-language-server-2.10.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.6.6/haskell-language-server-2.9.0.1/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
+      "haskell-language-server",
+      -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.10.1/haskell-language-server-2.10.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
+      -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.12.2/haskell-language-server-2.11.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
         "--lsp",
         -- "--debug", "--logfile", "/tmp/hls.log"
         -- "+RTS", "--nonmoving-gc", "-RTS"
+        -- Run haskell language server memory profiling, every 10s, should not have impact of performance but I'll have a profile after long editing sessions.
+         "+RTS", "-l", "-hT", "-i10", "-RTS"
     },
 
     -- https://github.com/neovim/neovim/pull/22405
@@ -267,8 +268,8 @@ vim.lsp.config('hls', {
 
     settings = {
         haskell = {
-            checkProject = false,
-            checkParents = "NeverCheck",
+            -- checkProject = false,
+            -- checkParents = "NeverCheck",
 
             plugin = {
                  ["hlint"] = {
@@ -484,11 +485,9 @@ vim.api.nvim_create_autocmd("User", {
   callback = require("lualine").refresh,
 })
 
--- Completly dummy watchfile
 local watchfiles = require('vim.lsp._watchfiles')
 local default_watchfunc = watchfiles._watchfunc
 watchfiles._watchfunc = function(path, opts, callback)
-  vim.api.nvim_echo({{"WATCHING: ".. path}}, true, {})
   if path == "/home/guillaume" or path == "/nix/store" or path == "/nix" or path == "/"
   then
       vim.api.nvim_echo({{"ignored watch_file: ".. path}}, true, {})
@@ -532,13 +531,23 @@ require('mini.indentscope').setup(
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(args)
+    -- Only enabling format on save for some directories
+    jinko = "/home/guillaume/jinko/jinko/"
+    if string.sub(args.file, 0, string.len(jinko)) == jinko
+    then
+    else
+      print("format on save disabled for " .. args.file)
+      return
+    end
+
+
     -- 2
     vim.api.nvim_create_autocmd("BufWritePre", {
       -- 3
       buffer = args.buf,
       callback = function()
         -- 4 + 5
-        -- vim.lsp.buf.format {async = false, id = args.data.client_id }
+        vim.lsp.buf.format {async = false, id = args.data.client_id }
       end,
     })
   end

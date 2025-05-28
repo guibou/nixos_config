@@ -19,7 +19,6 @@ in
   home.username = "guillaume";
   home.homeDirectory = "/home/guillaume";
   home.packages = with pkgs; [
-    tig
     evince
     hicolor-icon-theme
     ack
@@ -136,6 +135,9 @@ in
     networkmanager_dmenu
     bluez
     dmenu-bluetooth
+
+    # for mouse emulation
+    xdotool
 
     (pkgs.writeScriptBin "diff-image"
       ''
