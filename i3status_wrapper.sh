@@ -4,28 +4,33 @@ dunst_status=""
 tailscale_status=""
 bluetooth_status=""
 
+red=$(xrdb -get color1)
+yellow=$(xrdb -get color11)
+green=$(xrdb -get color10)
+foreground=$(xrdb -get foreground)
+
 update() {
   status=$(dunstctl is-paused)
   if [ "$status" = "true" ]
   then
-    dunst_status='{"name":"dunst","instance":"dunst","color":"#FF0000","markup":"none","full_text":"Notifications: OFF"}'
+    dunst_status='{"name":"dunst","instance":"dunst","color":"'"$red"'","markup":"none","full_text":"Notifications: OFF"}'
   else
-    dunst_status='{"name":"dunst","instance":"dunst","color":"#00FF00","markup":"none","full_text":"Notifications: ON"}'
+    dunst_status='{"name":"dunst","instance":"dunst","color":"'"$green"'","markup":"none","full_text":"Notifications: ON"}'
   fi
 
   if (tailscale status | grep "Tailscale is stopped." > /dev/null)
   then
-    tailscale_status='{"name":"tailscale","instance":"tailscale","color":"#FFFFFF","markup":"none","full_text":"VPN: OFF"}'
+    tailscale_status='{"name":"tailscale","instance":"tailscale","color":"'"$foreground"'","markup":"none","full_text":"VPN: OFF"}'
   else
-    tailscale_status='{"name":"tailscale","instance":"tailscale","color":"#00FF00","markup":"none","full_text":"VPN: ON"}'
+    tailscale_status='{"name":"tailscale","instance":"tailscale","color":"'"$green"'","markup":"none","full_text":"VPN: ON"}'
   fi
 
   status=$(dmenu-bluetooth --status)
   if [ "$status" = "" ]
   then
-    bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"#00FF00","markup":"none","full_text":"'"$status"'"}'
+    bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"'"$green"'","markup":"none","full_text":"'"$status"'"}'
   else
-    bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"#FFFFFF","markup":"none","full_text":"'"$status"'"}'
+    bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"'"$foreground"'","markup":"none","full_text":"'"$status"'"}'
   fi
 }
 
@@ -40,7 +45,7 @@ first_comma=""
 do
   read line
   update
-  echo "${first_comma}[${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" || exit 1
+  echo "${first_comma}[${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/" || exit 1
   first_comma=","
 done) ) &
 

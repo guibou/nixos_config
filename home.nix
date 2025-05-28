@@ -607,6 +607,9 @@ in
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'set bg=${if dark then "dark" else "light"}'
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'colorscheme ${foxTheme}'
       done
+
+      ${pkgs.lib.getExe pkgs.hsetroot} -solid $(xrdb -get system.background)
+      i3-msg restart
     '';
   };
 }
