@@ -139,6 +139,9 @@ in
     # for mouse emulation
     xdotool
 
+    # For title in the i3bar
+    xtitle
+
     (pkgs.writeScriptBin "diff-image"
       ''
         ${pkgs.imagemagick}/bin/compare $1 $2 png:- | montage -geometry +4+4 $1 - $2 png:- | kitty icat --stdin

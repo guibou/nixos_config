@@ -3,6 +3,7 @@
 dunst_status=""
 tailscale_status=""
 bluetooth_status=""
+title=""
 
 red=$(xrdb -get color1)
 yellow=$(xrdb -get color11)
@@ -32,6 +33,8 @@ update() {
   else
     bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"'"$foreground"'","markup":"none","full_text":"'"$status"'"}'
   fi
+
+  title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(xtitle | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
 }
 
 # Override header
@@ -45,9 +48,12 @@ first_comma=""
 do
   read line
   update
-  echo "${first_comma}[${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/" || exit 1
+  echo "${first_comma}[${title},${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/" || exit 1
   first_comma=","
 done) ) &
+
+(i3-msg -t subscribe -m '["window"]' | (while read line; do killall -USR1 i3status ; done;)) &
+
 
 # TODO: maybe this can leak background process
 
