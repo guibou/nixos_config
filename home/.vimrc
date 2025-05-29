@@ -26,8 +26,7 @@ Plug 'folke/lsp-trouble.nvim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'nvim-lualine/lualine.nvim'
 "
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'master'}
 
 " Languages
 Plug 'LnL7/vim-nix'
@@ -221,34 +220,6 @@ vim.lsp.enable('yamlls')
 vim.lsp.enable('pyright')
 vim.lsp.enable('cssls')
 
--- Vue support in ts_ls
-vim.lsp.enable('volar')
-vim.lsp.config('volar', {
--- add filetypes for typescript, javascript and vue
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  init_options = {
-    vue = {
-      -- disable hybrid mode
-      hybridMode = false,
-    },
-  },
-    })
--- lspconfig.ts_ls.setup{
---   init_options = {
---     plugins = {
---       {
---         name = "@vue/typescript-plugin",
---         location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
---         languages = {"javascript", "typescript", "vue"},
---       },
---     },
---   },
---   filetypes = {
---     "javascript",
---     "typescript",
---     "vue",
---   },
--- }
 vim.lsp.enable('hls')
 vim.lsp.config('hls', {
     single_file_support = true,
@@ -286,50 +257,6 @@ vim.lsp.config('hls', {
     }
 })
 
-local hooks = require "ibl.hooks"
--- create the highlight groups in the highlight setup hook, so they are reset
--- every time the colorscheme changes
-hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-  vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 blend=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B blend=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 blend=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 blend=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF blend=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD blend=nocombine]]
-end)
-
--- require("ibl").setup {
---     indent = {
---         char = "▏",
---         highlight = 
---         {
---            "IndentBlanklineIndent1",
---            "IndentBlanklineIndent2",
---            "IndentBlanklineIndent3",
---            "IndentBlanklineIndent4",
---            "IndentBlanklineIndent5",
---            "IndentBlanklineIndent6",
---         }
---     },
---     exclude = { buftypes = { "terminal", "help", "vim-plug", "nofile" }},
---     scope = {
---       enabled = false,
---       char = "▎",
---       highlight = 
---       {
---          "IndentBlanklineIndent1",
---          "IndentBlanklineIndent2",
---          "IndentBlanklineIndent3",
---          "IndentBlanklineIndent4",
---          "IndentBlanklineIndent5",
---          "IndentBlanklineIndent6",
---       },
---       include = {
---           node_type = { haskell = { "do", "local_binds" } },
---       },
---     },
--- }
-
 require('nightfox').setup({
     options = {
         styles = {
@@ -361,41 +288,29 @@ require('telescope').load_extension('ui-select')
 require('telescope').load_extension('fzf')
 
 -- Install PyF parser
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.pyf = {
-    install_info = {
-        url = "https://github.com/guibou/PyF",
-        files = { "src/parser.c" },
-        -- optional entries:
-        branch = "main", -- default branch in case of git repo if different from master
-        location = "tree-sitter-pyf",
-        generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-    },
-}
+-- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+-- parser_config.pyf = {
+--     install_info = {
+--         url = "https://github.com/guibou/PyF",
+--         files = { "src/parser.c" },
+--         -- optional entries:
+--         branch = "main", -- default branch in case of git repo if different from master
+--         location = "tree-sitter-pyf",
+--         generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+--     },
+-- }
 
 require "nvim-treesitter.configs".setup {
     ensure_install = { "haskell", "json", "vim", "python", "pyf", "lua" },
     playground = {
         enable = true
     },
-    --  haskell = {
-    --   enable = true
-    --    }
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false
     },
     indent = {
         enable = false;
-    },
-
-    -- Allow to extend selection with v/V
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        node_incremental = "v",
-        node_decremental = "V",
-      },
     },
 }
 

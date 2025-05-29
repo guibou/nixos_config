@@ -437,6 +437,9 @@ in
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = dark;
     };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = dark;
+    };
   };
 
   # services.network-manager-applet.enable = true;
@@ -608,7 +611,7 @@ in
         $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'colorscheme ${foxTheme}'
       done
 
-      ${pkgs.lib.getExe pkgs.hsetroot} -solid $(xrdb -get system.background)
+      ${pkgs.hsetroot}/bin/hsetroot -solid $(xrdb -get system.background)
       i3-msg restart
     '';
   };
