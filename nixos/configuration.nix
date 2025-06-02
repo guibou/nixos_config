@@ -133,12 +133,6 @@
         enable = true;
         extraPackages = with pkgs; [ dmenu i3status ];
       };
-
-      displayManager = {
-        gdm = {
-          enable = true;
-        };
-      };
     };
   };
 
@@ -150,7 +144,10 @@
         # it freeze once logged
         enable = false;
         user = "guillaume";
+      };
 
+        gdm = {
+          enable = true;
       };
     };
 
