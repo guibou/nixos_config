@@ -48,7 +48,7 @@ first_comma=""
 do
   read line
   update
-  echo "${first_comma}[${title},${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/" || exit 1
+  echo "${first_comma}[${title},${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/g" || exit 1
   first_comma=","
 done) ) &
 
