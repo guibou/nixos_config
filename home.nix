@@ -583,6 +583,9 @@ in
         merge-editor = "meld";
         diff-editor = "meld";
       };
+      git = {
+        push-new-bookmarks = true;
+      };
       merge-tools.kitty = {
         program = "kitten";
         diff-args = [ "diff" "$left" "$right" ];
@@ -607,6 +610,7 @@ in
 
   home.activation = {
     reloadNvimColorScheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      set -x
       # Force all nvim to the new colorscheme
       for path in $(${pkgs.lib.getExe pkgs.neovim-remote} --nostart --serverlist)
       do

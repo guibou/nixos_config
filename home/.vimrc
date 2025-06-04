@@ -199,7 +199,7 @@ local default_caps = {
   workspace = {
     didChangeWatchedFiles = {
       -- fast update
-      dynamicRegistration = true,
+      -- dynamicRegistration = true,
     },
   },
 }
@@ -231,7 +231,7 @@ vim.lsp.config('hls', {
         -- "--debug", "--logfile", "/tmp/hls.log"
         -- "+RTS", "--nonmoving-gc", "-RTS"
         -- Run haskell language server memory profiling, every 10s, should not have impact of performance but I'll have a profile after long editing sessions.
-         "+RTS", "-l", "-hT", "-i10", "-RTS"
+         -- "+RTS", "-l", "-hT", "-i10", "-RTS"
     },
 
     -- https://github.com/neovim/neovim/pull/22405
