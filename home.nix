@@ -595,6 +595,9 @@ in
         diff-args = [ "$left" "$right" ];
         diff-invocation-mode = "file-by-file";
       };
+      revset-aliases = {
+        "closest_bookmark(to)" = "heads(::to & bookmarks())";
+      };
     };
   };
 
