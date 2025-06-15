@@ -252,6 +252,9 @@ vim.lsp.config('hls', {
                  ["explicit-fields"] = {
                     inlayHintsOn = false;
                  };
+                 ["semanticTokens"] = {
+                     globalOn = true;
+                 };
             },
         }
     }
@@ -467,6 +470,32 @@ vim.api.nvim_create_autocmd("LspAttach", {
     })
   end
 })
+
+
+-- Override diagnostics in HLS
+local haskell_diagnostic_severity = {
+      -- No type signature at top level
+      ["GHC-38417"] = vim.diagnostic.severity.HINT,
+      -- Warnings and deprecated
+      ["GHC-63394"] = vim.diagnostic.severity.INFO
+     }
+
+-- Save the original handler
+local orig_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+  if result and result.diagnostics then
+    for _, diag in ipairs(result.diagnostics) do
+      new_severity = haskell_diagnostic_severity[diag.code]
+      if new_severity ~= nil
+      then
+        diag.severity = new_severity
+      end
+    end
+  end
+  -- Pass to original handler
+  orig_handler(err, result, ctx, config)
+end
 
 EOF
 

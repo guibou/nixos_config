@@ -557,10 +557,22 @@ in
         font_size 12
 
         # Monaspace
-        font_family      Monaspace Neon Var
-        bold_font        Monaspace Xenon Var
-        italic_font      Monaspace Radon Var
-        bold_italic_font Monaspace Krypton Var
+        font_family      family='Monaspace Neon Var' features=-calt
+        bold_font        family='Monaspace Xenon Var' features=-calt style=Bold
+        italic_font      family='Monaspace Radon Var' features=-calt style=Italic
+        bold_italic_font family='Monaspace Krypton Var' features=-calt style='Bold Italic'
+
+        # Jetbrain mono
+        # font_family      family="JetBrainsMono Nerd Font"
+        # bold_font        auto
+        # italic_font      auto
+        # bold_italic_font auto
+
+        # Mapple mono
+        #font_family      family="Maple Mono"
+        #bold_font        auto
+        #italic_font      auto
+        #bold_italic_font auto
 
         enable_audio_bell false
         visual_bell_duration 0.1
