@@ -3,6 +3,7 @@
 dunst_status=""
 tailscale_status=""
 bluetooth_status=""
+ps_controller_status=""
 title=""
 
 red=$(xrdb -get color1)
@@ -34,6 +35,27 @@ update() {
     bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"'"$foreground"'","markup":"none","full_text":"'"$status"'"}'
   fi
 
+  status=$(upower -i /org/freedesktop/UPower/devices/battery_ps_controller_battery_84o30o95o16o8eod8 | pcregrep -o1 'percentage:.*?([0-9]+)%')
+  upower -i /org/freedesktop/UPower/devices/battery_ps_controller_battery_84o30o95o16o8eod8 | grep 'should be ignored' > /dev/null
+  if [ $? -eq 0 ]
+  then
+    ps_controler_status=''
+  else
+    if [ "$status" -eq "100" ]
+    then
+        color=$green
+    elif [ "$status" -gt "50" ]
+    then
+      color=$white
+    elif [ "$status" -gt "20" ]
+    then
+      color=$yellow
+    else
+      color=$red
+    fi
+    ps_controler_status='{"name":"ps_controler","instance":"ps_controler","color":"'"$color"'","markup":"none","full_text":"  '"$status%"'"},'
+  fi
+
   title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(xtitle | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
 }
 
@@ -48,7 +70,7 @@ first_comma=""
 do
   read line
   update
-  echo "${first_comma}[${title},${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/g" || exit 1
+  echo "${first_comma}[${title},${ps_controler_status}${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/g" || exit 1
   first_comma=","
 done) ) &
 

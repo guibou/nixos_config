@@ -88,7 +88,9 @@ noremap <Leader>/ <cmd>lua require("telescope").extensions.live_grep_args.live_g
 " noremap <Leader>* <cmd>Telescope grep_string<cr>
 noremap <Leader>* <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args({vimgrep_arguments = { "rg", "--hidden", "--smart-case", "--vimgrep", "--max-filesize", "1000000"},  default_text = vim.fn.expand('<cword>')})<cr>
 noremap <Leader>f <cmd>Telescope find_files<cr>
-noremap <Leader>s <cmd>Telescope git_status<cr>
+" noremap <Leader>s <cmd>Telescope git_status<cr>
+noremap <Leader>s <cmd>Telescope find_files find_command=jj,diff,--name-only<cr>
+noremap <Leader>S <cmd>Telescope find_files find_command=jj,diff,--name-only,--from,trunk()<cr>
 noremap <Leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
 noremap <Leader>C <cmd>Telescope colorscheme enable_preview=true<cr>
 
@@ -231,7 +233,7 @@ vim.lsp.config('hls', {
         -- "--debug", "--logfile", "/tmp/hls.log"
         -- "+RTS", "--nonmoving-gc", "-RTS"
         -- Run haskell language server memory profiling, every 10s, should not have impact of performance but I'll have a profile after long editing sessions.
-         -- "+RTS", "-l", "-hT", "-i10", "-RTS"
+        -- "+RTS", "-l", "-hT", "-i5", "-RTS"
     },
 
     -- https://github.com/neovim/neovim/pull/22405
@@ -476,8 +478,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local haskell_diagnostic_severity = {
       -- No type signature at top level
       ["GHC-38417"] = vim.diagnostic.severity.HINT,
+      -- Defined but not used
+      ["GHC-40910"] = vim.diagnostic.severity.HINT,
+      -- Defaulting
+      ["GHC-18042"] = vim.diagnostic.severity.HINT,
       -- Warnings and deprecated
-      ["GHC-63394"] = vim.diagnostic.severity.INFO
+      ["GHC-63394"] = vim.diagnostic.severity.INFO,
+      -- Deprecated
+      ["GHC-68441"] = vim.diagnostic.severity.INFO,
      }
 
 -- Save the original handler
@@ -497,7 +505,40 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx,
   orig_handler(err, result, ctx, config)
 end
 
+vim.api.nvim_create_autocmd("LspTokenUpdate", {
+  callback = function(args)
+    local token = args.data.token
+    if token.type == "variable" then
+      vim.lsp.semantic_tokens.highlight_token(
+        token, args.buf, args.data.client_id, "@lsp.type.variable", {priority = 200})
+    end
+  end,
+})
+
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local function change_gitsign_base(prompt_bufnr, map)
+  vim.api.nvim_echo({{"BLORK "}}, true, {})
+  
+  actions.select_default:replace(function()
+    actions.close(prompt_bufnr)
+    local selection = action_state.get_selected_entry()
+    vim.cmd{ cmd = "Gitsigns", args = {"change_base", '"' .. selection.value .. '"'}}
+  end)
+  return true
+end
+vim.api.nvim_echo({{"BLIROUUO "}}, true, {})
+
+super_cheval = function()
+  local opts = {
+    git_command={"jj","log","--no-graph","--template","telescope", "-r", "trunk()::@"},
+    attach_mappings = change_gitsign_base
+  }
+  require("telescope.builtin").git_commits(opts)
+end
+
 EOF
+noremap <Leader>gb <cmd>lua super_cheval()<cr>
 
 " Folding: I don't like it
 " set foldmethod=expr

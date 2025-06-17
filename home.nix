@@ -610,6 +610,9 @@ in
       revset-aliases = {
         "closest_bookmark(to)" = "heads(::to & bookmarks())";
       };
+      template-aliases = {
+        telescope = ''format_short_commit_id(commit_id) ++ " " ++ if(description, description.first_line(), "(no description)") ++ " " ++ bookmarks ++  "\n"'';
+      };
     };
   };
 
@@ -625,7 +628,6 @@ in
 
   home.activation = {
     reloadNvimColorScheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      set -x
       # Force all nvim to the new colorscheme
       for path in $(${pkgs.lib.getExe pkgs.neovim-remote} --nostart --serverlist)
       do
