@@ -518,8 +518,6 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local function change_gitsign_base(prompt_bufnr, map)
-  vim.api.nvim_echo({{"BLORK "}}, true, {})
-  
   actions.select_default:replace(function()
     actions.close(prompt_bufnr)
     local selection = action_state.get_selected_entry()
@@ -527,7 +525,6 @@ local function change_gitsign_base(prompt_bufnr, map)
   end)
   return true
 end
-vim.api.nvim_echo({{"BLIROUUO "}}, true, {})
 
 super_cheval = function()
   local opts = {
