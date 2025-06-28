@@ -150,7 +150,7 @@ vim.lsp.enable('ccls')
 vim.lsp.enable('julials')
 
 -- local symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
-local symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
+local symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -200,8 +200,8 @@ vim.lsp.config('nil_ls', {
 local default_caps = {
   workspace = {
     didChangeWatchedFiles = {
-      -- fast update
-      -- dynamicRegistration = true,
+      -- Disabled because it eats a lot of CPU on linux
+      dynamicRegistration = false,
     },
   },
 }
@@ -330,7 +330,7 @@ require('gitsigns').setup {
 statusline = {
   lualine_a = {'mode'},
   lualine_c = {
-      'branch',
+      -- 'branch',
       {'diagnostics',
       sources = {'nvim_workspace_diagnostic'},
       symbols = symbols}
@@ -526,7 +526,7 @@ local function change_gitsign_base(prompt_bufnr, map)
   return true
 end
 
-super_cheval = function()
+gitsign_change_base_using_jj = function()
   local opts = {
     git_command={"jj","log","--no-graph","--template","telescope", "-r", "trunk()::@"},
     attach_mappings = change_gitsign_base
@@ -535,7 +535,8 @@ super_cheval = function()
 end
 
 EOF
-noremap <Leader>gb <cmd>lua super_cheval()<cr>
+noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
+noremap <Leader>et <cmd>Trouble diagnostics filter = { ['not'] = { severity = vim.diagnostic.severity.INFO } }<cr>
 
 " Folding: I don't like it
 " set foldmethod=expr
