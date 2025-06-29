@@ -46,7 +46,11 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    plugins = with pkgs.vimPlugins; [ vim-plug ];
+    plugins = with pkgs.vimPlugins; [
+      # vim-plug
+      nvim-treesitter
+      blink-cmp
+    ];
 
     extraConfig = ''
       source /home/guillaume/nixos_config/home/.vimrc

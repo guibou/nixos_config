@@ -1,54 +1,56 @@
-" Install vim-plug
-source ~/.local/share/nvim/site/autoload/plug.vim
-call plug#begin('~/.vim/plugged')
+lua << EOF
+vim.pack.add({
+    'https://github.com/ibhagwan/fzf-lua',
 
-Plug 'ibhagwan/fzf-lua'
+    -- LSP
+    'https://github.com/neovim/nvim-lspconfig',
 
-" LSP
-Plug 'neovim/nvim-lspconfig'
+    -- Listing of LSP error
+    'https://github.com/kyazdani42/nvim-web-devicons',
+    'https://github.com/folke/lsp-trouble.nvim',
 
-" Listing of LSP error
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'folke/lsp-trouble.nvim'
+    -- Misc
+    'https://github.com/liuchengxu/vim-which-key',
+    'https://github.com/nvim-lualine/lualine.nvim',
+    --
+    -- Manually installed by nix
+    -- { src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    --   version = 'master'
+    -- }, -- TODO {'do': ':TSUpdate', }
 
-" Misc
-Plug 'liuchengxu/vim-which-key'
-Plug 'nvim-lualine/lualine.nvim'
-"
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'master'}
+    -- Languages
+    'https://github.com/LnL7/vim-nix',
+    'https://github.com/tikhomirov/vim-glsl',
+    'https://github.com/mechatroner/rainbow_csv',
 
-" Languages
-Plug 'LnL7/vim-nix'
-Plug 'tikhomirov/vim-glsl'
-Plug 'mechatroner/rainbow_csv'
+    -- Git
+    'https://github.com/lewis6991/gitsigns.nvim',
 
-" Git
-Plug 'lewis6991/gitsigns.nvim'
+    -- Theme
+    'https://github.com/ryanoasis/vim-devicons',
+    'https://github.com/EdenEast/nightfox.nvim',
+    'https://github.com/chrisbra/unicode.vim',
 
-" Theme
-Plug 'ryanoasis/vim-devicons'
-Plug 'EdenEast/nightfox.nvim'
-Plug 'chrisbra/unicode.vim'
+    -- illuminate symbols under cursor
+    'https://github.com/RRethy/vim-illuminate',
 
-" illuminate symbols under cursor
-Plug 'RRethy/vim-illuminate'
+    'https://github.com/guibou/PyF', -- TODO { 'rtp': 'tree-sitter-pyf/vim-plugin/after', }
 
-Plug 'guibou/PyF', { 'rtp': 'tree-sitter-pyf/vim-plugin/after' }
+    'https://github.com/linrongbin16/lsp-progress.nvim',
 
-Plug 'linrongbin16/lsp-progress.nvim'
+    --" Images
+    -- Clip image directly into neovim
+    'https://github.com/HakonHarnes/img-clip.nvim',
+    --     'https://github.com/3rd/image.nvim',
+    'https://github.com/folke/snacks.nvim',
 
-"" Images
-" Clip image directry into neovim
-Plug 'HakonHarnes/img-clip.nvim'
-" Plug '3rd/image.nvim'
-Plug 'folke/snacks.nvim'
+    'https://github.com/echasnovski/mini.indentscope',
 
-Plug 'echasnovski/mini.indentscope'
-
-" Completion
-Plug 'saghen/blink.cmp', { 'do': 'nix run .#build-plugin' }
-
-call plug#end()
+    -- Completion
+    -- Installed with nix
+    -- 'https://github.com/saghen/blink.cmp', -- TODO { 'do': 'nix run .#build-plugin', }
+})
+EOF
 
 " set completeopt=menuone,noselect
 set completeopt=menu,menuone,noselect
