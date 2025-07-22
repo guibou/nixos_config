@@ -13,7 +13,7 @@ Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 " Plug 'junegunn/fzf'
 " Plug 'junegunn/fzf.vim'
-" Plug 'ibhagwan/fzf-lua'
+Plug 'ibhagwan/fzf-lua'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
