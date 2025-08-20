@@ -36,7 +36,6 @@ in
 
     meld
     pavucontrol
-    duckstation
     # simplescreenrecorder
     # transmission-gtk
 

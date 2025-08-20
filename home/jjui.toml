@@ -5,3 +5,6 @@
 "diff kitty" = { args = ["show", "$change_id", "--tool", "kitty"], show = "diff"}
 "rebase dev" = { args = ["rebase", "--source", "$change_id", "--destination", "dev@origin"] }
 "resolve" = { args = ["resolve", "-r", "$change_id"] }
+
+[ui.tracer]
+enabled = true
