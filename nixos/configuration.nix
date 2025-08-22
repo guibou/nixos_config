@@ -202,15 +202,7 @@
     # ocean that rocks and sharks are cutting every days ending by "day".
     registry.nixpkgs.flake = nixpkgs;
 
-    # I tested this patchset in order to improve GC performance
-    # package = pkgs.nixVersions.latest;
-    /*.override {
-      patchedSrc = pkgs.fetchurl {
-        url = "https://github.com/apoelstra/nix/archive/2025-03--gc-speedup2.tar.gz";
-        sha256 = "sha256-hO9WEnFMA9FY6PtdjAmBMPpeiUSz2cOKHh76enOj5w0=";
-      };
-      };
-    */
+    package = pkgs.nixVersions.latest;
 
     settings = {
       sandbox = true;
