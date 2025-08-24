@@ -100,7 +100,7 @@
       };
     };
 
-    logind = { lidSwitch = "ignore"; };
+    logind = { settings.Login.HandleLidSwitch = "ignore"; };
     avahi.enable = false;
 
     # fingerprint things. I don't like it.
