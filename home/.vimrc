@@ -2,17 +2,6 @@
 source ~/.local/share/nvim/site/autoload/plug.vim
 call plug#begin('~/.vim/plugged')
 
-" fuzzy
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-Plug 'nvim-telescope/telescope-live-grep-args.nvim'
-Plug 'nvim-telescope/telescope-ui-select.nvim'
-
-" Plug 'junegunn/fzf'
-" Plug 'junegunn/fzf.vim'
 Plug 'ibhagwan/fzf-lua'
 
 " LSP
@@ -74,39 +63,26 @@ set termguicolors
 let g:one_allow_italics = 1
 let g:onedark_terminal_italics = 1
 
-" Git Grep
-command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number -- '.shellescape(<q-args>), 0,
-  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+noremap <Leader><Space> <cmd>FzfLua files<cr>
+noremap <Leader>o <cmd>FzfLua oldfiles<cr>
+noremap <Leader>b <cmd>FzfLua buffers<cr>
+noremap <Leader>/ <cmd>FzfLua live_grep<cr>
+noremap <Leader>* <cmd>:lua FzfLua.live_grep({search = vim.fn.expand('<cword>')})<cr>
+noremap <Leader>s <cmd>:lua FzfLua.git_diff({ cmd = "jj diff --name-only", previewer = { cmd_modified    = "jj diff --git --no-pager --no-color {file} {ref}"} })<cr>
+noremap <Leader>S <cmd>:lua FzfLua.git_diff({ cmd = "jj diff --from 'trunk()' --name-only", previewer = { cmd_modified    = "jj diff --git --no-pager --no-color {file} {ref} --from 'trunk()'"} })<cr>
+noremap <Leader>ca <cmd>FzfLua lsp_code_actions previewer=codeaction_native<cr>
 
-noremap <Leader><Space> <cmd>Telescope git_files<cr>
-noremap <Leader>o <cmd>Telescope oldfiles<cr>
-noremap <Leader>b <cmd>Telescope buffers show_all_buffers=true<cr>
-" noremap <Leader>/ <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args({default_text = vim.fn.expand('<cword>')})<cr>
-noremap <Leader>/ <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args({vimgrep_arguments = { "rg", "--hidden", "--smart-case", "--vimgrep", "--max-filesize", "1000000"} })<cr>
-" noremap <Leader>* <cmd>Telescope grep_string<cr>
-noremap <Leader>* <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args({vimgrep_arguments = { "rg", "--hidden", "--smart-case", "--vimgrep", "--max-filesize", "1000000"},  default_text = vim.fn.expand('<cword>')})<cr>
-noremap <Leader>f <cmd>Telescope find_files<cr>
-" noremap <Leader>s <cmd>Telescope git_status<cr>
-noremap <Leader>s <cmd>Telescope find_files find_command=jj,diff,--name-only<cr>
-noremap <Leader>S <cmd>Telescope find_files find_command=jj,diff,--name-only,--from,trunk()<cr>
-noremap <Leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
-noremap <Leader>C <cmd>Telescope colorscheme enable_preview=true<cr>
+noremap <Leader>cD <cmd>FzfLua lsp_incoming_calls<cr>
+noremap <Leader>cR <cmd>FzfLua lsp_references<cr>
+noremap <Leader>cd <cmd>FzfLua lsp_definitions<cr>
 
-noremap <Leader>cD <cmd>Telescope lsp_incoming_calls<cr>
-noremap <Leader>cR <cmd>Telescope lsp_references<cr>
-noremap <Leader>cd <cmd>Telescope lsp_definitions<cr>
-
-noremap <Leader>ci <cmd>Telescope lsp_implementations<cr>
+noremap <Leader>ci <cmd>FzfLua lsp_implementations<cr>
 
 noremap <Leader>cl :lua vim.lsp.codelens.run()<cr>
 noremap <Leader>cr :lua vim.lsp.buf.rename()<cr>
 noremap <Leader>ch :lua vim.lsp.buf.hover { border = "rounded" }<cr>
-noremap <Leader>ct <cmd>Telescope lsp_type_definitions<cr>
-noremap <Leader>cs <cmd>Telescope lsp_dynamic_workspace_symbols<cr>
-" noremap <Leader>ct :TroubleToggle<cr>
-" noremap <Leader>cT :Trouble lsp_references<cr>
+noremap <Leader>ct <cmd>FzfLua lsp_typedefs<cr>
+noremap <Leader>cs <cmd>FzfLua lsp_workspace_symbols<cr>
 noremap <Leader>cf :lua vim.lsp.buf.format()<cr>
 noremap <Leader>ee :lua vim.diagnostic.open_float { border = "rounded" }<cr>
 noremap <Leader>en :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" } }<cr>
@@ -270,27 +246,16 @@ require('nightfox').setup({
     }
 })
 
-require("trouble").setup {}
-
-local trouble_source_telescope = require("trouble.sources.telescope")
-require("telescope").setup {
-    defaults = {
-        layout_strategy = 'vertical',
-        i = { ["<c-t>"] = trouble_source_telescope.open },
-        n = { ["<c-t>"] = trouble_source_telescope.open },
-    },
-    extensions = {
-        live_grep_args = {
-            auto_quoting = false
-        },
-        ["ui-select"] = {
-            require("telescope.themes").get_dropdown {
-            }
-        }
-    }
-}
-require('telescope').load_extension('ui-select')
-require('telescope').load_extension('fzf')
+-- fzflua logic
+local fzflua = require'fzf-lua'
+fzflua.register_ui_select()
+fzflua.setup({
+  winopts = {
+      preview = {
+          layout = "vertical";
+      }
+  }
+})
 
 -- Install PyF parser
 -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
@@ -515,28 +480,29 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
   end,
 })
 
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
-local function change_gitsign_base(prompt_bufnr, map)
-  actions.select_default:replace(function()
-    actions.close(prompt_bufnr)
-    local selection = action_state.get_selected_entry()
-    vim.cmd{ cmd = "Gitsigns", args = {"change_base", '"' .. selection.value .. '"'}}
-  end)
-  return true
-end
 
-gitsign_change_base_using_jj = function()
-  local opts = {
-    git_command={"jj","log","--no-graph","--template","telescope", "-r", "trunk()::@"},
-    attach_mappings = change_gitsign_base
-  }
-  require("telescope.builtin").git_commits(opts)
-end
+-- local actions = require "telescope.actions"
+-- local action_state = require "telescope.actions.state"
+-- local function change_gitsign_base(prompt_bufnr, map)
+--   actions.select_default:replace(function()
+--     actions.close(prompt_bufnr)
+--     local selection = action_state.get_selected_entry()
+--     vim.cmd{ cmd = "Gitsigns", args = {"change_base", '"' .. selection.value .. '"'}}
+--   end)
+--   return true
+-- end
+-- 
+-- gitsign_change_base_using_jj = function()
+--   local opts = {
+--     git_command={"jj","log","--no-graph","--template","telescope", "-r", "trunk()::@"},
+--     attach_mappings = change_gitsign_base
+--   }
+--   require("telescope.builtin").git_commits(opts)
+-- end
 
 EOF
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
-noremap <Leader>et <cmd>Trouble diagnostics filter = { ['not'] = { severity = vim.diagnostic.severity.INFO } }<cr>
+noremap <Leader>et <cmd>FzfLua lsp_workspace_diagnostics severity_limit=1<cr>
 
 " Folding: I don't like it
 " set foldmethod=expr
