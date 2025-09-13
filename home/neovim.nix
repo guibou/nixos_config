@@ -47,7 +47,6 @@
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-      # vim-plug
       nvim-treesitter
       blink-cmp
     ];
