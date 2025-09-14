@@ -6,7 +6,7 @@ It contains my nixos and my home manager configuration, both are split.
 
 # How to install
 
-- On nixos install live, clone this repo and run `sh nixos/run_disko.sh`, it will FORMAT your disk. (you may have to change a few settings here to point to the correct disk).
+- On nixos install live, clone this repo and run `sh nixos/run_disko.sh`, it will **FORMAT** your disk. (you may have to change a few settings here to point to the correct disk).
 - Then run `nixos-install ~/path/to/this/repo`
 - Move this repo to your `/home`.
 - Reboot
@@ -18,7 +18,7 @@ On user, run:
 # What should be done manually once system is reinstalled
 
 - Cloning repo ;)
-- vim `:PackerInstall`
+- ~~vim `:PackerInstall`~~
 - Open `firefox` and click everywhere for "first session", enable addons and
   log to useful site (in the correct workspace)
 - Add credentials into `kubectl` configuration.
@@ -32,7 +32,11 @@ On user, run:
   - [X] multi container mode
   - [X] addblocker
 
-- My vim setup, right now, I need to manually install packer and run `:PackerInstall` in vim.
+- [X] My vim setup, right now, I need to manually install packer and run `:PackerInstall` in vim.
+  -> That's partially done. I still have some packages handled by native nvim
+  `vim.pack`, but I don't need to manually install packer, hence this is not
+  100% reproducible, however the install process is automated and on demand
+  when starting nix.
 
 - Credentials (ssh keys, aws keys). For now I copy everything from bitwarden manually, that's a pain.
 
