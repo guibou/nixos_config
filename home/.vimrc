@@ -87,7 +87,9 @@ noremap <Leader>ct <cmd>FzfLua lsp_typedefs<cr>
 noremap <Leader>cs <cmd>FzfLua lsp_workspace_symbols<cr>
 noremap <Leader>cf :lua vim.lsp.buf.format()<cr>
 noremap <Leader>ee :lua vim.diagnostic.open_float { border = "rounded" }<cr>
-noremap <Leader>en :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" } }<cr>
+noremap <Leader>en :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" }, severity =  vim.diagnostic.severity.ERROR }<cr>
+noremap <Leader>eN :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" } }<cr>
+noremap <Leader>ep :lua vim.diagnostic.jump { count = -1, float = {border = "rounded" , severity =  vim.diagnostic.severity.ERROR } }<cr>
 noremap <Leader>ep :lua vim.diagnostic.jump { count = -1, float = {border = "rounded" } }<cr>
 
 " Git things
@@ -504,7 +506,9 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
 
 EOF
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
-noremap <Leader>et <cmd>FzfLua lsp_workspace_diagnostics severity_limit=1<cr>
+noremap <Leader>ei <cmd>FzfLua lsp_workspace_diagnostics<cr>
+noremap <Leader>ew <cmd>FzfLua lsp_workspace_diagnostics severity_limit=2<cr>
+noremap <Leader>ee <cmd>FzfLua lsp_workspace_diagnostics severity_limit=1<cr>
 
 " Folding: I don't like it
 " set foldmethod=expr

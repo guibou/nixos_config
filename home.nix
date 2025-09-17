@@ -86,6 +86,7 @@ in
 
     # CCLS for C++ dev pulls a lot of dependencies
     # (ccls.override{llvmPackages = llvmPackages_latest;})
+    ccls
 
     # gimp
 
