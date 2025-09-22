@@ -63,7 +63,7 @@ in
     binutils-unwrapped
     python3
     fd
-    linuxPackages.perf
+    perf
     gdb
     # xournal
     # renderdoc
@@ -125,8 +125,8 @@ in
     # Navigate json interactively
     fx
 
-    #xournalpp
-    #texlive.combined.scheme-full
+    xournalpp
+    texlive.combined.scheme-full
 
     # Because that's sometime useful, in order to restart i3status
     killall
