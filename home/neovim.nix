@@ -1,4 +1,4 @@
-{ neovim, foxTheme, dark }: { pkgs, ... }:
+{ neovim, darkTheme, lightTheme }: { pkgs, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -54,8 +54,29 @@
     extraConfig = ''
       source /home/guillaume/nixos_config/home/.vimrc
 
-      set bg=${if dark then "dark" else "light"}
-      :colorscheme ${foxTheme}
+      lua << EOF
+function load_theme_from_os_preferences()
+      local obj = vim.system({'dconf', 'read', '/org/gnome/desktop/interface/color-scheme'}, {text = true}):wait().stdout
+
+      if obj == "'prefer-dark'\n"
+      then
+         vim.cmd([[
+           set bg=dark
+           colorscheme ${darkTheme}
+           set bg=dark
+         ]])
+      else
+         vim.cmd([[
+           set bg=light
+           colorscheme ${lightTheme}
+           set bg=light
+           ]])
+      end
+end
+load_theme_from_os_preferences()
+EOF
+
+
     '';
 
   };

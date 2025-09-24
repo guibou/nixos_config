@@ -1,6 +1,9 @@
 { pkgs, config, dark, neovim, nightfox-nvim, lib, ... }:
 let
-  foxTheme = if dark then "nordfox" else "dawnfox";
+  darkTheme = "nordfox";
+  lightTheme = "dawnfox";
+
+  foxTheme = if dark then darkTheme else lightTheme;
 
   #trackMania = pkgs.writeScriptBin "trackMania" ''
   #  cd /home/guillaume/.wine/drive_c/Program\ Files/TmNationsForever/
@@ -11,7 +14,7 @@ let
 in
 {
   imports = [
-    (import ./home/neovim.nix { inherit neovim foxTheme dark; })
+    (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
     ./home/nova.nix
     ./home/firefox.nix
   ];
@@ -417,7 +420,16 @@ in
 
         "mpv/scripts/sub-cut.lua".source = link "mpv_sub-cut.lua";
 
-        #"sway/config" = link "swayconfig";
+        "kitty/dark-theme.auto.conf" = {
+          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+        };
+        "kitty/no-preference-theme.auto.conf" = {
+          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+        };
+
+        "kitty/light-theme.auto.conf" = {
+          source = "${nightfox-nvim}/extra/${lightTheme}/kitty.conf";
+        };
       };
   };
 
@@ -553,7 +565,6 @@ in
       #inherit package;
       enable = true;
       extraConfig = ''
-        include ${nightfox-nvim}/extra/${foxTheme}/kitty.conf
         font_size 12
 
         # Monaspace
@@ -581,6 +592,8 @@ in
         scrollback_lines 100000
 
         cursor_trail 3
+
+        notify_on_cmd_finish invisible
       '';
     };
 
@@ -629,11 +642,7 @@ in
   home.activation = {
     reloadNvimColorScheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Force all nvim to the new colorscheme
-      for path in $(${pkgs.lib.getExe pkgs.neovim-remote} --nostart --serverlist)
-      do
-        $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'set bg=${if dark then "dark" else "light"}'
-        $DRY_RUN_CMD ${pkgs.lib.getExe pkgs.neovim-remote} --nostart --servername $path -cc 'colorscheme ${foxTheme}'
-      done
+      pkill -SIGUSR1 nvim || echo "no vim was started"
 
       ${pkgs.hsetroot}/bin/hsetroot -solid $(xrdb -get system.background)
       i3-msg restart

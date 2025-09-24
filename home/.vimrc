@@ -12,11 +12,6 @@ vim.pack.add({
     -- Misc
     'https://github.com/liuchengxu/vim-which-key',
     'https://github.com/nvim-lualine/lualine.nvim',
-    --
-    -- Manually installed by nix
-    -- { src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    --   version = 'master'
-    -- }, -- TODO {'do': ':TSUpdate', }
 
     -- Languages
     'https://github.com/LnL7/vim-nix',
@@ -41,14 +36,10 @@ vim.pack.add({
     --" Images
     -- Clip image directly into neovim
     'https://github.com/HakonHarnes/img-clip.nvim',
-    --     'https://github.com/3rd/image.nvim',
+    -- Image support and math equation in markdown
     'https://github.com/folke/snacks.nvim',
 
     'https://github.com/echasnovski/mini.indentscope',
-
-    -- Completion
-    -- Installed with nix
-    -- 'https://github.com/saghen/blink.cmp', -- TODO { 'do': 'nix run .#build-plugin', }
 })
 EOF
 
@@ -275,7 +266,7 @@ fzflua.setup({
 -- }
 
 require "nvim-treesitter.configs".setup {
-    ensure_install = { "haskell", "json", "vim", "python", "pyf", "lua" },
+    ensure_install = { "haskell", "json", "vim", "python", "pyf", "lua", "markdown" },
     playground = {
         enable = true
     },
@@ -402,7 +393,9 @@ end
 -- })
 
 require("snacks").setup({
-image = {}
+image = {
+    conceal = true;
+}
 })
 
 require('mini.indentscope').setup(
@@ -503,6 +496,14 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
 --   }
 --   require("telescope.builtin").git_commits(opts)
 -- end
+
+
+-- Change colorscheme when receiving signal
+vim.api.nvim_create_autocmd({"Signal"}, {
+     callback = function()
+       vim.schedule(load_theme_from_os_preferences)
+	end
+})
 
 EOF
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
