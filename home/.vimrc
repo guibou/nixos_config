@@ -78,10 +78,6 @@ noremap <Leader>ct <cmd>FzfLua lsp_typedefs<cr>
 noremap <Leader>cs <cmd>FzfLua lsp_workspace_symbols<cr>
 noremap <Leader>cf :lua vim.lsp.buf.format()<cr>
 noremap <Leader>ee :lua vim.diagnostic.open_float { border = "rounded" }<cr>
-noremap <Leader>en :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" }, severity =  vim.diagnostic.severity.ERROR }<cr>
-noremap <Leader>eN :lua vim.diagnostic.jump{ count = 1, float= { border = "rounded" } }<cr>
-noremap <Leader>ep :lua vim.diagnostic.jump { count = -1, float = {border = "rounded" , severity =  vim.diagnostic.severity.ERROR } }<cr>
-noremap <Leader>ep :lua vim.diagnostic.jump { count = -1, float = {border = "rounded" } }<cr>
 
 " Git things
 noremap <Leader>gh <cmd>:Gitsigns preview_hunk<cr>
@@ -504,6 +500,18 @@ vim.api.nvim_create_autocmd({"Signal"}, {
        vim.schedule(load_theme_from_os_preferences)
 	end
 })
+
+
+function next_diag(offset)
+   -- Try to jump to first error, if not, jump to every diag
+   if vim.diagnostic.jump{ count = offset, float= { border = "rounded" }, severity =  vim.diagnostic.severity.ERROR } == nil
+       then vim.diagnostic.jump{ count = offset, float= { border = "rounded" } }
+    end
+end
+
+vim.keymap.set('n', '<leader>en', function() next_diag(1) end)
+vim.keymap.set('n', '<leader>ep', function() next_diag(-1) end)
+
 
 EOF
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
