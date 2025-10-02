@@ -22,6 +22,11 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nova = {
+      url = "/home/guillaume/jinko/my_nova_nix";
+      flake = false;
+    };
   };
 
   # Contains everything cached from nix-community, including neovim
@@ -30,7 +35,7 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, nova, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
@@ -41,7 +46,7 @@
           myNixos = dark:
             nixpkgs.lib.nixosSystem {
               inherit system;
-              specialArgs = { inherit nixpkgs disko nur; };
+              specialArgs = { inherit nixpkgs disko nur nova; };
               modules = [
                 ./nixos/configuration.nix
 
@@ -62,7 +67,7 @@
                   # Optionally, use home-manager.extraSpecialArgs to pass
                   # arguments to home.nix
                   home-manager.extraSpecialArgs = {
-                    inherit neovim dark nightfox-nvim;
+                    inherit neovim dark nightfox-nvim nova;
                     nur = nur.legacyPackages.${system};
                   };
                 }

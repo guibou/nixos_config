@@ -295,6 +295,19 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "nova": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759423820,
+        "narHash": "sha256-xX9jDWs3h7JF6jsR+gC/P1H2rH/8hHnBHWKh/zZtGRs=",
+        "path": "/home/guillaume/jinko/my_nova_nix",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/guillaume/jinko/my_nova_nix",
+        "type": "path"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -323,6 +336,7 @@
         "neovim-flake": "neovim-flake",
         "nightfox-nvim": "nightfox-nvim",
         "nixpkgs": "nixpkgs_3",
+        "nova": "nova",
         "nur": "nur"
       }
     },

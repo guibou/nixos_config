@@ -1,4 +1,4 @@
-{ pkgs, config, dark, neovim, nightfox-nvim, lib, ... }:
+{ pkgs, config, dark, neovim, nightfox-nvim, lib, nova, ... }:
 let
   darkTheme = "nordfox";
   lightTheme = "dawnfox";
@@ -15,7 +15,7 @@ in
 {
   imports = [
     (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
-    ./home/nova.nix
+    "${nova}/nova-home.nix"
     ./home/firefox.nix
   ];
 
@@ -518,8 +518,6 @@ in
   home.sessionVariables = {
     TZ = "Indian/Reunion";
     EDITOR = "vim";
-    S3NOVA =
-      "s3://devops-ci-infra-prod-caching-nix?region=eu-central-1&profile=nix-daemon";
   };
 
   programs.ssh = {

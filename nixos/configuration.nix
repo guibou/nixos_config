@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, lib, disko, ... }:
+{ config, pkgs, nixpkgs, lib, disko, nova, ... }:
 
 {
   imports = [
@@ -6,7 +6,7 @@
     "${disko}/module.nix"
     ./disko.nix
     # Work specific config
-    ./nova.nix
+    "${nova}/nova-nixos.nix"
     ./xps-9315.nix
   ];
 
