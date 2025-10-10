@@ -6,7 +6,6 @@ vim.pack.add({
     'https://github.com/neovim/nvim-lspconfig',
 
     -- Listing of LSP error
-    'https://github.com/kyazdani42/nvim-web-devicons',
     'https://github.com/folke/lsp-trouble.nvim',
 
     -- Misc
@@ -22,7 +21,7 @@ vim.pack.add({
     'https://github.com/lewis6991/gitsigns.nvim',
 
     -- Theme
-    'https://github.com/ryanoasis/vim-devicons',
+    'https://github.com/nvim-tree/nvim-web-devicons',
     'https://github.com/EdenEast/nightfox.nvim',
     'https://github.com/chrisbra/unicode.vim',
 
@@ -36,10 +35,12 @@ vim.pack.add({
     --" Images
     -- Clip image directly into neovim
     'https://github.com/HakonHarnes/img-clip.nvim',
-    -- Image support and math equation in markdown
-    'https://github.com/folke/snacks.nvim',
 
     'https://github.com/echasnovski/mini.indentscope',
+
+    -- Render image in markdown
+    'https://github.com/3rd/image.nvim',
+    'https://github.com/Thiago4532/mdmath.nvim'
 })
 EOF
 
@@ -51,18 +52,13 @@ set inccommand=nosplit
 let mapleader = "\<Space>"
 set list
 
-" curly waves in term
-set termguicolors
-let g:one_allow_italics = 1
-let g:onedark_terminal_italics = 1
-
 noremap <Leader><Space> <cmd>FzfLua files<cr>
 noremap <Leader>o <cmd>FzfLua oldfiles<cr>
 noremap <Leader>b <cmd>FzfLua buffers<cr>
 noremap <Leader>/ <cmd>FzfLua live_grep<cr>
 noremap <Leader>* <cmd>:lua FzfLua.live_grep({search = vim.fn.expand('<cword>')})<cr>
 noremap <Leader>s <cmd>:lua FzfLua.git_diff({ cmd = "jj diff --name-only", previewer = { cmd_modified    = "jj diff --git --no-pager --no-color {file} {ref}"} })<cr>
-noremap <Leader>S <cmd>:lua FzfLua.git_diff({ cmd = "jj diff --from 'trunk()' --name-only", previewer = { cmd_modified    = "jj diff --git --no-pager --no-color {file} {ref} --from 'trunk()'"} })<cr>
+noremap <Leader>S <cmd>:lua FzfLua.git_diff({ cmd = "jj diff --from 'fork_point(trunk()..@)-' --name-only", previewer = { cmd_modified    = "jj diff --git --no-pager --no-color {file} {ref} --from 'fork_point(trunk()..@)-'"} })<cr>
 noremap <Leader>ca <cmd>FzfLua lsp_code_actions previewer=codeaction_native<cr>
 
 noremap <Leader>cD <cmd>FzfLua lsp_incoming_calls<cr>
@@ -80,14 +76,14 @@ noremap <Leader>cf :lua vim.lsp.buf.format()<cr>
 noremap <Leader>ee :lua vim.diagnostic.open_float { border = "rounded" }<cr>
 
 " Git things
-noremap <Leader>gh <cmd>:Gitsigns preview_hunk<cr>
-noremap <Leader>gp <cmd>:Gitsigns prev_hunk<cr>
-noremap <Leader>gn <cmd>:Gitsigns next_hunk<cr>
-noremap <Leader>gU <cmd>:Gitsigns reset_hunk<cr>
-noremap <Leader>gs <cmd>:Gitsigns stage_hunk<cr>
-noremap <Leader>gtd <cmd>:Gitsigns toggle_deleted<cr>
-noremap <Leader>gbo <cmd>:Gitsigns change_base origin/dev<cr>
-noremap <Leader>gbh <cmd>:Gitsigns change_base HEAD<cr>
+noremap <Leader>gh <cmd>Gitsigns preview_hunk<cr>
+noremap <Leader>gp <cmd>Gitsigns prev_hunk<cr>
+noremap <Leader>gn <cmd>Gitsigns next_hunk<cr>
+noremap <Leader>gU <cmd>Gitsigns reset_hunk<cr>
+noremap <Leader>gs <cmd>Gitsigns stage_hunk<cr>
+noremap <Leader>gtd <cmd>Gitsigns toggle_deleted<cr>
+noremap <Leader>gbo <cmd>Gitsigns change_base origin/dev<cr>
+noremap <Leader>gbh <cmd>Gitsigns change_base HEAD<cr>
 
 set clipboard=unnamed,unnamedplus
 set mouse=a
@@ -262,7 +258,7 @@ fzflua.setup({
 -- }
 
 require "nvim-treesitter.configs".setup {
-    ensure_install = { "haskell", "json", "vim", "python", "pyf", "lua", "markdown" },
+    ensure_install = { "haskell", "json", "vim", "python", "pyf", "lua", "markdown", "latex"},
     playground = {
         enable = true
     },
@@ -388,11 +384,11 @@ end
 --   }
 -- })
 
-require("snacks").setup({
-image = {
-    conceal = true;
-}
-})
+-- require("snacks").setup({
+-- image = {
+--     conceal = true;
+-- }
+-- })
 
 require('mini.indentscope').setup(
 {
@@ -512,6 +508,10 @@ end
 vim.keymap.set('n', '<leader>en', function() next_diag(1) end)
 vim.keymap.set('n', '<leader>ep', function() next_diag(-1) end)
 
+-- require("image").setup()
+-- require("mdmath").setup({
+--  hide_on_insert = false,
+-- })
 
 EOF
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>

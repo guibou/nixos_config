@@ -25,14 +25,16 @@
 
       # images support (latext)
       ghostscript
-      # Let's disable latex support, I don't really use it most of the time and
-      # it brings so much dependencies.
-      # texliveFull
 
       # fs notifications
       inotify-tools
 
       pyright
+
+      # For math display
+      python3Packages.pylatexenc
+      imagemagick
+      librsvg
     ];
 
     extraLuaPackages = ps: with ps; [
@@ -49,6 +51,8 @@
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter
       blink-cmp
+      
+     nvim-treesitter-parsers.latex  
     ] ++
     (with nvim-treesitter-parsers; [
       latex
