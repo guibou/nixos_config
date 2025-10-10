@@ -16,6 +16,7 @@ in
   imports = [
     (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
     ./home/firefox.nix
+    ./home/timezone-lyon.nix
   ];
 
   home.username = "guillaume";
@@ -515,7 +516,6 @@ in
   };
 
   home.sessionVariables = {
-    TZ = "Indian/Reunion";
     EDITOR = "vim";
   };
 

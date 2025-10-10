@@ -6,6 +6,7 @@
     "${disko}/module.nix"
     ./disko.nix
     ./xps-9315.nix
+    ./timezone-lyon.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -56,11 +57,6 @@
   };
 
   i18n = { defaultLocale = "en_US.UTF-8"; };
-
-  #time.timeZone = "Europe/Paris";
-  #time.timeZone = "Indian/Reunion";
-  # "Indian/Reunion" does not work with firefox, I have no idea why.
-  time.timeZone = "Asia/Dubai";
 
   documentation.man.enable = true;
 
