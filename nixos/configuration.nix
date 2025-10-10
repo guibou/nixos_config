@@ -59,14 +59,14 @@
 
   i18n = { defaultLocale = "en_US.UTF-8"; };
 
-  #time.timeZone = "Europe/Paris";
+  time.timeZone = "Europe/Paris";
   #time.timeZone = "Indian/Reunion";
   # "Indian/Reunion" does not work with firefox, I have no idea why.
-  time.timeZone = "Asia/Dubai";
+  # time.timeZone = "Asia/Dubai";
 
   documentation.man.enable = true;
 
-  fonts.packages = with pkgs; [ awesome noto-fonts nerd-fonts.bitstream-vera-sans-mono monaspace ];
+  fonts.packages = with pkgs; [ nerd-fonts.bitstream-vera-sans-mono monaspace ];
 
   # services.nix-serve.enable = true;
 

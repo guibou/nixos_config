@@ -424,7 +424,7 @@ in
           source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
         "kitty/no-preference-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${lightTheme}/kitty.conf";
         };
 
         "kitty/light-theme.auto.conf" = {
@@ -516,12 +516,30 @@ in
   };
 
   home.sessionVariables = {
-    TZ = "Indian/Reunion";
+    # TZ = "Indian/Reunion";
+    TZ = "Europe/Paris";
     EDITOR = "vim";
   };
 
   programs.ssh = {
     enable = true;
+
+    enableDefaultConfig = false;
+
+    # Docs tell me to do that
+    matchBlocks."*" = {
+      forwardAgent = false;
+      addKeysToAgent = "no";
+      compression = false;
+      serverAliveInterval = 0;
+      serverAliveCountMax = 3;
+      hashKnownHosts = false;
+      userKnownHostsFile = "~/.ssh/known_hosts";
+      controlMaster =
+        "no";
+      controlPath = "~/.ssh/master-%r@%n:%p";
+      controlPersist = "no";
+    };
 
     extraConfig = ''
       Host github.com
