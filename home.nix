@@ -522,6 +522,23 @@ in
   programs.ssh = {
     enable = true;
 
+    enableDefaultConfig = false;
+
+    # Docs tell me to do that
+    matchBlocks."*" = {
+      forwardAgent = false;
+      addKeysToAgent = "no";
+      compression = false;
+      serverAliveInterval = 0;
+      serverAliveCountMax = 3;
+      hashKnownHosts = false;
+      userKnownHostsFile = "~/.ssh/known_hosts";
+      controlMaster =
+        "no";
+      controlPath = "~/.ssh/master-%r@%n:%p";
+      controlPersist = "no";
+    };
+
     extraConfig = ''
       Host github.com
       IdentityFile ~/.ssh/id_gecko
