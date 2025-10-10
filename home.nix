@@ -423,7 +423,7 @@ in
           source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
         "kitty/no-preference-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${lightTheme}/kitty.conf";
         };
 
         "kitty/light-theme.auto.conf" = {
