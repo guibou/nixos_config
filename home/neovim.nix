@@ -49,32 +49,41 @@
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter
       blink-cmp
-    ];
+    ] ++
+    (with nvim-treesitter-parsers; [
+      latex
+      haskell
+      json
+      vim
+      python
+      lua
+      markdown
+    ]);
 
     extraConfig = ''
-      source /home/guillaume/nixos_config/home/.vimrc
+            source /home/guillaume/nixos_config/home/.vimrc
 
-      lua << EOF
-function load_theme_from_os_preferences()
-      local obj = vim.system({'dconf', 'read', '/org/gnome/desktop/interface/color-scheme'}, {text = true}):wait().stdout
+            lua << EOF
+      function load_theme_from_os_preferences()
+            local obj = vim.system({'dconf', 'read', '/org/gnome/desktop/interface/color-scheme'}, {text = true}):wait().stdout
 
-      if obj == "'prefer-dark'\n"
-      then
-         vim.cmd([[
-           set bg=dark
-           colorscheme ${darkTheme}
-           set bg=dark
-         ]])
-      else
-         vim.cmd([[
-           set bg=light
-           colorscheme ${lightTheme}
-           set bg=light
-           ]])
+            if obj == "'prefer-dark'\n"
+            then
+               vim.cmd([[
+                 set bg=dark
+                 colorscheme ${darkTheme}
+                 set bg=dark
+               ]])
+            else
+               vim.cmd([[
+                 set bg=light
+                 colorscheme ${lightTheme}
+                 set bg=light
+                 ]])
+            end
       end
-end
-load_theme_from_os_preferences()
-EOF
+      load_theme_from_os_preferences()
+      EOF
 
 
     '';
