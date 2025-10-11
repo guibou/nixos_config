@@ -1,12 +1,10 @@
-{ config, pkgs, nixpkgs, lib, disko, nova, ... }:
+{ config, pkgs, nixpkgs, lib, disko, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     "${disko}/module.nix"
     ./disko.nix
-    # Work specific config
-    "${nova}/nova-nixos.nix"
     ./xps-9315.nix
   ];
 
@@ -17,7 +15,7 @@
 
       # neovim file watcher require that...
       # See :h fswatch-limitations
-      "fs.inotify.max_user_watches" = 1000000;
+      "fs.inotify.max_user_watches" = lib.mkForce 1000000;
       "fs.inotify.max_queued_events" = 1000000;
     };
     loader = {

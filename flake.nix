@@ -23,9 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nova = {
-      url = "/home/guillaume/jinko/my_nova_nix";
-      flake = false;
+    doctor = {
+      url = "git+file:///home/guillaume/jinko/doctor?ref=guibou_config";
     };
   };
 
@@ -35,19 +34,25 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, nova, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
+
     in
     {
       nixosConfigurations =
         let
-          myNixos = dark:
+          myNixos = { dark, isNova }:
             nixpkgs.lib.nixosSystem {
               inherit system;
-              specialArgs = { inherit nixpkgs disko nur nova; };
-              modules = [
+              specialArgs = { inherit nixpkgs disko nur doctor; };
+
+              modules = (if isNova then
+                [
+                  doctor.nixosModules.guillaume
+                ] else [ ]) ++
+              [
                 ./nixos/configuration.nix
 
                 home-manager.nixosModules.home-manager
@@ -67,7 +72,7 @@
                   # Optionally, use home-manager.extraSpecialArgs to pass
                   # arguments to home.nix
                   home-manager.extraSpecialArgs = {
-                    inherit neovim dark nightfox-nvim nova;
+                    inherit neovim dark nightfox-nvim;
                     nur = nur.legacyPackages.${system};
                   };
                 }
@@ -75,8 +80,9 @@
             };
         in
         {
-          gecko = myNixos false;
-          gecko_dark = myNixos true;
+          gecko = myNixos { dark = false; isNova = true; };
+          gecko_no_nova = myNixos { dark = false; isNova = false; };
+          gecko_dark = myNixos { dark = true; isNova = true; };
         };
     };
 }

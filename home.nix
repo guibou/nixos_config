@@ -15,7 +15,6 @@ in
 {
   imports = [
     (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
-    "${nova}/nova-home.nix"
     ./home/firefox.nix
   ];
 

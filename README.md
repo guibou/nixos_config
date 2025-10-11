@@ -6,8 +6,8 @@ It contains my nixos and my home manager configuration, both are split.
 
 # How to install
 
-- On nixos install live, clone this repo and run `sh nixos/run_disko.sh`, it will **FORMAT** your disk. (you may have to change a few settings here to point to the correct disk).
-- Then run `nixos-install ~/path/to/this/repo`
+- On nixos install live, clone this repo and run `sh run_disko.sh` from `nixos` directory, it will **FORMAT** your disk. (you may have to change a few settings here to point to the correct disk).
+- Then run `nixos-install ~/path/to/this/repo#gecko`
 - Move this repo to your `/home`.
 - Reboot
 
@@ -22,6 +22,7 @@ On user, run:
 - Open `firefox` and click everywhere for "first session", enable addons and
   log to useful site (in the correct workspace)
 - Add credentials into `kubectl` configuration.
+- `mkdir Screenshots`
 
 # Things not handled by nix
 
