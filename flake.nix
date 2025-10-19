@@ -83,6 +83,17 @@
           gecko = myNixos { dark = false; isNova = true; };
           gecko_no_nova = myNixos { dark = false; isNova = false; };
           gecko_dark = myNixos { dark = true; isNova = true; };
+
+          family = 
+            nixpkgs.lib.nixosSystem {
+              inherit system;
+              specialArgs = { inherit nixpkgs disko nur doctor; };
+
+              modules = 
+              [
+                ./nixos/configuration-familly-laptop.nix
+              ];
+            };
         };
     };
 }
