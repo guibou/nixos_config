@@ -33,6 +33,9 @@
           "extensions.formautofill.creditCards.enabled" = false;
           "signon.rememberSignons" = false;
 
+          "browser.startup.homepage" = "about:blank";
+          "browser.urlbar.placeholderName" = "DuckDuckGo";
+
           # TODO: session restore + addons automatic accept + remove all "startup popup"
         };
         extensions.packages = with nur.repos.rycee.firefox-addons; [
