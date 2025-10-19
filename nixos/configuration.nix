@@ -6,7 +6,7 @@
     "${disko}/module.nix"
     ./disko.nix
     ./xps-9315.nix
-    ./timezone-lyon.nix
+    ./timezone-run.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

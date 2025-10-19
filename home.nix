@@ -16,7 +16,7 @@ in
   imports = [
     (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
     ./home/firefox.nix
-    ./home/timezone-lyon.nix
+    ./home/timezone-run.nix
   ];
 
   home.username = "guillaume";
@@ -286,10 +286,10 @@ in
 
   programs.zsh = {
     enable = true;
-    enableCompletion = false;
+    enableCompletion = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ ];
+      plugins = [ "nix-zsh-completions" ];
       theme = "norm";
     };
 
@@ -424,11 +424,11 @@ in
           source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
         "kitty/no-preference-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${lightTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
 
         "kitty/light-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${lightTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
       };
   };
