@@ -3,7 +3,7 @@ let
   darkTheme = "nordfox";
   lightTheme = "dawnfox";
 
-  foxTheme = if dark then darkTheme else lightTheme;
+  currentTheme = if dark then darkTheme else lightTheme;
 
   #trackMania = pkgs.writeScriptBin "trackMania" ''
   #  cd /home/guillaume/.wine/drive_c/Program\ Files/TmNationsForever/
@@ -420,16 +420,21 @@ in
 
         "mpv/scripts/sub-cut.lua".source = link "mpv_sub-cut.lua";
 
+
+        /*
+        # TODO: kitty auto theme switch does not work as expected, so for now I
+        # just force the theme files
         "kitty/dark-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
         };
         "kitty/no-preference-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
         };
 
         "kitty/light-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
         };
+        */
       };
   };
 
@@ -438,7 +443,7 @@ in
   gtk.cursorTheme.size = 16;
 
   xresources.extraConfig = ''
-    #include "${nightfox-nvim}/extra/${foxTheme}/${foxTheme}.Xresources"
+    #include "${nightfox-nvim}/extra/${currentTheme}/${currentTheme}.Xresources"
   '';
 
   gtk = {
@@ -579,6 +584,7 @@ in
       #inherit package;
       enable = true;
       extraConfig = ''
+        include ${nightfox-nvim}/extra/${currentTheme}/kitty.conf
         font_size 12
 
         # Monaspace
