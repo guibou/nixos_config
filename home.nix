@@ -287,9 +287,14 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    syntaxHighlighting.enable = true;
+
+    enableVteIntegration = true;
+    autosuggestion.enable = true;
+
     oh-my-zsh = {
       enable = true;
-      plugins = [ "nix-zsh-completions" ];
+      plugins = [ "" ];
       theme = "norm";
     };
 
@@ -341,19 +346,14 @@ in
           '';
       in
       ''
-        autoload -U compinit && compinit
-
         # skydive roulette
         [ $[ $RANDOM % 1500 ] -eq 0 ] && ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
-
-        COMPLETION_WAITING_DOTS="true"
-        ENABLE_CORRECTION="true"
 
         LESS="-XRj.5"
         export BROWSER="firefox"
 
         icat () {
-        kitty +kitten icat $*
+          kitty +kitten icat $*
         }
 
         # I don't know why, but RPROMPT seems to be set to something by

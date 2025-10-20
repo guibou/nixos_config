@@ -247,4 +247,8 @@
   # waiting at each nix command.
   # See https://github.com/aws/aws-cli/issues/5623
   systemd.services.nix-daemon.serviceConfig.Environment = [ "AWS_EC2_METADATA_DISABLED=true" ];
+
+
+  # Helps with path completion
+  environment.pathsToLink = [ "/share/zsh" ];
 }
