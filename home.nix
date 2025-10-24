@@ -581,7 +581,6 @@ in
 
   programs.kitty =
     {
-      #inherit package;
       enable = true;
       extraConfig = ''
         include ${nightfox-nvim}/extra/${currentTheme}/kitty.conf
@@ -590,14 +589,14 @@ in
         # Monaspace
         font_family      family='Monaspace Neon Var' features=-calt
         bold_font        family='Monaspace Xenon Var' features=-calt style=Bold
-        italic_font      family='Monaspace Radon Var' features=-calt style=Italic
-        bold_italic_font family='Monaspace Krypton Var' features=-calt style='Bold Italic'
+        italic_font      family='Monaspace Radon Var' features=-calt
+        bold_italic_font family='Monaspace Krypton Var' features=-calt style=Bold
 
         # Jetbrain mono
-        # font_family      family="JetBrainsMono Nerd Font"
-        # bold_font        auto
-        # italic_font      auto
-        # bold_italic_font auto
+        #font_family      family="JetBrainsMono Nerd Font"
+        #bold_font        auto
+        #italic_font      auto
+        #bold_italic_font auto
 
         # Mapple mono
         #font_family      family="Maple Mono"
