@@ -474,6 +474,11 @@ in
   # alert for battery events
   services.poweralertd.enable = true;
 
+  programs.delta = {
+    enable = true;
+    options = { "syntax-theme" = if dark then "1337" else "GitHub"; };
+  };
+
   programs.git = {
     lfs.enable = true;
     enable = true;
@@ -481,15 +486,10 @@ in
     ignores =
       [ "*~" "*.o" "*.hi" "*.dyn_hi" "*.dyn_o" ".stack-work" "\\#*\\#" ];
 
-    userEmail = "guillaum.bouchard@gmail.com";
-    userName = "Guillaume Bouchard";
+    settings = {
+      user.email = "guillaum.bouchard@gmail.com";
+      user.name = "Guillaume Bouchard";
 
-    delta = {
-      enable = true;
-      options = { "syntax-theme" = if dark then "1337" else "GitHub"; };
-    };
-
-    extraConfig = {
       init.defaultBranch = "main";
       core = {
         askPass = "";
