@@ -97,9 +97,6 @@
     logind = { settings.Login.HandleLidSwitch = "ignore"; };
     avahi.enable = false;
 
-    # fingerprint things. I don't like it.
-    # fprintd.enable = true;
-
     fwupd.enable = true; # BIOS upgrade
     fstrim.enable = true; # trim for SSD
 
