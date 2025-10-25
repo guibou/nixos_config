@@ -24,7 +24,12 @@ update() {
   then
     tailscale_status='{"name":"tailscale","instance":"tailscale","color":"'"$foreground"'","markup":"none","full_text":"VPN: OFF"}'
   else
-    tailscale_status='{"name":"tailscale","instance":"tailscale","color":"'"$green"'","markup":"none","full_text":"VPN: ON"}'
+    if (tailscale status | grep "Logged out." > /dev/null)
+    then
+      tailscale_status='{"name":"tailscale","instance":"tailscale","color":"'"$yellow"'","markup":"none","full_text":"VPN: LOGGED OUT"}'
+    else
+      tailscale_status='{"name":"tailscale","instance":"tailscale","color":"'"$green"'","markup":"none","full_text":"VPN: ON"}'
+    fi
   fi
 
   status=$(dmenu-bluetooth --status)

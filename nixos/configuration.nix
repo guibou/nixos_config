@@ -71,7 +71,10 @@
      };
     steam.enable = true;
     bash.completion.enable = true;
-    zsh.enable = true;
+    zsh = {
+       enable = true;
+       enableCompletion = true;
+     };
     ssh.startAgent = true;
   };
 
@@ -246,6 +249,6 @@
   systemd.services.nix-daemon.serviceConfig.Environment = [ "AWS_EC2_METADATA_DISABLED=true" ];
 
 
-  # Helps with path completion
+  # Helps with path completion, well' I'm unsure
   environment.pathsToLink = [ "/share/zsh" ];
 }
