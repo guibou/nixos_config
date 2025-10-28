@@ -87,12 +87,6 @@ in
     nixfmt-rfc-style
     ripgrep
 
-    # CCLS for C++ dev pulls a lot of dependencies
-    # (ccls.override{llvmPackages = llvmPackages_latest;})
-    ccls
-
-    # gimp
-
     nil
 
     k9s
@@ -127,9 +121,6 @@ in
 
     # Navigate json interactively
     fx
-
-    xournalpp
-    texlive.combined.scheme-full
 
     # Because that's sometime useful, in order to restart i3status
     killall
