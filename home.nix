@@ -17,6 +17,8 @@ in
     (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
     ./home/firefox.nix
     ./home/timezone-run.nix
+    # ./home/ts-dev.nix
+    # ./home/teaching.nix
   ];
 
   home.username = "guillaume";
@@ -25,7 +27,6 @@ in
     evince
     hicolor-icon-theme
     ack
-    brightnessctl
     eog
     ffmpeg
     file
@@ -68,8 +69,6 @@ in
     fd
     perf
     gdb
-    # xournal
-    # renderdoc
 
     # hyperfine
     (pkgs.haskell.lib.doJailbreak nix-diff)
@@ -90,8 +89,6 @@ in
     nil
 
     k9s
-    pgformatter
-    pgbadger
 
     v4l-utils
 
@@ -100,9 +97,7 @@ in
     gnuplot
     ttyplot
     nixpkgs-fmt
-    #yaml-language-server
     cabal-install
-    # bitwarden-cli
     kubectl
 
     # ps2 emul
@@ -113,14 +108,13 @@ in
 
     haskellPackages.eventlog2html
 
-    #peek
     sqlite-interactive
 
     nix-tree
     ncdu
 
     # Navigate json interactively
-    fx
+    # fx
 
     # Because that's sometime useful, in order to restart i3status
     killall

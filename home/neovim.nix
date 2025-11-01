@@ -19,9 +19,6 @@
 
       # LSP
       asm-lsp
-      typescript-language-server
-      vue-language-server
-      vscode-langservers-extracted
 
       # images support (latext)
       ghostscript
