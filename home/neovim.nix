@@ -39,7 +39,9 @@
       magick
     ];
 
-    package = neovim;
+    package = neovim.overrideAttrs (old: {
+      patches = old.patches ++ [../home/neovim_patch_36257.diff];
+    });
 
     viAlias = true;
     vimAlias = true;

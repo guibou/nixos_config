@@ -191,8 +191,7 @@ in
     (pkgs.writeScriptBin "notify-brightness-change"
       ''
         PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.dunst pkgs.pcre pkgs.gnugrep]}
-        current=$(brightnessctl | pcregrep -o1 '([0-9]+)%')
-        echo $current
+        current=$(brightnessctl s $1 | pcregrep -o1 '([0-9]+)%')
         dunstify -t 2000 -r 12345 -h int:value:$current -a changeBrightness \
                     -i ${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic/status/display-brightness-symbolic.svg \
                     "Brightness"
@@ -268,6 +267,18 @@ in
       '';
     };
   };
+
+  home.shell = {
+    enableBashIntegration = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  programs.nushell = {
+    enable = true;
+    extraConfig = ''
+      '';
+    };
 
   programs.zsh = {
     enable = true;
@@ -546,6 +557,8 @@ in
     "org/gnome/evince/default" = { continuous = true; };
     "org/gnome/desktop/interface" = { color-scheme = if dark then "prefer-dark" else "prefer-light"; };
   };
+
+
 
   programs.kitty =
     {
