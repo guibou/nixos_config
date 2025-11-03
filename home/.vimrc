@@ -573,3 +573,14 @@ noremap <Leader>qh <cmd>:e ~/nixos_config/home.nix<cr>
 "s Nice diff with commont parts in lines
 set diffopt+=linematch:50
 
+" Automatic compression/decompression of jsonzlib files
+" The write file is not guranteed to be the same as the input file
+augroup jsonzlib
+  autocmd!
+  autocmd BufReadPre,FileReadPre	*.jsonzlib set bin
+  autocmd BufReadPost,FileReadPost	*.jsonzlib '[,']!jsonzlib-decompress
+  autocmd BufReadPost,FileReadPost	*.jsonzlib set nobin
+  autocmd BufReadPost,FileReadPost	*.jsonzlib set filetype=json
+  autocmd BufReadPost,FileReadPost	*.jsonzlib execute ":doautocmd BufReadPost " .. expand("%:r")
+  autocmd BufWritePost *.jsonzlib silent execute '!jsonzlib-compress < ' . shellescape(expand('%:p')) . ' > ' . shellescape(expand('%:p') . '.tmp') . ' && mv ' . shellescape(expand('%:p') . '.tmp') . ' ' . shellescape(expand('%:p'))
+augroup END

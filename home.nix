@@ -165,6 +165,20 @@ in
                     "$(pactl get-default-sink | cut -d. -f4 | sed 's/__sink//' | sed 's/__/ /')"
       '')
 
+    (pkgs.writeScriptBin "jsonzlib-compress"
+      ''
+      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
+      cat - | jq -cj | pigz -z -
+      ''
+    )
+
+    (pkgs.writeScriptBin "jsonzlib-decompress"
+      ''
+      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
+      cat - | pigz -d | jq '.'
+      ''
+    )
+
     (pkgs.writeScriptBin "set-notification-pause"
       ''
         PATH=${pkgs.lib.makeBinPath [pkgs.dunst pkgs.killall]}
