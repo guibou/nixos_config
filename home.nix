@@ -167,6 +167,7 @@ in
 
     (pkgs.writeScriptBin "jsonzlib-compress"
       ''
+      #!/usr/bin/env sh
       PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
       cat - | jq -cj | pigz -z -
       ''
@@ -174,8 +175,25 @@ in
 
     (pkgs.writeScriptBin "jsonzlib-decompress"
       ''
+      #!/usr/bin/env sh
       PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
       cat - | pigz -d | jq '.'
+      ''
+    )
+
+    (pkgs.writeScriptBin "jsonzlib-diff"
+      ''
+      #!/usr/bin/env sh
+      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq pkgs.difftastic]}
+      difft <(cat $1 | pigz -d | jq '.') <(cat $2 | pigz -d | jq '.')
+      ''
+    )
+
+    (pkgs.writeScriptBin "zlib-diff"
+      ''
+      #!/usr/bin/env sh
+      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.difftastic]}
+      difft <(cat $1 | pigz -d) <(cat $2 | pigz -d)
       ''
     )
 
@@ -630,6 +648,16 @@ in
       merge-tools.kitty = {
         program = "kitten";
         diff-args = [ "diff" "$left" "$right" ];
+      };
+      merge-tools.zlib = {
+        program = "zlib-diff";
+        diff-args = [ "$left" "$right" ];
+        diff-invocation-mode = "file-by-file";
+      };
+      merge-tools.jsonzlib = {
+        program = "jsonzlib-diff";
+        diff-args = [ "$left" "$right" ];
+        diff-invocation-mode = "file-by-file";
       };
       merge-tools.images = {
         program = "diff-image";
