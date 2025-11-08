@@ -18,7 +18,7 @@ in
     ./home/firefox.nix
     ./home/timezone-run.nix
     # ./home/ts-dev.nix
-    # ./home/teaching.nix
+    ./home/teaching.nix
   ];
 
   home.username = "guillaume";
