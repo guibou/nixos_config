@@ -182,7 +182,7 @@
   };
 
   virtualisation = {
-    docker.enable = false;
+    docker.enable = true;
     docker.enableOnBoot = false;
     docker.autoPrune.enable = true;
   };

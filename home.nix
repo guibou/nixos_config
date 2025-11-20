@@ -17,7 +17,7 @@ in
     (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
     ./home/firefox.nix
     ./home/timezone-run.nix
-    # ./home/ts-dev.nix
+    ./home/ts-dev.nix
     ./home/teaching.nix
   ];
 
@@ -167,33 +167,33 @@ in
 
     (pkgs.writeScriptBin "jsonzlib-compress"
       ''
-      #!/usr/bin/env sh
-      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
-      cat - | jq -cj | pigz -z -
+        #!/usr/bin/env sh
+        PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
+        cat - | jq -cj | pigz -z -
       ''
     )
 
     (pkgs.writeScriptBin "jsonzlib-decompress"
       ''
-      #!/usr/bin/env sh
-      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
-      cat - | pigz -d | jq '.'
+        #!/usr/bin/env sh
+        PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq]}
+        cat - | pigz -d | jq '.'
       ''
     )
 
     (pkgs.writeScriptBin "jsonzlib-diff"
       ''
-      #!/usr/bin/env sh
-      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq pkgs.difftastic]}
-      difft <(cat $1 | pigz -d | jq '.') <(cat $2 | pigz -d | jq '.')
+        #!/usr/bin/env sh
+        PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.jq pkgs.difftastic]}
+        difft <(cat $1 | pigz -d | jq '.') <(cat $2 | pigz -d | jq '.')
       ''
     )
 
     (pkgs.writeScriptBin "zlib-diff"
       ''
-      #!/usr/bin/env sh
-      PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.difftastic]}
-      difft <(cat $1 | pigz -d) <(cat $2 | pigz -d)
+        #!/usr/bin/env sh
+        PATH=${pkgs.lib.makeBinPath [pkgs.pigz pkgs.coreutils-full pkgs.difftastic]}
+        difft <(cat $1 | pigz -d) <(cat $2 | pigz -d)
       ''
     )
 
@@ -310,7 +310,7 @@ in
     enable = true;
     extraConfig = ''
       '';
-    };
+  };
 
   programs.zsh = {
     enable = true;
@@ -542,6 +542,8 @@ in
 
     # Docs tell me to do that
     matchBlocks."*" = {
+      # This is the part that nix set by default and that maybe I should have a
+      # look at what the true default are
       forwardAgent = false;
       addKeysToAgent = "no";
       compression = false;
@@ -553,6 +555,9 @@ in
         "no";
       controlPath = "~/.ssh/master-%r@%n:%p";
       controlPersist = "no";
+
+      # This is my part
+      identityFile = "~/.ssh/id_gecko";
     };
 
     extraConfig = ''
@@ -691,5 +696,9 @@ in
       ${pkgs.hsetroot}/bin/hsetroot -solid $(xrdb -get system.background)
       i3-msg restart
     '';
+  };
+
+  programs.awscli = {
+    enable = true;
   };
 }

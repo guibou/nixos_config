@@ -185,6 +185,9 @@ vim.lsp.enable('yamlls')
 vim.lsp.enable('pyright')
 vim.lsp.enable('cssls')
 
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('vue_ls')
+
 vim.lsp.enable('hls')
 vim.lsp.config('hls', {
     single_file_support = true,

@@ -24,7 +24,7 @@
     };
 
     doctor = {
-      url = "git+file:///home/guillaume/jinko/doctor?ref=guibou_config";
+      url = "git+file:///home/guillaume/jinko/doctor";
     };
   };
 
@@ -39,6 +39,37 @@
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
 
+      novaModule = {
+        nixpkgs.overlays = [
+          doctor.overlays.autoCalledPackages
+        ];
+
+        imports = [
+          #doctor.nixosModules.datadog-agent
+          #doctor.nixosModules.antivirus
+          doctor.nixosModules.vpn
+          "${doctor}/nixos/modules/nix-cache.nix"
+          "${doctor}/nixos/user-config.nix"
+          { }
+        ];
+
+        userConfig = {
+          login = "guillaume.bouchard";
+          pc = "n00101";
+        };
+
+        home-manager.users.guillaume = {
+          imports = [
+            ./home.nix
+            "${doctor}/nix/hm/zerotrust.nix"
+            "${doctor}/nixos/collections/nova/ssh-known-hosts/hm.nix"
+            "${doctor}/nixos/collections/guillaume.bouchard/firefox-bookmarks/hm.nix"
+            "${doctor}/nixos/common/user-profile.nix"
+          ];
+        };
+
+        home-manager.users.root = import "${doctor}/nixos/hm/root.nix";
+      };
     in
     {
       nixosConfigurations =
@@ -46,37 +77,42 @@
           myNixos = { dark, isNova }:
             nixpkgs.lib.nixosSystem {
               inherit system;
-              specialArgs = { inherit nixpkgs disko nur doctor; };
+              specialArgs = {
+                inherit nixpkgs disko nur;
+              };
 
-              modules = (if isNova then
+              modules =
+                nixpkgs.lib.optional isNova novaModule
+                ++
                 [
-                  doctor.nixosModules.guillaume
-                ] else [ ]) ++
-              [
-                ./nixos/configuration.nix
+                  ./nixos/configuration.nix
+                  home-manager.nixosModules.home-manager
 
-                home-manager.nixosModules.home-manager
-                {
-                  # Ensure that home-manager uses nixpkgs and that flake have
-                  # the globally pinned nixpkgs
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
+                  {
+                    # Ensure that home-manager uses nixpkgs and that flake have
+                    # the globally pinned nixpkgs
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
 
-                  # Some config files can be overriden by the tool (such as htop)
-                  # When home-manager try to create the symlink, it will fail
-                  # Instead, this won't fail and just move the new file in a "backup" file
-                  home-manager.backupFileExtension = "backup";
+                    # Some config files can be overriden by the tool (such as htop)
+                    # When home-manager try to create the symlink, it will fail
+                    # Instead, this won't fail and just move the new file in a "backup" file
+                    home-manager.backupFileExtension = "backup";
 
-                  home-manager.users.guillaume = import ./home.nix;
+                    home-manager.users.guillaume = {
+                      imports = [
+                        ./home.nix
+                      ];
+                    };
 
-                  # Optionally, use home-manager.extraSpecialArgs to pass
-                  # arguments to home.nix
-                  home-manager.extraSpecialArgs = {
-                    inherit neovim dark nightfox-nvim;
-                    nur = nur.legacyPackages.${system};
-                  };
-                }
-              ];
+                    # Optionally, use home-manager.extraSpecialArgs to pass
+                    # arguments to home.nix
+                    home-manager.extraSpecialArgs = {
+                      inherit neovim dark nightfox-nvim;
+                      nur = nur.legacyPackages.${system};
+                    };
+                  }
+                ];
             };
         in
         {
@@ -84,15 +120,15 @@
           gecko_no_nova = myNixos { dark = false; isNova = false; };
           gecko_dark = myNixos { dark = true; isNova = true; };
 
-          family = 
+          family =
             nixpkgs.lib.nixosSystem {
               inherit system;
-              specialArgs = { inherit nixpkgs disko nur doctor; };
+              specialArgs = { inherit nixpkgs disko nur; };
 
-              modules = 
-              [
-                ./nixos/configuration-familly-laptop.nix
-              ];
+              modules =
+                [
+                  ./nixos/configuration-familly-laptop.nix
+                ];
             };
         };
     };
