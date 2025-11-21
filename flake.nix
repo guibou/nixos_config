@@ -103,12 +103,13 @@
                       imports = [
                         ./home.nix
                       ];
+                      dark-theme = dark;
                     };
 
                     # Optionally, use home-manager.extraSpecialArgs to pass
                     # arguments to home.nix
                     home-manager.extraSpecialArgs = {
-                      inherit neovim dark nightfox-nvim;
+                      inherit neovim nightfox-nvim;
                       nur = nur.legacyPackages.${system};
                     };
                   }

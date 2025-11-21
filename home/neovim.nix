@@ -1,4 +1,4 @@
-{ neovim, darkTheme, lightTheme }: { pkgs, ... }:
+{ neovim }: { pkgs, lib, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -40,7 +40,7 @@
     ];
 
     package = neovim.overrideAttrs (old: {
-      patches = old.patches ++ [../home/neovim_patch_36257.diff];
+      patches = old.patches ++ [ ../home/neovim_patch_36257.diff ];
     });
 
     viAlias = true;
@@ -50,8 +50,8 @@
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter
       blink-cmp
-      
-     nvim-treesitter-parsers.latex  
+
+      nvim-treesitter-parsers.latex
     ] ++
     (with nvim-treesitter-parsers; [
       latex
@@ -63,32 +63,8 @@
       markdown
     ]);
 
-    extraConfig = ''
-            source /home/guillaume/nixos_config/home/.vimrc
-
-            lua << EOF
-      function load_theme_from_os_preferences()
-            local obj = vim.system({'dconf', 'read', '/org/gnome/desktop/interface/color-scheme'}, {text = true}):wait().stdout
-
-            if obj == "'prefer-dark'\n"
-            then
-               vim.cmd([[
-                 set bg=dark
-                 colorscheme ${darkTheme}
-                 set bg=dark
-               ]])
-            else
-               vim.cmd([[
-                 set bg=light
-                 colorscheme ${lightTheme}
-                 set bg=light
-                 ]])
-            end
-      end
-      load_theme_from_os_preferences()
-      EOF
-
-
+    extraConfig = lib.mkBefore ''
+      source /home/guillaume/nixos_config/home/.vimrc
     '';
 
   };

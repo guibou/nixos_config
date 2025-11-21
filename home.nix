@@ -1,10 +1,5 @@
-{ pkgs, config, dark, neovim, nightfox-nvim, lib, nova, ... }:
+{ pkgs, config, neovim, lib, ... }:
 let
-  darkTheme = "nordfox";
-  lightTheme = "dawnfox";
-
-  currentTheme = if dark then darkTheme else lightTheme;
-
   #trackMania = pkgs.writeScriptBin "trackMania" ''
   #  cd /home/guillaume/.wine/drive_c/Program\ Files/TmNationsForever/
   #  ${pkgs.wineWowPackages.staging}/bin/wine TmForever.exe
@@ -14,11 +9,12 @@ let
 in
 {
   imports = [
-    (import ./home/neovim.nix { inherit neovim darkTheme lightTheme; })
+    (import ./home/neovim.nix { inherit neovim ; })
     ./home/firefox.nix
     ./home/timezone-run.nix
     ./home/ts-dev.nix
     ./home/teaching.nix
+    ./home/theming.nix
   ];
 
   home.username = "guillaume";
@@ -430,22 +426,6 @@ in
         };
 
         "mpv/scripts/sub-cut.lua".source = link "mpv_sub-cut.lua";
-
-
-        /*
-        # TODO: kitty auto theme switch does not work as expected, so for now I
-        # just force the theme files
-        "kitty/dark-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
-        };
-        "kitty/no-preference-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
-        };
-
-        "kitty/light-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
-        };
-        */
       };
   };
 
@@ -453,24 +433,8 @@ in
   gtk.cursorTheme.name = "whiteglass";
   gtk.cursorTheme.size = 16;
 
-  xresources.extraConfig = ''
-    #include "${nightfox-nvim}/extra/${currentTheme}/${currentTheme}.Xresources"
-  '';
-
   gtk = {
     enable = true;
-    iconTheme.name = "Adwaita";
-    iconTheme.package = pkgs.gnome-themes-extra;
-    theme = {
-      name = if dark then "Adwaita-dark" else "Adwaita";
-      package = pkgs.gnome-themes-extra;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = dark;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = dark;
-    };
   };
 
   # services.network-manager-applet.enable = true;
@@ -487,7 +451,6 @@ in
 
   programs.delta = {
     enable = true;
-    options = { "syntax-theme" = if dark then "1337" else "GitHub"; };
   };
 
   programs.git = {
@@ -592,7 +555,6 @@ in
 
   dconf.settings = {
     "org/gnome/evince/default" = { continuous = true; };
-    "org/gnome/desktop/interface" = { color-scheme = if dark then "prefer-dark" else "prefer-light"; };
   };
 
 
@@ -603,27 +565,6 @@ in
       shellIntegration.enableZshIntegration = true;
 
       extraConfig = ''
-        include ${nightfox-nvim}/extra/${currentTheme}/kitty.conf
-        font_size 12
-
-        # Monaspace
-        font_family      family='Monaspace Neon Var' features=-calt
-        bold_font        family='Monaspace Xenon Var' features=-calt style=Bold
-        italic_font      family='Monaspace Radon Var' features=-calt
-        bold_italic_font family='Monaspace Krypton Var' features=-calt style=Bold
-
-        # Jetbrain mono
-        #font_family      family="JetBrainsMono Nerd Font"
-        #bold_font        auto
-        #italic_font      auto
-        #bold_italic_font auto
-
-        # Mapple mono
-        #font_family      family="Maple Mono"
-        #bold_font        auto
-        #italic_font      auto
-        #bold_italic_font auto
-
         enable_audio_bell false
         visual_bell_duration 0.1
 
