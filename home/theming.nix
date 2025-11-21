@@ -16,28 +16,21 @@ in
 
   config = {
     programs.neovim = {
-      extraConfig = ''
-              lua << EOF
+      extraLuaConfig = ''
         function load_theme_from_os_preferences()
               local obj = vim.system({'dconf', 'read', '/org/gnome/desktop/interface/color-scheme'}, {text = true}):wait().stdout
 
               if obj == "'prefer-dark'\n"
               then
-                 vim.cmd([[
-                   set bg=dark
-                   colorscheme ${darkTheme}
-                   set bg=dark
-                 ]])
+                 vim.opt.bg = dark
+                 vim.cmd.colorscheme('${darkTheme}')
               else
-                 vim.cmd([[
-                   set bg=light
-                   colorscheme ${lightTheme}
-                   set bg=light
-                   ]])
+                 vim.opt.bg = "light"
+                 vim.cmd.colorscheme('${lightTheme}')
               end
         end
+
         load_theme_from_os_preferences()
-        EOF
       '';
     };
 
