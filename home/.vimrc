@@ -5,9 +5,6 @@ vim.pack.add({
     -- LSP
     'https://github.com/neovim/nvim-lspconfig',
 
-    -- Listing of LSP error
-    'https://github.com/folke/lsp-trouble.nvim',
-
     -- Misc
     'https://github.com/liuchengxu/vim-which-key',
     'https://github.com/nvim-lualine/lualine.nvim',
