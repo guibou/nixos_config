@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
     "${disko}/module.nix"
     ./disko.nix
-    ./xps-9315.nix
+    ./x1-carbon.nix
     ./timezone-run.nix
   ];
 
