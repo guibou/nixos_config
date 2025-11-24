@@ -123,6 +123,8 @@ in
     # for mouse emulation
     xdotool
 
+    glab
+
     # For title in the i3bar
     xtitle
 
@@ -600,6 +602,13 @@ in
         diff-args = [ "$left" "$right" ];
         diff-invocation-mode = "file-by-file";
       };
+
+      merge-tools.nvim = {
+        program = "nvim";
+        diff-args = [ "-d" "$left" "$right" ];
+        diff-invocation-mode = "file-by-file";
+      };
+
       merge-tools.jsonzlib = {
         program = "jsonzlib-diff";
         diff-args = [ "$left" "$right" ];

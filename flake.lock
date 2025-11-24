@@ -351,6 +351,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware_2": {
+      "locked": {
+        "lastModified": 1762847253,
+        "narHash": "sha256-BWWnUUT01lPwCWUvS0p6Px5UOBFeXJ8jR+ZdLX8IbrU=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "899dc449bc6428b9ee6b3b8f771ca2b0ef945ab9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixos-images": {
       "inputs": {
         "nixos-stable": [
@@ -598,6 +613,7 @@
         "home-manager": "home-manager_2",
         "neovim-flake": "neovim-flake",
         "nightfox-nvim": "nightfox-nvim",
+        "nixos-hardware": "nixos-hardware_2",
         "nixpkgs": "nixpkgs_8",
         "nur": "nur_2"
       }

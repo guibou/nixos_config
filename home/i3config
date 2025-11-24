@@ -270,3 +270,14 @@ hide_edge_borders both
 # for_window [title="eog"] floating enable`
 for_window [title="LambdaBridgeUI"] floating enable
 
+mode "action" {
+  bindsym w exec "networkmanager_dmenu -l 10"; mode "default"
+  bindsym b exec "dmenu-bluetooth -l 10"; mode "default"
+  bindsym n exec "set-notification-pause toggle"; mode "default"
+
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+t mode "action"

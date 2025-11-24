@@ -26,6 +26,11 @@
     doctor = {
       url = "git+file:///home/guillaume/jinko/doctor";
     };
+
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware";
+    };
+
   };
 
   # Contains everything cached from nix-community, including neovim
@@ -34,7 +39,7 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, nixos-hardware, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
@@ -85,6 +90,7 @@
                 nixpkgs.lib.optional isNova novaModule
                 ++
                 [
+                  "${nixos-hardware}/lenovo/thinkpad/x1/13th-gen/default.nix"
                   ./nixos/configuration.nix
                   home-manager.nixosModules.home-manager
 
