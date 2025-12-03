@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    (import ./home/neovim.nix { inherit neovim ; })
+    (import ./home/neovim.nix { inherit neovim; })
     ./home/firefox.nix
     ./home/timezone-run.nix
     ./home/ts-dev.nix
@@ -650,5 +650,10 @@ in
 
   programs.awscli = {
     enable = true;
+    settings = {
+      "default" = {
+        region = "eu-central-1";
+      };
+    };
   };
 }
