@@ -590,9 +590,9 @@ in
         merge-editor = "meld";
         diff-editor = "meld";
       };
-      git = {
-        push-new-bookmarks = true;
-      };
+      #git = {
+      #  push-new-bookmarks = true;
+      #};
       merge-tools.kitty = {
         program = "kitten";
         diff-args = [ "diff" "$left" "$right" ];
