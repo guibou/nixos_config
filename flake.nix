@@ -55,6 +55,7 @@
           doctor.nixosModules.vpn
           "${doctor}/nixos/modules/nix-cache.nix"
           "${doctor}/nixos/user-config.nix"
+          ./nixos/packet.nix
           { }
         ];
 
@@ -135,6 +136,7 @@
               modules =
                 [
                   ./nixos/configuration-familly-laptop.nix
+                  ./nixos/packet.nix
                 ];
             };
         };
