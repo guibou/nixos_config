@@ -128,6 +128,14 @@ in
     # For title in the i3bar
     xtitle
 
+    # when occasianally I mount ntfs drives
+    ntfs3g
+
+    # Manual screen editing
+    # I'm doing everything most of the time with autorandr, but when I want to
+    # do a special configuration, I'm blocked because of that and that's sad.
+    arandr
+
     (pkgs.writeScriptBin "diff-image"
       ''
         ${pkgs.imagemagick}/bin/compare $1 $2 png:- | montage -geometry +4+4 $1 - $2 png:- | kitty icat --stdin
