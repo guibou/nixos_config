@@ -48,20 +48,8 @@
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-      nvim-treesitter
       blink-cmp
-
-      nvim-treesitter-parsers.latex
-    ] ++
-    (with nvim-treesitter-parsers; [
-      latex
-      haskell
-      json
-      vim
-      python
-      lua
-      markdown
-    ]);
+    ];
 
     extraConfig = lib.mkBefore ''
       source /home/guillaume/nixos_config/home/.vimrc

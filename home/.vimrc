@@ -37,7 +37,10 @@ vim.pack.add({
 
     -- Render image in markdown
     'https://github.com/3rd/image.nvim',
-    'https://github.com/Thiago4532/mdmath.nvim'
+    'https://github.com/Thiago4532/mdmath.nvim',
+
+    -- Treesitter
+    'https://github.com/nvim-treesitter/nvim-treesitter'
 })
 EOF
 
@@ -258,7 +261,8 @@ fzflua.setup({
 -- }
 
 require "nvim-treesitter.configs".setup {
-    ensure_install = { "haskell", "json", "vim", "python", "pyf", "lua", "markdown", "latex"},
+    ensure_installed = { "haskell", "json", "vim", "python", "lua", "markdown", "latex", "glsl"},
+    auto_install = true,
     playground = {
         enable = true
     },
