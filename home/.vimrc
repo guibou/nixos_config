@@ -25,7 +25,7 @@ vim.pack.add({
     -- illuminate symbols under cursor
     'https://github.com/RRethy/vim-illuminate',
 
-    'https://github.com/guibou/PyF', -- TODO { 'rtp': 'tree-sitter-pyf/vim-plugin/after', }
+    -- 'https://github.com/guibou/PyF', -- TODO { 'rtp': 'tree-sitter-pyf/vim-plugin/after', }
 
     'https://github.com/linrongbin16/lsp-progress.nvim',
 
