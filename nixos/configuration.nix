@@ -229,4 +229,7 @@
 
   # Helps with path completion, well' I'm unsure
   environment.pathsToLink = [ "/share/zsh" ];
+
+  # Diasble this thing which is turned on and I don't understand why
+  services.speechd.enable = false;
 }
