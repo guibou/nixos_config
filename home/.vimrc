@@ -174,7 +174,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Inlay hint
     -- Disabled, most of the time, I don't like the result, it does not update
     -- correctly when editing and confuses me.
-    -- vim.lsp.inlay_hint.enable(true, { 0 })
+    vim.lsp.inlay_hint.enable(true, { 0 })
 
     -- Setup color
     vim.lsp.document_color.enable(true, 0, {style = 'virtual'})
