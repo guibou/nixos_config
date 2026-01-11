@@ -10,7 +10,6 @@ vim.pack.add({
     'https://github.com/nvim-lualine/lualine.nvim',
 
     -- Languages
-    'https://github.com/LnL7/vim-nix',
     'https://github.com/tikhomirov/vim-glsl',
     'https://github.com/mechatroner/rainbow_csv',
 
@@ -216,6 +215,8 @@ vim.lsp.config('hls', {
                  },
                  ["importLens"] = {
                     inlayHintsOn = true;
+                    codeActionOn = false;
+                    codeLensOn = false;
                  };
                  ["explicit-fields"] = {
                     inlayHintsOn = false;
