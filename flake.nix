@@ -30,7 +30,6 @@
     nixos-hardware = {
       url = "github:nixos/nixos-hardware";
     };
-
   };
 
   # Contains everything cached from nix-community, including neovim

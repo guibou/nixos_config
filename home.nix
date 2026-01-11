@@ -79,7 +79,7 @@ in
       ]))
 
     jq
-    nixfmt-rfc-style
+    nixfmt
     ripgrep
 
     nil
@@ -305,6 +305,8 @@ in
 
     enableVteIntegration = true;
     autosuggestion.enable = true;
+    
+    dotDir = "${config.xdg.configHome}/zsh";
 
     plugins = [
       /*{
