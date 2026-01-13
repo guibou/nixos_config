@@ -24,8 +24,6 @@ vim.pack.add({
     -- illuminate symbols under cursor
     'https://github.com/RRethy/vim-illuminate',
 
-    -- 'https://github.com/guibou/PyF', -- TODO { 'rtp': 'tree-sitter-pyf/vim-plugin/after', }
-
     'https://github.com/linrongbin16/lsp-progress.nvim',
 
     --" Images
@@ -39,7 +37,10 @@ vim.pack.add({
     'https://github.com/Thiago4532/mdmath.nvim',
 
     -- Treesitter
-    'https://github.com/nvim-treesitter/nvim-treesitter'
+    {
+            src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+            version = 'main'
+    }
 })
 EOF
 
@@ -248,33 +249,67 @@ fzflua.setup({
   }
 })
 
--- Install PyF parser
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.pyf = {
---     install_info = {
---         url = "https://github.com/guibou/PyF",
---         files = { "src/parser.c" },
---         -- optional entries:
---         branch = "main", -- default branch in case of git repo if different from master
---         location = "tree-sitter-pyf",
---         generate_requires_npm = false, -- if stand-alone parser without npm dependencies
---     },
--- }
+-- Setup of the pyf parser
+vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate',
+callback = function()
+  require('nvim-treesitter.parsers').pyf = {
+    install_info = {
+      -- I did NOT succeed at generating from the remote repo, I don't know
+      -- why, so instead I've run the thing in my local checkout
+      -- url = "https://github.com/guibou/PyF",
+      path = "~/dev/PyF/tree-sitter-pyf/",
+      -- location = 'tree-sitter-pyf', -- only needed if the parser is in subdirectory of a "monorepo"
+      -- generate = true, -- only needed if repo does not contain pre-generated `src/parser.c`
+      -- generate_from_json = false, -- only needed if repo does not contain `src/grammar.json` either
+      queries = 'vim-plugin/after/queries/pyf', -- also install queries from given directory
+    },
+  }
+end})
 
-require "nvim-treesitter.configs".setup {
-    ensure_installed = { "haskell", "json", "vim", "python", "lua", "markdown", "latex", "glsl"},
-    auto_install = true,
-    playground = {
-        enable = true
-    },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false
-    },
-    indent = {
-        enable = false;
-    },
-}
+-- It helps debugging, I can just open a .pyf file and see if it works, without the added step of haskell injection
+vim.filetype.add({
+  extension = {
+    pyf = "pyf",
+  },
+})
+vim.treesitter.language.register("pyf", { "pyf" })
+
+-- Extend my haskell injections and highlight for quasiquotes so it detect the pyf namespace.
+vim.treesitter.query.set(
+          'haskell',
+          'injections',
+          [[
+; extends
+(quasiquote
+  (quoter) @_name
+  (#eq? @_name "fmt")
+  ((quasiquote_body) @injection.content)
+  (#set! injection.language "pyf"))
+
+(quasiquote
+  (quoter) @_name
+  (#eq? @_name "fmtTrim")
+  ((quasiquote_body) @injection.content)
+  (#set! injection.language "pyf"))
+        ]])
+
+vim.treesitter.query.set(
+          'haskell',
+          'highlights',
+          [[
+; extends
+(quasiquote_body) @string
+]])
+
+local ts_lang = { "haskell", "json", "vim", "python", "lua", "markdown", "latex", "glsl", "pyf"}
+require('nvim-treesitter').install(ts_lang)
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = ts_lang,
+  callback = function() vim.treesitter.start() end,
+})
+
+
 
 require('gitsigns').setup {
     numhl = false,
