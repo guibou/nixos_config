@@ -50,11 +50,11 @@
                          default)
                               # Set to standard HP
                               # Got the name using wpctl status --name
-                              wpctl set-default $(pw-cli info alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink | head -n1 | awk '{print $2}')
+                              wpctl set-default $(pw-cli info alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink | head -n1 | awk '{print $2}')
                            ;;
                          *)
                               # Anything else, switch to HDMI output
-                              wpctl set-default $(pw-cli info  alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__HDMI1__sink | head -n1 | awk '{print $2}')
+                              wpctl set-default $(pw-cli info  alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink | head -n1 | awk '{print $2}')
                            ;;
               esac
             '';
