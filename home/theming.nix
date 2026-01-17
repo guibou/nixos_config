@@ -16,7 +16,7 @@ in
 
   config = {
     programs.neovim = {
-      extraLuaConfig = ''
+      initLua = ''
         function load_theme_from_os_preferences()
               local obj = vim.system({'dconf', 'read', '/org/gnome/desktop/interface/color-scheme'}, {text = true}):wait().stdout
 
@@ -41,10 +41,13 @@ in
     gtk = {
       iconTheme.name = "Adwaita";
       iconTheme.package = pkgs.gnome-themes-extra;
+
       theme = {
         name = if dark then "Adwaita-dark" else "Adwaita";
         package = pkgs.gnome-themes-extra;
       };
+      gtk4.theme = null;
+
       gtk3.extraConfig = {
         gtk-application-prefer-dark-theme = dark;
       };

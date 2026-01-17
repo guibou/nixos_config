@@ -12,7 +12,7 @@ in
     (import ./home/neovim.nix { inherit neovim; })
     ./home/firefox.nix
     ./home/timezone-run.nix
-    ./home/ts-dev.nix
+    # ./home/ts-dev.nix
     # ./home/teaching.nix
     ./home/theming.nix
   ];
@@ -305,7 +305,7 @@ in
 
     enableVteIntegration = true;
     autosuggestion.enable = true;
-    
+
     dotDir = "${config.xdg.configHome}/zsh";
 
     plugins = [
@@ -413,12 +413,12 @@ in
       };
   };
 
-  gtk.cursorTheme.package = pkgs.xorg.xcursorthemes;
-  gtk.cursorTheme.name = "whiteglass";
-  gtk.cursorTheme.size = 16;
-
   gtk = {
     enable = true;
+
+    cursorTheme.package = pkgs.xcursor-themes;
+    cursorTheme.name = "whiteglass";
+    cursorTheme.size = 16;
   };
 
   # services.network-manager-applet.enable = true;
@@ -438,6 +438,7 @@ in
   };
 
   programs.git = {
+    signing.format = null;
     lfs.enable = true;
     enable = true;
 
@@ -607,6 +608,17 @@ in
       template-aliases = {
         telescope = ''format_short_commit_id(commit_id) ++ " " ++ if(description, description.first_line(), "(no description)") ++ " " ++ bookmarks ++  "\n"'';
       };
+
+      "--scope" = [
+        {
+          "--when" = {
+            repositories = [ "~/jinko" ];
+          };
+          "user" = {
+            email = "guillaume.bouchard@novainsilico.ai";
+          };
+        }
+      ];
     };
   };
 

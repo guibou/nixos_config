@@ -40,8 +40,12 @@ vim.pack.add({
     {
             src = 'https://github.com/nvim-treesitter/nvim-treesitter',
             version = 'main'
-    }
+    },
+
+    'https://github.com/suderio/autolang.nvim'
 })
+
+require('vim._core.ui2').enable({})
 EOF
 
 " set completeopt=menuone,noselect
@@ -52,7 +56,7 @@ set inccommand=nosplit
 let mapleader = "\<Space>"
 set list
 
-noremap <Leader><Space> <cmd>FzfLua files<cr>
+noremap <Leader><Space> <cmd>FzfLua jj_files<cr>
 noremap <Leader>o <cmd>FzfLua oldfiles<cr>
 noremap <Leader>b <cmd>FzfLua buffers<cr>
 noremap <Leader>/ <cmd>FzfLua live_grep<cr>
@@ -172,12 +176,10 @@ local default_caps = {
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     -- Inlay hint
-    -- Disabled, most of the time, I don't like the result, it does not update
-    -- correctly when editing and confuses me.
     vim.lsp.inlay_hint.enable(true, { 0 })
 
     -- Setup color
-    vim.lsp.document_color.enable(true, 0, {style = 'virtual'})
+    vim.lsp.document_color.enable(true, { 0 } , {style = 'virtual'})
   end,
 })
 
@@ -193,8 +195,6 @@ vim.lsp.config('hls', {
     single_file_support = true,
     cmd = {
       "haskell-language-server",
-      -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.10.1/haskell-language-server-2.10.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-      -- "/home/guillaume/srcs/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-9.12.2/haskell-language-server-2.11.0.0/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
         "--lsp",
         -- "--debug", "--logfile", "/tmp/hls.log"
         -- "+RTS", "--nonmoving-gc", "-RTS"
@@ -261,7 +261,7 @@ callback = function()
       -- location = 'tree-sitter-pyf', -- only needed if the parser is in subdirectory of a "monorepo"
       -- generate = true, -- only needed if repo does not contain pre-generated `src/parser.c`
       -- generate_from_json = false, -- only needed if repo does not contain `src/grammar.json` either
-      queries = 'vim-plugin/after/queries/pyf', -- also install queries from given directory
+      queries = 'vim-plugin/after/queries/pyf', -- also install ueries from given directory
     },
   }
 end})
@@ -299,7 +299,11 @@ vim.treesitter.query.set(
           [[
 ; extends
 (quasiquote_body) @string
+(string) @spell
+(haddock) @spell
 ]])
+-- 
+-- (ERROR) @error
 
 local ts_lang = { "haskell", "json", "vim", "python", "lua", "markdown", "latex", "glsl", "pyf"}
 require('nvim-treesitter').install(ts_lang)
@@ -446,7 +450,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(args)
     -- Only enabling format on save for some directories
-    jinko = "/home/guillaume/jinko/jinko/"
+    jinko = "/home/guillaume/jinko"
     if string.sub(args.file, 0, string.len(jinko)) == jinko
     then
     else
@@ -553,7 +557,22 @@ vim.keymap.set('n', '<leader>ep', function() next_diag(-1) end)
 --  hide_on_insert = false,
 -- })
 
+-- Display something when syntax error from treesitter
+-- vim.api.nvim_set_hl(0, "@error", { standout = true})     
+vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+callback = function()
+    vim.api.nvim_set_hl(0, "@error", { standout = false})     
+end
+})
+
+vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+callback = function()
+    vim.api.nvim_set_hl(0, "@error", { standout = true})     
+end
+})
+
 EOF
+
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
 noremap <Leader>ei <cmd>FzfLua lsp_workspace_diagnostics<cr>
 noremap <Leader>ew <cmd>FzfLua lsp_workspace_diagnostics severity_limit=2<cr>

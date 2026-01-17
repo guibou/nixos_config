@@ -128,16 +128,46 @@
           gecko_dark = myNixos { dark = true; isNova = true; };
 
           family =
-            nixpkgs.lib.nixosSystem {
-              inherit system;
-              specialArgs = { inherit nixpkgs disko nur; };
+            nixpkgs.lib.nixosSystem
+              {
+                inherit system;
+                specialArgs = { inherit nixpkgs disko nur; };
 
-              modules =
-                [
-                  ./nixos/configuration-familly-laptop.nix
-                  ./nixos/packet.nix
-                ];
-            };
+                modules =
+                  [
+                    ./nixos/configuration-familly-laptop.nix
+                    ./nixos/packet.nix
+
+
+                    home-manager.nixosModules.home-manager
+
+                    {
+                      # Ensure that home-manager uses nixpkgs and that flake have
+                      # the globally pinned nixpkgs
+                      home-manager.useGlobalPkgs = true;
+                      home-manager.useUserPackages = true;
+
+                      # Some config files can be overriden by the tool (such as htop)
+                      # When home-manager try to create the symlink, it will fail
+                      # Instead, this won't fail and just move the new file in a "backup" file
+                      home-manager.backupFileExtension = "backup";
+
+                      home-manager.users.cyrielle = {
+                        imports = [
+                          {
+                            home.stateVersion = "20.09";
+                            programs.mpv = {
+                              enable = true;
+                              bindings = {
+                                ";" = "frame-step";
+                              };
+                            };
+                          }
+                        ];
+                      };
+                    }
+                  ];
+              };
         };
     };
 }

@@ -1,10 +1,28 @@
-[custom_commands]
-"new main" = { args = ["new", "dev@origin"] }
-"tug" = { key = ["ctrl+t"], args = ["bookmark", "move", "--from", "closest_bookmark($change_id)", "--to", "closest_pushable($change_id)"] }
-"push new" = { args = ["git", "push", "--allow-new", "-r", "closest_bookmark($change_id)"], show = "diff"}
-"diff kitty" = { args = ["show", "$change_id", "--tool", "kitty"], show = "diff"}
-"rebase dev" = { args = ["rebase", "--source", "$change_id", "--destination", "dev@origin"] }
-"resolve" = { args = ["resolve", "-r", "$change_id"] }
+[[actions]]
+name = "new-main"
+lua = '''
+jj_async("new", "dev@origin")
+revisions.refresh()
+'''
+
+[[bindings]]
+action = "new-main"
+seq = ["x", "n"]
+scope = "revisions"
+desc = "new revision based on main"
+
+[[actions]]
+name = "resolve"
+lua = '''
+jj_async("resolve", "-r", context.change_id())
+revisions.refresh()
+'''
+
+[[bindings]]
+action = "resolve"
+seq = ["x", "r"]
+scope = "revisions"
+desc = "Resolve a revision"
 
 [ui.tracer]
 enabled = true
