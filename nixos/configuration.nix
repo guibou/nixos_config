@@ -68,15 +68,15 @@
 
   programs = {
     i3lock = {
-       enable = true;
-       package = pkgs.i3lock-color;
-     };
+      enable = true;
+      package = pkgs.i3lock-color;
+    };
     steam.enable = true;
     bash.completion.enable = true;
     zsh = {
-       enable = true;
-       enableCompletion = true;
-     };
+      enable = true;
+      enableCompletion = true;
+    };
     ssh.startAgent = true;
   };
 
@@ -117,8 +117,8 @@
         user = "guillaume";
       };
 
-        gdm = {
-          enable = true;
+      gdm = {
+        enable = true;
       };
     };
 
@@ -232,4 +232,12 @@
 
   # Diasble this thing which is turned on and I don't understand why
   services.speechd.enable = false;
+
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
 }

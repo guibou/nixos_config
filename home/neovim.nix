@@ -3,6 +3,10 @@
   programs.neovim = {
     enable = true;
 
+    # new default with home.stateVersion 26.05
+    withRuby = false;
+    withPython3 = false;
+
     extraPackages = with pkgs; [
       # For treesitter
       jq

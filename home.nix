@@ -288,12 +288,12 @@ in
 
   home.shell = {
     enableBashIntegration = true;
-    enableNushellIntegration = true;
+    enableNushellIntegration = false;
     enableZshIntegration = true;
   };
 
   programs.nushell = {
-    enable = true;
+    enable = false;
     extraConfig = ''
       '';
   };

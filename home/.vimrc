@@ -105,6 +105,7 @@ set expandtab
 cmap w!! $!sudo tee > /dev/null %
 
 set scrolloff=10
+set scrolloffpad=10
 
 set updatetime=100
 
