@@ -45,7 +45,7 @@ vim.pack.add({
     'https://github.com/suderio/autolang.nvim'
 })
 
-require('vim._core.ui2').enable({})
+require('vim._core.ui2').enable()
 EOF
 
 " set completeopt=menuone,noselect
@@ -610,10 +610,8 @@ set nu relativenumber
 "sign define DiagnosticSignInfo text= linehl= texthl=DiagnosticSignInfo numhl=
 "sign define DiagnosticSignHint text= linehl= texthl=DiagnosticSignHint numhl=
 
-" No status line
-" I would like to disable it entirely, but looks like it is not possible
 set laststatus=3
-set cmdheight=0
+" set cmdheight=0
 
 " TODO: tune the winbar so filename change color relative to the mode
 " set winbar=%!WinBar()
