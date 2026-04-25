@@ -6,28 +6,26 @@ in
 {
   config = {
     home.packages = [
-      (pkgs.writeScriptBin "dark-theme"
+      (pkgs.writeScriptBin "switch-theme"
         ''
-          PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
+          set -x
+          current=$(dconf read '/org/gnome/desktop/interface/color-scheme')
 
-          cat ${nightfox-nvim}/extra/${darkTheme}/${darkTheme}.Xresources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > ~/.config/theme.conf
-          dconf write '/org/gnome/desktop/interface/color-scheme' "'prefer-dark'"
+          if [ "$current" = "'prefer-dark'" ]
+          then
+            new_theme="'prefer-light'"
+            resources=${nightfox-nvim}/extra/${lightTheme}/${lightTheme}.Xresources 
+          else
+            new_theme="'prefer-dark'"
+            resources=${nightfox-nvim}/extra/${darkTheme}/${darkTheme}.Xresources 
+          fi
+
+
+          cat $resources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > ~/.config/theme.conf
+          dconf write '/org/gnome/desktop/interface/color-scheme' $new_theme
 
           # force reload all nvim
-          pkill -SIGUSR1 nvim || echo "no vim was started"
-
-          # force reload sway
-          swaymsg reload
-        '')
-      (pkgs.writeScriptBin "light-theme"
-        ''
-          PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
-
-          cat ${nightfox-nvim}/extra/${lightTheme}/${lightTheme}.Xresources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > ~/.config/theme.conf
-          dconf write '/org/gnome/desktop/interface/color-scheme' "'prefer-light'"
-
-          # force reload all nvim
-          pkill -SIGUSR1 nvim || echo "no vim was started"
+          pkill -SIGUSR1 nvim
 
           # force reload sway
           swaymsg reload
