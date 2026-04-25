@@ -1,20 +1,39 @@
-{ config, lib, pkgs, nightfox-nvim, ... }:
+{ pkgs, nightfox-nvim, ... }:
 let
   darkTheme = "nordfox";
   lightTheme = "dawnfox";
-
-  currentTheme = if config.dark-theme then darkTheme else lightTheme;
-  dark = config.dark-theme;
 in
 {
-  options = {
-    dark-theme = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
-  };
-
   config = {
+    home.packages = [
+      (pkgs.writeScriptBin "dark-theme"
+        ''
+          PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
+
+          cat ${nightfox-nvim}/extra/${darkTheme}/${darkTheme}.Xresources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > ~/.config/theme.conf
+          dconf write '/org/gnome/desktop/interface/color-scheme' "'prefer-dark'"
+
+          # force reload all nvim
+          pkill -SIGUSR1 nvim || echo "no vim was started"
+
+          # force reload sway
+          swaymsg reload
+        '')
+      (pkgs.writeScriptBin "light-theme"
+        ''
+          PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
+
+          cat ${nightfox-nvim}/extra/${lightTheme}/${lightTheme}.Xresources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > ~/.config/theme.conf
+          dconf write '/org/gnome/desktop/interface/color-scheme' "'prefer-light'"
+
+          # force reload all nvim
+          pkill -SIGUSR1 nvim || echo "no vim was started"
+
+          # force reload sway
+          swaymsg reload
+        '')
+    ];
+
     programs.neovim = {
       initLua = ''
         function load_theme_from_os_preferences()
@@ -39,27 +58,14 @@ in
       iconTheme.package = pkgs.gnome-themes-extra;
 
       theme = {
-        name = if dark then "Adwaita-dark" else "Adwaita";
+        name = "Adwaita";
         package = pkgs.gnome-themes-extra;
       };
       gtk4.theme = null;
-
-      gtk3.extraConfig = {
-        gtk-application-prefer-dark-theme = dark;
-      };
-      gtk4.extraConfig = {
-        gtk-application-prefer-dark-theme = dark;
-      };
     };
-
-    programs.delta = {
-      options = { "syntax-theme" = if dark then "1337" else "GitHub"; };
-    };
-
 
     programs.kitty = {
       extraConfig = ''
-        include ${nightfox-nvim}/extra/${currentTheme}/kitty.conf
         font_size 12
 
         # Monaspace
@@ -84,34 +90,21 @@ in
 
     xdg = {
       configFile = {
-        "theme.conf" = {
-          source = pkgs.runCommand "make-theme.conf" {
-
-          }
-          ''
-          cat ${nightfox-nvim}/extra/${currentTheme}/${currentTheme}.Xresources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > $out
-          '';
-        };
-        /*
-        # TODO: kitty auto theme switch does not work as expected, so for now I
-        # just force the theme files
         "kitty/dark-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
         "kitty/no-preference-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
-
         "kitty/light-theme.auto.conf" = {
-          source = "${nightfox-nvim}/extra/${currentTheme}/kitty.conf";
+          source = "${nightfox-nvim}/extra/${lightTheme}/kitty.conf";
         };
-        */
 
       };
     };
-
-    dconf.settings = {
-      "org/gnome/desktop/interface" = { color-scheme = if dark then "prefer-dark" else "prefer-light"; };
-    };
   };
 }
+
+
+
+

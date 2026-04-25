@@ -414,10 +414,6 @@ in
   # alert for battery events
   services.poweralertd.enable = true;
 
-  programs.delta = {
-    enable = true;
-  };
-
   programs.git = {
     signing.format = null;
     lfs.enable = true;
@@ -615,8 +611,6 @@ in
 
   home.activation = {
     reloadNvimColorScheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      # Force all nvim to the new colorscheme
-      pkill -SIGUSR1 nvim || echo "no vim was started"
     '';
   };
 

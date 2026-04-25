@@ -79,7 +79,7 @@
     {
       nixosConfigurations =
         let
-          myNixos = { dark, isNova }:
+          myNixos = { isNova }:
             nixpkgs.lib.nixosSystem {
               inherit system;
               specialArgs = {
@@ -109,7 +109,6 @@
                       imports = [
                         ./home.nix
                       ];
-                      dark-theme = dark;
                     };
 
                     # Optionally, use home-manager.extraSpecialArgs to pass
@@ -123,9 +122,8 @@
             };
         in
         {
-          gecko = myNixos { dark = false; isNova = true; };
-          gecko_no_nova = myNixos { dark = false; isNova = false; };
-          gecko_dark = myNixos { dark = true; isNova = true; };
+          gecko = myNixos { isNova = true; };
+          gecko_no_nova = myNixos { isNova = false; };
 
           family =
             nixpkgs.lib.nixosSystem
