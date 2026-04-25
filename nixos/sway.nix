@@ -82,13 +82,13 @@
           (pkgs.writeScriptBin "lock-action"
             ''
               PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
-              swaylock -c 404040
 
               # I turn notifications OFF so they do not risk poping over my screen
               set-notification-pause true
 
               # I set volume OFF so it does not continue or pop on out of suspend
               pactl set-sink-mute @DEFAULT_SINK@ 1
+              swaylock -f -c 404040
             '')
 
         ];
