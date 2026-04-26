@@ -54,7 +54,6 @@
           doctor.nixosModules.vpn
           "${doctor}/nixos/modules/nix-cache.nix"
           "${doctor}/nixos/user-config.nix"
-          ./nixos/packet.nix
           { }
         ];
 
@@ -65,7 +64,6 @@
 
         home-manager.users.guillaume = {
           imports = [
-            ./home.nix
             "${doctor}/nix/hm/zerotrust.nix"
             "${doctor}/nixos/collections/nova/ssh-known-hosts/hm.nix"
             "${doctor}/nixos/collections/guillaume.bouchard/firefox-bookmarks/hm.nix"
@@ -92,6 +90,7 @@
                 [
                   "${nixos-hardware}/lenovo/thinkpad/x1/13th-gen/default.nix"
                   ./nixos/configuration.nix
+                  ./nixos/packet.nix
                   home-manager.nixosModules.home-manager
 
                   {
