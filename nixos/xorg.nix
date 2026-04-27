@@ -76,6 +76,11 @@
 
         ];
 
+        gtk = {
+          cursorTheme.package = pkgs.xcursor-themes;
+          cursorTheme.name = "whiteglass";
+          cursorTheme.size = 16;
+        };
 
         programs.i3lock = {
           enable = true;

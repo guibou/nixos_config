@@ -398,10 +398,6 @@ in
 
   gtk = {
     enable = true;
-
-    cursorTheme.package = pkgs.xcursor-themes;
-    cursorTheme.name = "whiteglass";
-    cursorTheme.size = 16;
   };
 
   # services.network-manager-applet.enable = true;
