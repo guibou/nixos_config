@@ -11,6 +11,10 @@ set $flameshot "flameshot gui --raw | wl-copy"
 
 include /home/guillaume/nixos_config/home/i3config
 
+# video 
+bindsym $mod+Shift+V exec start-screen-capture
+bindsym $mod+Shift+Z exec stop-screen-capture
+
 # xwayland disable
 
 # Setup some stuffs?

@@ -218,6 +218,20 @@ in
                     "Brightness"
       '')
 
+    (pkgs.writeScriptBin "start-screen-capture"
+      ''
+        PATH=${pkgs.lib.makeBinPath [
+          pkgs.wl-screenrec pkgs.slurp pkgs.wl-clipboard pkgs.coreutils-full]}
+        TMPDIR=$(mktemp -d)
+        wl-screenrec -g "$(slurp -b '#000000aa')" -f $TMPDIR/screenrec.mp4
+        wl-copy -t text/uri-list file://$TMPDIR/screenrec.mp4 
+      '')
+    (pkgs.writeScriptBin "stop-screen-capture"
+      ''
+        pkill wl-screenrec
+      '')
+
+
     nix-output-monitor
     btop
     hyperfine
