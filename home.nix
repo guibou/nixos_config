@@ -224,6 +224,13 @@ in
 
     difftastic
     jjui
+
+    # A few wayland tools
+    ansifilter
+    xlsclients
+
+    # C++ dev
+    ccls
   ];
 
   # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
