@@ -39,6 +39,11 @@
           "browser.startup.homepage" = "about:blank";
           "browser.urlbar.placeholderName" = "DuckDuckGo";
 
+          # Disable history swipping with the trackpad, I've got bitten by that
+          # too many times
+          "browser.gesture.swipe.left" = "";
+          "browser.gesture.swipe.right" = "";
+
           # Disable AI things
           # these flags actualy disable the AI features
           # Found there: https://www.reddit.com/r/NixOS/comments/1rkt5ag/reminder_to_declare_the_blocking_of_ai_stuff_in/
