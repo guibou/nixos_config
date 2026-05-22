@@ -62,8 +62,8 @@ update() {
     ps_controler_status='{"name":"ps_controler","instance":"ps_controler","color":"'"$color"'","markup":"none","full_text":"  '"$status%"'"},'
   fi
 
-  #title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(xtitle | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
-  title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":""}'
+  window_title=$(swaymsg -t get_tree 2>/dev/null | jq -r '..|try select(.focused == true).name' 2>/dev/null)
+  title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(echo $window_title | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
 }
 
 # Override header
@@ -81,7 +81,7 @@ do
   first_comma=","
 done) ) &
 
-# (i3-msg -t subscribe -m '["window"]' | (while read line; do killall -USR1 i3status ; done;)) &
+(swaymsg -t subscribe -m '["window"]' | (while read line; do killall -USR1 i3status ; done;)) &
 
 
 # TODO: maybe this can leak background process

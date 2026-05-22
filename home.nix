@@ -125,9 +125,6 @@ in
 
     glab
 
-    # For title in the i3bar
-    xtitle
-
     # when occasianally I mount ntfs drives
     ntfs3g
 

@@ -62,6 +62,11 @@
           # do a special configuration, I'm blocked because of that and that's sad.
           arandr
 
+          # For title in the i3bar
+          # TODO: if reusing i3, maybe we could turn that into a script so the
+          # sway/i3 config works the same
+          xtitle
+
           (pkgs.writeScriptBin "lock-action"
             ''
               PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH
