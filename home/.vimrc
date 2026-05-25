@@ -43,6 +43,9 @@ vim.pack.add({
     },
 
     'https://github.com/suderio/autolang.nvim'
+
+    -- Turns ansi code into nice colors
+    ,'https://github.com/0xferrous/ansi.nvim'
 })
 
 require('vim._core.ui2').enable()
@@ -572,6 +575,18 @@ callback = function()
 end
 })
 
+require('ansi').setup({
+  -- Automatically enable for configured filetypes
+  auto_enable = true,
+
+  -- Automatically enable when buffer content was read from stdin
+  -- Useful for commands like: cat file.log | nvim -
+  auto_enable_stdin = true,
+
+  -- Filetypes to auto-enable when auto_enable is true
+  filetypes = { 'log' },
+})
+
 EOF
 
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
@@ -642,3 +657,4 @@ augroup jsonzlib
   autocmd BufReadPost,FileReadPost	*.jsonzlib execute ":doautocmd BufReadPost " .. expand("%:r")
   autocmd BufWritePost *.jsonzlib silent execute '!jsonzlib-compress < ' . shellescape(expand('%:p')) . ' > ' . shellescape(expand('%:p') . '.tmp') . ' && mv ' . shellescape(expand('%:p') . '.tmp') . ' ' . shellescape(expand('%:p'))
 augroup END
+

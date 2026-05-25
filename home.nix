@@ -539,6 +539,7 @@ in
     {
       enable = true;
       shellIntegration.enableZshIntegration = true;
+      shellIntegration.enableBashIntegration = true;
 
       extraConfig = ''
         enable_audio_bell false
