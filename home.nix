@@ -480,7 +480,7 @@ in
     enableDefaultConfig = false;
 
     # Docs tell me to do that
-    matchBlocks."*" = {
+    settings."*" = {
       # This is the part that nix set by default and that maybe I should have a
       # look at what the true default are
       forwardAgent = false;
