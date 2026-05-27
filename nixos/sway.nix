@@ -19,8 +19,20 @@
 
   xdg.portal = {
     enable = true;
-    config = { common = { default = "wlr"; }; };
+    config = { common = { default = "*"; }; };
     wlr.enable = true;
+
+    wlr.settings = {
+      screencast = {
+        chooser_type = "dmenu";
+        # I don't understand why it does not work with dmenu
+        chooser_cmd = "${pkgs.bemenu}/bin/bemenu -l 10";
+      };
+    };
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+    ];
   };
 
   # services.displayManager.defaultSession = "sway";
@@ -79,6 +91,7 @@
         };
 
         home.packages = [
+          pkgs.slurp
           (pkgs.writeScriptBin "lock-action"
             ''
               PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio]}:$PATH

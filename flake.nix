@@ -2,7 +2,7 @@
   description = "Home Manager configuration of @guibou";
 
   inputs = {
-    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
 
     home-manager = {
       url = "git+https://github.com/nix-community/home-manager?shallow=1&ref=master";
