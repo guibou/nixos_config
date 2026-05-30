@@ -9,6 +9,7 @@
     ./timezone-run.nix
     ./sway.nix
     # ./xorg.nix
+    ./zsh.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -69,10 +70,6 @@
   programs = {
     steam.enable = true;
     bash.completion.enable = true;
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-    };
     ssh.startAgent = true;
   };
 
@@ -122,8 +119,6 @@
       "networkmanager"
       "video" # for brightness control
     ];
-
-    shell = pkgs.zsh;
 
     hashedPassword =
       "$6$E8th2nqj4UVi$7BHlXOs5nrhxzsYnbeUMbiD9fXonO2TQgnFUhQ9YrjlPu4.DuPtfB8qYqE/q4TfJPWTSeKJoxU/VT/k80FriN.";
@@ -209,13 +204,8 @@
   # See https://github.com/aws/aws-cli/issues/5623
   systemd.services.nix-daemon.serviceConfig.Environment = [ "AWS_EC2_METADATA_DISABLED=true" ];
 
-
-  # Helps with path completion, well' I'm unsure
-  environment.pathsToLink = [ "/share/zsh" ];
-
   # Diasble this thing which is turned on and I don't understand why
   services.speechd.enable = false;
-
 
   xdg.portal = {
     enable = true;
