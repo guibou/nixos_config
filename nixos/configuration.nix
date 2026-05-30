@@ -9,7 +9,7 @@
     ./timezone-run.nix
     ./sway.nix
     # ./xorg.nix
-    ./zsh.nix
+    ./fish.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

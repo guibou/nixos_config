@@ -15,7 +15,7 @@ in
     # ./home/ts-dev.nix
     # ./home/teaching.nix
     ./home/theming.nix
-    ./home/zsh.nix
+    ./home/fish.nix
   ];
 
   home.username = "guillaume";
