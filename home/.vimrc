@@ -479,15 +479,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- Override diagnostics in HLS
 local haskell_diagnostic_severity = {
       -- No type signature at top level
-      ["GHC-38417"] = vim.diagnostic.severity.HINT,
+      ["GHC-38417"] = vim.diagnostic.severity.INFO,
       -- Defined but not used
-      ["GHC-40910"] = vim.diagnostic.severity.HINT,
+      ["GHC-40910"] = vim.diagnostic.severity.INFO,
       -- Defaulting
-      ["GHC-18042"] = vim.diagnostic.severity.HINT,
+      ["GHC-18042"] = vim.diagnostic.severity.INFO,
       -- Warnings and deprecated
-      ["GHC-63394"] = vim.diagnostic.severity.INFO,
+      ["GHC-63394"] = vim.diagnostic.severity.HINT,
       -- Deprecated
-      ["GHC-68441"] = vim.diagnostic.severity.INFO,
+      ["GHC-68441"] = vim.diagnostic.severity.HINT,
      }
 
 -- Save the original handler
@@ -590,7 +590,8 @@ require('ansi').setup({
 EOF
 
 noremap <Leader>gb <cmd>lua gitsign_change_base_using_jj()<cr>
-noremap <Leader>ei <cmd>FzfLua lsp_workspace_diagnostics<cr>
+noremap <Leader>eh <cmd>FzfLua lsp_workspace_diagnostics<cr>
+noremap <Leader>ei <cmd>FzfLua lsp_workspace_diagnostics severity_limit=3<cr>
 noremap <Leader>ew <cmd>FzfLua lsp_workspace_diagnostics severity_limit=2<cr>
 noremap <Leader>ee <cmd>FzfLua lsp_workspace_diagnostics severity_limit=1<cr>
 

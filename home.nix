@@ -391,6 +391,8 @@ in
 
   home.sessionVariables = {
     EDITOR = "vim";
+    BROWSER = "firefox";
+    LESS="-XRj.5";
   };
 
   programs.ssh = {

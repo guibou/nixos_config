@@ -40,9 +40,6 @@
         # skydive roulette
         [ $[ $RANDOM % 1500 ] -eq 0 ] && ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
 
-        LESS="-XRj.5"
-        export BROWSER="firefox"
-
         icat () {
           kitty +kitten icat $*
         }

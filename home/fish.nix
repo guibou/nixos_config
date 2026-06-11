@@ -16,21 +16,18 @@
       '';
     };
 
+    shellInit = ''
+        if test (builtin random 0 1500) -eq 0
+          ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
+        end
+
+    '';
+
     generateCompletions = true;
 
     /*
       initContent =
       ''
-        # skydive roulette
-        [ $[ $RANDOM % 1500 ] -eq 0 ] && ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
-
-        LESS="-XRj.5"
-        export BROWSER="firefox"
-
-        icat () {
-          kitty +kitten icat $*
-        }
-
         ghc_with () {
           version=$1;shift
           nix shell --impure --expr "(with import ${pkgs.path} {};haskell.packages.ghc$version.ghcWithPackages (ps: with ps; [ haskell-language-server $* ]))"
