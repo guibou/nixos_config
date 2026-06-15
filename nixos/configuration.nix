@@ -174,7 +174,7 @@
       warn-dirty = false;
 
       # No more implicit registry
-      flake-registry = [ ];
+      flake-registry = [];
 
       # lazy-trees = true;
     };

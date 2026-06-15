@@ -62,6 +62,8 @@
           pc = "n00101";
         };
 
+        nix.settings.flake-registry = nixpkgs.lib.mkForce "${doctor}/script/flake-registry.json";
+
         home-manager.users.guillaume = {
           imports = [
             "${doctor}/nix/hm/zerotrust.nix"
