@@ -44,7 +44,7 @@
     ];
 
     package = neovim.overrideAttrs (old: {
-      patches = old.patches ++ [ ../home/neovim_patch_36257.diff ];
+      patches = old.patches ++ [ ];
     });
 
     viAlias = true;
