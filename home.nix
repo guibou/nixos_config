@@ -38,7 +38,6 @@ in
     meld
     pavucontrol
     # simplescreenrecorder
-    # transmission-gtk
 
     # Poulet stuffs
     # coq
@@ -243,6 +242,8 @@ in
 
     # C++ dev
     ccls
+
+    transmission_4-gtk
   ];
 
   # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
