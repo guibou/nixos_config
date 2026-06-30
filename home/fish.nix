@@ -11,9 +11,8 @@
 
     functions = {
       fish_greeting.body = "";
-      icat.body = ''
-        kitty +kitten icat $args
-      '';
+      icat.body = ''kitty +kitten icat $argv'';
+      whichreal.body = "realpath (command -v $argv)";
     };
 
     shellInit = ''
