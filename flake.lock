@@ -55,10 +55,10 @@
         "userConfig": "userConfig"
       },
       "locked": {
-        "lastModified": 1779903532,
-        "narHash": "sha256-FMhlyemz5hVr62Z11rDH35gwfSIHDAwrCl7bVpfxMZs=",
-        "rev": "454a9aa605667be0a3c9a56a8b4b0f565f4e5d06",
-        "revCount": 1416,
+        "lastModified": 1782371548,
+        "narHash": "sha256-zC1ILlk2WYTI6cXRVhpZ6v7ewkDrc2DCafHB5pTYfaI=",
+        "rev": "0f83a13b272d86561676dd6dfb0aa6a61cd6c230",
+        "revCount": 1453,
         "type": "git",
         "url": "file:///home/guillaume/jinko/doctor"
       },
@@ -212,11 +212,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777434174,
-        "narHash": "sha256-KwTyQ5g2qDhWIs/O6vH8HeF8n4JCzZIT/VYE7nYnukQ=",
+        "lastModified": 1780593650,
+        "narHash": "sha256-CHo7k65YTL3HY+WQVedDTupji+LMgNlKCdrtRHZFAK4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d3b4e4b1bd59aedd3d4eb0a8df7162edb6da4607",
+        "rev": "447fd9ff62501dae7206dfe180ee89f8de27b7d5",
         "type": "github"
       },
       "original": {
@@ -500,11 +500,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1778869304,
-        "narHash": "sha256-30sZNZoA1cqF5JNO9fVX+wgiQYjB7HJqqJ4ztCDeBZE=",
+        "lastModified": 1780243769,
+        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d233902339c02a9c334e7e593de68855ad26c4cb",
+        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
         "type": "github"
       },
       "original": {

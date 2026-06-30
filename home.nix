@@ -421,10 +421,9 @@ in
       identityFile = "~/.ssh/id_gecko";
     };
 
-    extraConfig = ''
-      Host github.com
-      IdentityFile ~/.ssh/id_gecko
-    '';
+    settings."github.com" = {
+      identityFile = "~/.ssh/id_gecko";
+      };
   };
 
   home.file = {
