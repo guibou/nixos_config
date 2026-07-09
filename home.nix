@@ -36,7 +36,8 @@ in
     man-pages
 
     meld
-    pavucontrol
+    pwvucontrol
+
     # simplescreenrecorder
 
     # Poulet stuffs
