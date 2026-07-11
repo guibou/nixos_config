@@ -78,7 +78,7 @@ noremap <Leader>cl :lua vim.lsp.codelens.run()<cr>
 noremap <Leader>cr :lua vim.lsp.buf.rename()<cr>
 noremap <Leader>ch :lua vim.lsp.buf.hover { border = "rounded" }<cr>
 noremap <Leader>ct <cmd>FzfLua lsp_typedefs<cr>
-noremap <Leader>cs <cmd>FzfLua lsp_workspace_symbols<cr>
+noremap <Leader>cs <cmd>FzfLua lsp_live_workspace_symbols<cr>
 noremap <Leader>cf :lua vim.lsp.buf.format()<cr>
 noremap <Leader>ee :lua vim.diagnostic.open_float { border = "rounded" }<cr>
 
