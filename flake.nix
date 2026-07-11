@@ -27,6 +27,11 @@
       url = "git+file:///home/guillaume/jinko/doctor";
     };
 
+    xdg-desktop-portal-wlr = {
+      url = "github:funk443/xdg-desktop-portal-wlr/screencast-retry";
+      flake = false;
+    };
+
     nixos-hardware = {
       url = "github:nixos/nixos-hardware";
     };
@@ -38,7 +43,7 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, nixos-hardware, ... }:
+  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, nixos-hardware, xdg-desktop-portal-wlr, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
@@ -46,6 +51,13 @@
       novaModule = {
         nixpkgs.overlays = [
           doctor.overlays.autoCalledPackages
+          (self: super: {
+            xdg-desktop-portal-wlr = super.xdg-desktop-portal-wlr.overrideAttrs (old:
+              {
+                src = xdg-desktop-portal-wlr;
+              });
+          }
+          )
         ];
 
         imports = [
