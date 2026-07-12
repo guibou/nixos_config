@@ -55,10 +55,10 @@
         "userConfig": "userConfig"
       },
       "locked": {
-        "lastModified": 1783441128,
-        "narHash": "sha256-ns5DS6T2VmdECCTUro2/XosVOTTTSReJislQPS/JVTU=",
-        "rev": "277a5b0116056d1192d5f4fdbd6e75f438204ae1",
-        "revCount": 1456,
+        "lastModified": 1783876201,
+        "narHash": "sha256-BJYfH8yrsXrFd1R7OizzGavg5kcGObf9SREgouVa8YU=",
+        "rev": "af88014e867f27899f58c90ef751019d9038174f",
+        "revCount": 1463,
         "type": "git",
         "url": "file:///home/guillaume/jinko/doctor"
       },
