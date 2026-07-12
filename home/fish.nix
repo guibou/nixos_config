@@ -13,6 +13,10 @@
       fish_greeting.body = "";
       icat.body = ''kitty +kitten icat $argv'';
       whichreal.body = "realpath (command -v $argv)";
+
+      ghc_with.body = ''
+        nix shell --impure --expr "(with import ${pkgs.path} {};haskellPackages.ghcWithPackages (ps: with ps; [ $argv ]))"
+      '';
     };
 
     shellInit = ''
