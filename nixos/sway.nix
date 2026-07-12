@@ -23,7 +23,7 @@
 
     wlr.settings = {
       screencast = {
-        chooser_type = "dmenu";
+        chooser_type = "simple";
       };
     };
     extraPortals = [
