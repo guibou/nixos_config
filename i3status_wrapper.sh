@@ -110,9 +110,9 @@ do
       volume-change set-sink-mute @DEFAULT_SINK@ toggle
     elif [ "$name" = "wireless" ]
     then
-      networkmanager_dmenu -l 10
+      wifi-menu
     elif [ "$name" = "bluetooth" ]
     then
-      dmenu-bluetooth -l 10 > /dev/null
+      bz-menu > /dev/null
     fi
 done

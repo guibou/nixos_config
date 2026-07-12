@@ -117,8 +117,11 @@ in
     killall
 
     # For network manager, replaces the appled
-    networkmanager_dmenu
     bluez
+    bzmenu
+    iwmenu
+
+    # Used for cli status
     dmenu-bluetooth
 
     # for mouse emulation

@@ -3,7 +3,7 @@ input type:keyboard {
     xkb_variant dvorak-alt-intl
 }
 
-set $menu wmenu-run
+set $menu fuzzel
 set $nagbar swaynag
 set $msg swaymsg
 set $tray_output_value *

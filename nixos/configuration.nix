@@ -8,8 +8,8 @@
     ./x1-carbon.nix
     ./timezone-run.nix
     ./sway.nix
-    # ./xorg.nix
     ./fish.nix
+    ./launcher.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -44,8 +44,11 @@
     hostName = "gecko";
 
     networkmanager = {
-      enable = true;
+      # Replcade by iwd. I'll test that for a bit of time
+      # enable = true;
     };
+
+    wireless.iwd.enable = true;
 
     # Allow wifi in cafee
     resolvconf.dnsExtensionMechanism = false;

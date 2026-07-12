@@ -9,7 +9,6 @@
         swaylock
         swayidle
         wl-clipboard
-        wmenu
         i3status
       ];
     };
@@ -25,8 +24,6 @@
     wlr.settings = {
       screencast = {
         chooser_type = "dmenu";
-        # I don't understand why it does not work with dmenu
-        chooser_cmd = "${pkgs.bemenu}/bin/bemenu -l 10";
       };
     };
     extraPortals = [
@@ -34,8 +31,6 @@
       pkgs.xdg-desktop-portal-wlr
     ];
   };
-
-  # services.displayManager.defaultSession = "sway";
 
   # autologin on sway
   services.greetd = {
@@ -52,10 +47,6 @@
   home-manager.users.guillaume = {
     imports = [
       ({ config, lib, ... }: {
-        home.sessionVariables = {
-          DMENU_BLUETOOTH_LAUNCHER = "wmenu";
-        };
-
         home.activation = {
           reloadsway = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             # TODO: this does not work for some reasons
@@ -76,10 +67,6 @@
                 source = link "i3status.conf";
                 onChange = "swaymsg restart";
               };
-              "networkmanager-dmenu/config.ini".text = ''
-                [dmenu]
-                dmenu_command = wmenu
-              '';
             };
         };
 

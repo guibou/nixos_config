@@ -15,9 +15,11 @@ in
           then
             new_theme="'prefer-light'"
             resources=${nightfox-nvim}/extra/${lightTheme}/${lightTheme}.Xresources 
+            rm ~/.config/theme_fuzzel.ini
           else
             new_theme="'prefer-dark'"
             resources=${nightfox-nvim}/extra/${darkTheme}/${darkTheme}.Xresources 
+            ln -sf ${./theme_fuzzel.ini} ~/.config/theme_fuzzel.ini
           fi
 
 
@@ -88,6 +90,11 @@ in
 
     xdg = {
       configFile = {
+        "fuzzel/fuzzel.ini" = {
+          text = ''
+            include=~/.config/theme_fuzzel.ini
+          '';
+        };
         "kitty/dark-theme.auto.conf" = {
           source = "${nightfox-nvim}/extra/${darkTheme}/kitty.conf";
         };
