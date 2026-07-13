@@ -9,43 +9,84 @@
   programs.fish = {
     enable = true;
 
-    functions = {
-      fish_greeting.body = "";
-      icat.body = ''kitty +kitten icat $argv'';
-      whichreal.body = "realpath (command -v $argv)";
+    functions =
+      let
+        mkCached = name: ttl: command:
+          ''
+            set -l cache ~/.cache/mycommand/${name}-completions
+            set -l lock ~/.cache/mycommand/${name}-completions.lock
+            set -l max_age ${toString ttl}
+        
+            mkdir -p (dirname $cache)
+        
+            if not test -f $cache; or test (math (date +%s) - (stat -c %Y $cache)) -gt $max_age
+                # This is a bit unsafe, if it is interrupted, the lock will stay forever
+                if mkdir $lock 2>/dev/null
+                    ${command} 2> /dev/null > $cache.tmp
+                    mv $cache.tmp $cache
+                    rmdir $lock
+                end &
+            end
+        
+            if test -f $cache
+                cat $cache
+            end
+          '';
 
-      ghc_with.body = ''
-        nix shell --impure --expr "(with import ${pkgs.path} {};haskellPackages.ghcWithPackages (ps: with ps; [ $argv ]))"
-      '';
-    };
+      in
+      {
+        fish_greeting.body = "";
+        icat.body = ''kitty +kitten icat $argv'';
+        whichreal.body = "realpath (command -v $argv)";
+
+        ghc_with.body = ''
+          argparse "v/version=" "h/hls" -- $argv
+
+          if set -ql _flag_version
+            set ghc_version "haskell.packages.ghc$_flag_version"
+          else
+            set ghc_version haskellPackages
+          end
+
+          if set -ql _flag_hls
+            set hls "haskell-language-server"
+          else
+            set hls ""
+          end
+
+          nix shell --impure --expr "(with import ${pkgs.path} {};$ghc_version.ghcWithPackages (ps: with ps; [ $hls $argv ]))"
+        '';
+
+        __get_all_haskell_deps.body = mkCached "get_all_haskell_deps" 3600
+          '' nix eval --impure --raw --expr 'builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (x: y: "''${x}\t''${if (builtins.tryEval (y.meta.description or "")).success then (y.meta.description or "") else ""}") ((import (builtins.getFlake "nixpkgs") {}).haskellPackages)))' ''
+        ;
+
+        __get_aws_roles.body = mkCached "get_aws_roles" 3600
+          '' ztp-gen-aws -l | tail -n+2 '';
+        __get_postgresql_roles.body = mkCached "__get_postgresql_roles" 3600
+              '' ztp-gen-postgres -l | tail -n+2 '';
+      };
 
     shellInit = ''
-        if test (builtin random 0 1500) -eq 0
-          ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
-        end
+      if test (builtin random 0 1500) -eq 0
+        ${pkgs.libnotify}/bin/notify-send --urgency critical "Cutaway!";
+      end
 
+      # whichreal accept any commend
+      complete -c whichreal -a '(__fish_complete_command)' -f
+
+      complete -c ghc_with -a "(__get_all_haskell_deps)" -f
+
+      complete -c ztp_load_aws --long role -ra '(__get_aws_roles)' -f 
+      complete -c ztp_load_aws -f
+
+      complete -c ztp_load_pg --long role -ra '(__get_postgresql_roles)' -f 
+      complete -c ztp_load_pg -f
     '';
 
     generateCompletions = true;
 
     /*
-      initContent =
-      ''
-        ghc_with () {
-          version=$1;shift
-          nix shell --impure --expr "(with import ${pkgs.path} {};haskell.packages.ghc$version.ghcWithPackages (ps: with ps; [ haskell-language-server $* ]))"
-        }
-
-        ghc_nohls_with () {
-          version=$1;shift
-          nix shell --impure --expr "(with import ${pkgs.path} {};haskell.packages.ghc$version.ghcWithPackages (ps: with ps; [ $* ]))"
-        }
-
-        ghci_with () {
-          version=$1;shift
-          nix shell --impure --expr "(with import ${pkgs.path} {};haskell.packages.ghc$version.ghcWithPackages (ps: with ps; [ $* ]))" --command ghci
-        }
-
         cabalBuild () {
           version=$1;shift
           nix build --impure --expr '(with import ${pkgs.path} {}; haskell.packages.ghc$version.developPackage { root = ./.; })'
