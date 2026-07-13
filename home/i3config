@@ -228,7 +228,7 @@ bindsym $mod+l mode "lock"
 workspace_auto_back_and_forth yes
 # bindsym $mod+Shift+s exec "xrandr --output eDP-1 --auto --output HDMI-1 --auto --right-of eDP-1 --output VGA-1 --auto --right-of HDMI-1"
 
-bindsym $mod+Shift+s exec $flameshot
+bindsym $mod+Shift+s exec $screenshot
 
 # special hook for guerilla windows
 for_window [title="Node Picker"] floating enable

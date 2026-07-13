@@ -227,6 +227,24 @@ in
         wl-screenrec -g "$(slurp -b '#000000aa')" -f $TMPDIR/screenrec.mp4
         wl-copy -t text/uri-list file://$TMPDIR/screenrec.mp4 
       '')
+
+    (pkgs.writeScriptBin "take-screenshot"
+      ''
+        PATH=${pkgs.lib.makeBinPath [
+          pkgs.grim pkgs.satty pkgs.wl-clipboard pkgs.coreutils]}
+        mkdir  ~/Screenshots
+        filename=~/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png 
+        grim -g "0,0 1920x1200" -t ppm - | satty \
+           --filename -  \
+           --initial-tool crop \
+           --fullscreen \
+           --output-filename $filename \
+           --actions-on-enter 'save-to-file,exit' \
+           --annotation-size-factor 0.5
+
+        cat $filename | wl-copy 
+      '')
+
     (pkgs.writeScriptBin "stop-screen-capture"
       ''
         pkill wl-screenrec
@@ -249,27 +267,6 @@ in
 
     transmission_4-gtk
   ];
-
-  # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
-  services.flameshot = {
-    enable = true;
-    settings = {
-      General = {
-        disabledTrayIcon = true;
-        showStartupLaunchMessage = false;
-
-        copyPathAfterSave = true;
-        saveAfterCopy = true;
-        savePath = "/home/guillaume/Screenshots";
-        showDesktopNotification = false;
-        showHelp = false;
-        showSidePanelButton = false;
-      };
-      Shortcuts = {
-        TYPE_COPY = "Ctrl+C";
-      };
-    };
-  };
 
   programs.nix-index = {
     enable = true;
@@ -397,7 +394,7 @@ in
   home.sessionVariables = {
     EDITOR = "vim";
     BROWSER = "firefox";
-    LESS="-XRj.5";
+    LESS = "-XRj.5";
   };
 
   programs.ssh = {
@@ -427,7 +424,7 @@ in
 
     settings."github.com" = {
       identityFile = "~/.ssh/id_gecko";
-      };
+    };
   };
 
   home.file = {

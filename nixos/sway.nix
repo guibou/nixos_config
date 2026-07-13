@@ -70,13 +70,6 @@
             };
         };
 
-        # Note: `Screenshots` directory MUST exists, otherwise flameshot is broken
-        services.flameshot = {
-          package = pkgs.flameshot.override {
-            enableWlrSupport = true;
-          };
-        };
-
         home.packages = [
           pkgs.slurp
           (pkgs.writeScriptBin "lock-action"

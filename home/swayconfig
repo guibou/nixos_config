@@ -7,7 +7,7 @@ set $menu fuzzel
 set $nagbar swaynag
 set $msg swaymsg
 set $tray_output_value *
-set $flameshot "flameshot gui --raw | wl-copy"
+set $screenshot "take-screenshot"
 
 include /home/guillaume/nixos_config/home/i3config
 
