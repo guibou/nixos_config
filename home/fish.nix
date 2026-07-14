@@ -11,6 +11,21 @@
 
     functions =
       let
+
+        cache = command: pkgs.writeScriptBin "cache-command"
+          ''
+          #!/usr/bin/env sh
+          cache=$1
+          lock=$2
+          # This is a bit unsafe, if it is interrupted, the lock will stay forever
+          if mkdir $lock 2>/dev/null
+          then
+              ${command} 2> /dev/null > $cache.tmp
+              mv $cache.tmp $cache
+              rmdir $lock
+          fi
+          ''
+        ;
         mkCached = name: ttl: command:
           ''
             set -l cache ~/.cache/mycommand/${name}-completions
@@ -20,12 +35,8 @@
             mkdir -p (dirname $cache)
         
             if not test -f $cache; or test (math (date +%s) - (stat -c %Y $cache)) -gt $max_age
-                # This is a bit unsafe, if it is interrupted, the lock will stay forever
-                if mkdir $lock 2>/dev/null
-                    ${command} 2> /dev/null > $cache.tmp
-                    mv $cache.tmp $cache
-                    rmdir $lock
-                end &
+              # This is unfortunate, but fish can only run in background real program and not simple fish expressions
+              ${cache command}/bin/cache-command $cache $lock 2> /dev/null &
             end
         
             if test -f $cache
@@ -64,7 +75,7 @@
         __get_aws_roles.body = mkCached "get_aws_roles" 3600
           '' ztp-gen-aws -l | tail -n+2 '';
         __get_postgresql_roles.body = mkCached "__get_postgresql_roles" 3600
-              '' ztp-gen-postgres -l | tail -n+2 '';
+          '' ztp-gen-postgres -l | tail -n+2 '';
       };
 
     shellInit = ''
