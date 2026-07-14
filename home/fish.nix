@@ -17,13 +17,11 @@
           #!/usr/bin/env sh
           cache=$1
           lock=$2
-          # This is a bit unsafe, if it is interrupted, the lock will stay forever
-          if mkdir $lock 2>/dev/null
-          then
+          (
+            flock -n 200 || exit 1
               ${command} 2> /dev/null > $cache.tmp
               mv $cache.tmp $cache
-              rmdir $lock
-          fi
+          ) 200> $lock
           ''
         ;
         mkCached = name: ttl: command:
