@@ -76,6 +76,9 @@
           '' ztp-gen-aws -l | tail -n+2 '';
         __get_postgresql_roles.body = mkCached "__get_postgresql_roles" 3600
           '' ztp-gen-postgres -l | tail -n+2 '';
+
+          ztp-load-aws.body = "ztp_load_aws --role $argv[1]";
+          ztp-load-postgresql.body = "ztp_load_pg --role $argv[1]";
       };
 
     shellInit = ''
@@ -88,11 +91,9 @@
 
       complete -c ghc_with -a "(__get_all_haskell_deps)" -f
 
-      complete -c ztp_load_aws --long role -ra '(__get_aws_roles)' -f 
-      complete -c ztp_load_aws -f
+      complete -c ztp-load-aws -fra '(__get_aws_roles)'
 
-      complete -c ztp_load_pg --long role -ra '(__get_postgresql_roles)' -f 
-      complete -c ztp_load_pg -f
+      complete -c ztp-load-postgresql -fra '(__get_postgresql_roles)'
     '';
 
     generateCompletions = true;
