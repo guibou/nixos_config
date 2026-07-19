@@ -74,10 +74,10 @@ in
     unzip
 
     # GHC(i) with some defaults
-    (haskellPackages.ghcWithPackages (ps:
-      [
-        ps.haskell-language-server
-      ]))
+    # (haskellPackages.ghcWithPackages (ps:
+    #   [
+    #     ps.haskell-language-server
+    #   ]))
 
     jq
     nixfmt

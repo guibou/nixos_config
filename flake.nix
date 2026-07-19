@@ -35,6 +35,8 @@
     nixos-hardware = {
       url = "github:nixos/nixos-hardware";
     };
+
+    simwork.url = "git+file:///home/guillaume/jinko/jinko?ref=origin/dev";
   };
 
   # Contains everything cached from nix-community, including neovim
@@ -43,7 +45,7 @@
     extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
   };
 
-  outputs = { nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, nixos-hardware, xdg-desktop-portal-wlr, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, neovim-flake, nightfox-nvim, disko, nur, doctor, nixos-hardware, xdg-desktop-portal-wlr, ... }:
     let
       system = "x86_64-linux";
       neovim = (neovim-flake.packages.${system}.neovim).override { };
@@ -51,13 +53,6 @@
       novaModule = {
         nixpkgs.overlays = [
           doctor.overlays.autoCalledPackages
-          (self: super: {
-            xdg-desktop-portal-wlr = super.xdg-desktop-portal-wlr.overrideAttrs (old:
-              {
-                src = xdg-desktop-portal-wlr;
-              });
-          }
-          )
         ];
 
         imports = [
@@ -82,6 +77,14 @@
             "${doctor}/nixos/collections/nova/ssh-known-hosts/hm.nix"
             "${doctor}/nixos/collections/guillaume.bouchard/firefox-bookmarks/hm.nix"
             "${doctor}/nixos/common/user-profile.nix"
+
+            # Add the HLS from nova
+            {
+              home.packages = [
+                inputs.simwork.packages.${system}.hls
+                inputs.simwork.legacyPackages.${system}.pkgs.novaHaskellPackages.ghc
+              ];
+            }
           ];
         };
 
@@ -102,6 +105,18 @@
                 nixpkgs.lib.optional isNova novaModule
                 ++
                 [
+                  {
+                    nixpkgs.overlays = [
+                      doctor.overlays.autoCalledPackages
+                      (self: super: {
+                        xdg-desktop-portal-wlr = super.xdg-desktop-portal-wlr.overrideAttrs (old:
+                          {
+                            src = xdg-desktop-portal-wlr;
+                          });
+                      }
+                      )
+                    ];
+                  }
                   "${nixos-hardware}/lenovo/thinkpad/x1/13th-gen/default.nix"
                   ./nixos/configuration.nix
                   ./nixos/packet.nix
