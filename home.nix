@@ -287,7 +287,13 @@ in
     };
   };
 
-  programs.mpv = { enable = true; };
+  programs.mpv = {
+    enable = true;
+    config = {
+      slang = "fr";
+      save-position-on-quit = "yes";
+    };
+  };
 
   home.shell = {
     enableBashIntegration = true;
