@@ -293,6 +293,10 @@ in
       slang = "fr";
       save-position-on-quit = "yes";
     };
+    package = pkgs.mpv.override {
+      # Youtube support is sometime broken (yt-dl) and I really don't care.
+      youtubeSupport = false;
+      };
   };
 
   home.shell = {
