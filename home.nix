@@ -69,15 +69,9 @@ in
 
     # hyperfine
     (pkgs.haskell.lib.doJailbreak nix-diff)
-    (pkgs.haskell.lib.unmarkBroken (pkgs.haskell.lib.doJailbreak haskellPackages.profiteur))
+    (pkgs.haskell.lib.justStaticExecutables (pkgs.haskell.lib.unmarkBroken (pkgs.haskell.lib.doJailbreak haskellPackages.profiteur)))
     patchelf
     unzip
-
-    # GHC(i) with some defaults
-    # (haskellPackages.ghcWithPackages (ps:
-    #   [
-    #     ps.haskell-language-server
-    #   ]))
 
     jq
     nixfmt
@@ -103,7 +97,7 @@ in
     # playstation portable emul
     # ppspp-sdl
 
-    haskellPackages.eventlog2html
+    novaHaskellPackages.eventlog2html
 
     sqlite-interactive
 

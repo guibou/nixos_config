@@ -5,7 +5,7 @@ let
       ''
         #!/usr/bin/env sh
         PATH=${pkgs.lib.makeBinPath [
-           (pkgs.haskellPackages.ghcWithPackages(p: [p.process p.async]))
+           (pkgs.novaHaskellPackages.ghcWithPackages(p: [p.process p.async]))
            pkgs.sway
            pkgs.slurp
            pkgs.jq
