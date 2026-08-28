@@ -248,11 +248,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785627969,
-        "narHash": "sha256-4dtXQk/NMePegK/nWp5NSeuZKLATItOq61lpEvmXqGw=",
+        "lastModified": 1787559586,
+        "narHash": "sha256-onL0VLf9vPllmT0H/OlURIU5r5t5WIEl7t4tVNKT0Nw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "427bf4bd9435fdf21321c8cc628c24efc14c0f7a",
+        "rev": "9d0d87172c374f89da73c1cfe6d81ae62feac1f1",
         "type": "github"
       },
       "original": {
@@ -1192,10 +1192,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1787487906,
-        "narHash": "sha256-zIdM+8teujHm5hc5MIPDnV7k2UeOOT/pFyFtWjOCwsY=",
+        "lastModified": 1787797243,
+        "narHash": "sha256-8+Q7NOB7RPajRjA4pbCDLzqH+MTjnG9x6LUPLfL2joA=",
         "ref": "master",
-        "rev": "cfba7ad5886b342b8dd63ba74354b3853ea4cfc9",
+        "rev": "99c9ec63390f1d8c14d95d9e8b17cc29cfbd4e11",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/home-manager"
@@ -1243,11 +1243,11 @@
     "jinko-api-vpopcalibration": {
       "flake": false,
       "locked": {
-        "lastModified": 1783689539,
-        "narHash": "sha256-B3soVCQ9dwGM/9mZSWfLjvhnO3v3eNXwIUl9Nxb5tPA=",
+        "lastModified": 1787643333,
+        "narHash": "sha256-9UyqnPxEcp4An2AR5ODPdEjwf9RyxtDOV3fm7IW8Zj0=",
         "ref": "refs/heads/main",
-        "rev": "4e438c05e58f3bb8444dee5994351ea1dbba35db",
-        "revCount": 259,
+        "rev": "5ac58b95c9f2386ca281f592f2f06143cbc072b3",
+        "revCount": 372,
         "type": "git",
         "url": "ssh://git@git.novadiscovery.net/jinko/api/vpop-calibration.git"
       },
@@ -1276,10 +1276,10 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1787473592,
-        "narHash": "sha256-dz08yNP6blwlo5UwzreLOgPz9S5RmUwDbDfF4mVWYm4=",
+        "lastModified": 1787876661,
+        "narHash": "sha256-Ggp83T12BJA1XBbJeSCFI1bnKLkSYWWmYqByhpeTfNM=",
         "ref": "master",
-        "rev": "6053b510c33f88e4fd7aeff55b6b55f68b605855",
+        "rev": "476e5145565274b3aa6ecf3f7ab726fd8131e736",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/neovim-nightly-overlay"
@@ -1294,11 +1294,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1787430245,
-        "narHash": "sha256-gEGxSH1ubKVhKYp6G0HZcGn1/iSgHNURLjCM3drzvQ8=",
+        "lastModified": 1787861531,
+        "narHash": "sha256-Y8NLahyZQ5ulkKRakZrEiUIhFZNsSZnKNUJdsIz4bVQ=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "b296666e419cdf7a673fdac7c348d0d95577f5ac",
+        "rev": "7e2e3f8c255f7ae65bd9fdc3feba6b4efd21416f",
         "type": "github"
       },
       "original": {
@@ -1777,11 +1777,11 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1787209939,
-        "narHash": "sha256-WvvHR4kSQLAbtouMC/ruZ5UpLwlUcY3K4FAllMN+yGk=",
+        "lastModified": 1787814960,
+        "narHash": "sha256-PYZq1qzCJXC2zGI0mH07vrZBsw6DRBAOX0jN1pPtqOQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "391b592eb44808b3bd0cb80bb71b63a5a118b8bb",
+        "rev": "c27cdad491a991b11ed731760aa2ef8db0cb0410",
         "type": "github"
       },
       "original": {
@@ -1806,10 +1806,10 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1787364730,
-        "narHash": "sha256-NcYt9QJfpJiF1lAyN8BDPB4EeScbPU+EwQqPiBElrpU=",
+        "lastModified": 1787814960,
+        "narHash": "sha256-PYZq1qzCJXC2zGI0mH07vrZBsw6DRBAOX0jN1pPtqOQ=",
         "ref": "nixpkgs-unstable",
-        "rev": "a831408e6378bc02ebf8cc09b52c96ca86f6bab4",
+        "rev": "c27cdad491a991b11ed731760aa2ef8db0cb0410",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -1877,11 +1877,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787497273,
-        "narHash": "sha256-Sk6o3q14uAAxi3Qh+PNZSgsp63mVnX8QGZUAOuqZEI8=",
+        "lastModified": 1787917456,
+        "narHash": "sha256-ixIMaqF72pEUQtPRcJi7YJmRCKLACowY3mvpvWDY3mo=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3fc6fd53fe364db8e5c2c15d381f4d68ed276b6f",
+        "rev": "169dcfb0ea5fd84800b785f2440ddee0a39e056f",
         "type": "github"
       },
       "original": {
@@ -1990,11 +1990,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1787312113,
-        "narHash": "sha256-Vaq3lVNXKPfhTg9LVVjTDyFl1OC+Kn8j/D/YYSd1ZZI=",
+        "lastModified": 1787906012,
+        "narHash": "sha256-+mcDe5jP9vw3sX25XCE44kDUS69ptSSZ84Sp6lqGGm8=",
         "ref": "origin/dev",
-        "rev": "7835c906381004d9577193571a8a35c916be1b6b",
-        "revCount": 25735,
+        "rev": "d2567f78bd9408e58364362c76467870cb91a2cc",
+        "revCount": 25802,
         "type": "git",
         "url": "file:///home/guillaume/jinko/jinko"
       },
