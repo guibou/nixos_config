@@ -117,7 +117,6 @@
     uid = 1000;
     extraGroups = [
       "wheel"
-      "docker"
       "plugdev"
       "networkmanager"
       "video" # for brightness control
@@ -137,12 +136,6 @@
         nvd diff /run/current-system "$systemConfig"
       '';
     };
-  };
-
-  virtualisation = {
-    docker.enable = false;
-    docker.enableOnBoot = false;
-    docker.autoPrune.enable = true;
   };
 
   nix = {

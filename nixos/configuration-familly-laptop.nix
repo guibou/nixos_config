@@ -107,7 +107,6 @@
     uid = 1000;
     extraGroups = [
       "wheel"
-      "docker"
       "plugdev"
       "networkmanager"
       "video" # for brightness control
@@ -121,7 +120,6 @@
     uid = 1001;
     extraGroups = [
       "wheel"
-      "docker"
       "plugdev"
       "networkmanager"
       "video" # for brightness control
@@ -135,7 +133,6 @@
     uid = 1002;
     extraGroups = [
       "wheel"
-      "docker"
       "plugdev"
       "networkmanager"
       "video" # for brightness control
@@ -149,7 +146,6 @@
     uid = 1003;
     extraGroups = [
       "wheel"
-      "docker"
       "plugdev"
       "networkmanager"
       "video" # for brightness control
