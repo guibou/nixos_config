@@ -64,7 +64,14 @@
 
   i18n = { defaultLocale = "en_US.UTF-8"; };
 
-  documentation.man.enable = true;
+  documentation.man = {
+    enable = true;
+    cache = {
+      # enable = true;
+      enable = false;
+      generateAtRuntime = true;
+    };
+  };
 
   fonts.packages = with pkgs; [ nerd-fonts.bitstream-vera-sans-mono monaspace ];
 
@@ -170,7 +177,7 @@
       warn-dirty = false;
 
       # No more implicit registry
-      flake-registry = [];
+      flake-registry = [ ];
 
       # lazy-trees = true;
     };
