@@ -6,6 +6,7 @@ tailscale_status=""
 bluetooth_status=""
 ps_controller_status=""
 title=""
+recording=""
 
 red=$(cat ~/.config/theme.conf | grep 'color1 ' | cut -f 3 -d' ')
 yellow=$(cat ~/.config/theme.conf | grep 'color11 ' | cut -f 3 -d' ')
@@ -64,6 +65,8 @@ update() {
 
   window_title=$(swaymsg -t get_tree 2>/dev/null | jq -r '..|try select(.focused == true).name' 2>/dev/null)
   title='{"name":"title","instance":"title","color":"'"$foreground"'","markup":"none","full_text":"'"$(echo $window_title | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')"'"}'
+
+  recording=$(pid=$(pgrep wl-screenrec) && echo '{"name":"recording","instance":"recording","color":"'"$yellow"'","markup":"none","full_text":"Recording: '"$(ps h -p $pid -o etime | sed 's/ //g')"'"}' || echo "{}")
 }
 
 # Override header
@@ -77,7 +80,7 @@ first_comma=","
 do
   read line
   update
-  echo "${first_comma}[${title},${ps_controler_status}${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/g" || exit 1
+  echo "${first_comma}[${title},${recording},${ps_controler_status}${bluetooth_status},${tailscale_status},${dunst_status},${line#,\[}" | sed "s/#00FF00/$green/g" | sed "s/#FF0000/$red/g" | sed "s/#FFFF00/$yellow/g" || exit 1
   first_comma=","
 done) ) &
 
