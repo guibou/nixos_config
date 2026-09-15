@@ -33,8 +33,11 @@ vim.pack.add({
     'https://github.com/echasnovski/mini.indentscope',
 
     -- Render image in markdown
-    'https://github.com/3rd/image.nvim',
-    'https://github.com/Thiago4532/mdmath.nvim',
+    --'https://github.com/3rd/image.nvim',
+    --'https://github.com/Thiago4532/mdmath.nvim',
+
+    'https://github.com/techwizrd/render-latex.nvim',
+    'https://MeanderingProgrammer/render-markdown.nvim',
 
     -- Treesitter
     {
@@ -140,16 +143,16 @@ vim.diagnostic.config({
 })
 
 
-blink = require("blink.cmp")
-blink.setup({
-  completion = {
-       documentation = {
-            -- Controls whether the documentation window will automatically show when selecting a completion item
-            auto_show = true,
-        },
-    },
-    signature = { enabled = true }
-})
+-- blink = require("blink.cmp")
+-- blink.setup({
+--   completion = {
+--        documentation = {
+--             -- Controls whether the documentation window will automatically show when selecting a completion item
+--             auto_show = true,
+--         },
+--     },
+--     signature = { enabled = true }
+-- })
 
 
 vim.lsp.enable('asm')
@@ -178,12 +181,18 @@ local default_caps = {
 }
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
+  callback = function(ev)
     -- Inlay hint
     vim.lsp.inlay_hint.enable(true, { 0 })
 
     -- Setup color
     vim.lsp.document_color.enable(true, { 0 } , {style = 'virtual'})
+
+    -- Completion
+    vim.lsp.completion.enable(true, ev.data.client_id, 0, {
+		autotrigger = true,
+      })
+      vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
   end,
 })
 
@@ -477,9 +486,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 
 -- Override diagnostics in HLS
+-- For me, error are stuffs which will completly block compilation
+-- Warnings are stuff which are certainly incorrect and must be fixed first
+-- Info are mostly irrelevant, that's most of the time for "beauty"
+-- HINT: stuff that can be accepted in prod, that's usually deprecation
+-- warning not yet addressed.
 local haskell_diagnostic_severity = {
       -- No type signature at top level
       ["GHC-38417"] = vim.diagnostic.severity.INFO,
+      -- Redundant import
+      ["GHC-38856"] = vim.diagnostic.severity.INFO,
+      -- Name shadowing
+      ["GHC-63397"] = vim.diagnostic.severity.INFO,
       -- Defined but not used
       ["GHC-40910"] = vim.diagnostic.severity.INFO,
       -- Defaulting
