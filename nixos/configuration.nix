@@ -146,11 +146,18 @@
     };
   };
 
-  virtualisation = {
-    docker.enable = true;
-    docker.enableOnBoot = false;
-    docker.autoPrune.enable = true;
-  };
+  virtualisation =
+    {
+      docker.enable = true;
+      podman.enable = false;
+      podman.dockerCompat = false;
+      docker.enableOnBoot = false;
+      docker.autoPrune.enable = true;
+      #containers.registries.settings = {
+      #  unqualified-search-registries = ["docker.io"];
+      #};
+
+    };
 
   nix = {
     # Pin registry so it only contains flake and that this flake is already
