@@ -12,7 +12,7 @@ in
     (import ./home/neovim.nix { inherit neovim; })
     ./home/firefox.nix
     ./home/timezone-run.nix
-    # ./home/ts-dev.nix
+    ./home/ts-dev.nix
     ./home/teaching.nix
     ./home/theming.nix
     ./home/fish.nix

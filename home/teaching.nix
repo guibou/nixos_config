@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     # Draw graph and insert latex formula
     xournalpp
-    texlive.combined.scheme-full
+    texliveSmall
 
     # C++ dev
     ccls
