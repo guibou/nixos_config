@@ -86,6 +86,8 @@
   # Automatic change screen configuration
   services.autorandr.enable = true;
 
+  services.tlp.enable = true;
+
   services = {
     pipewire = {
       enable = true;
@@ -141,7 +143,7 @@
       # Show diff between current and new system
       nixosDiff = ''
         PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
-        nvd diff /run/current-system "$systemConfig"
+        nvd --color always diff /run/current-system "$systemConfig"
       '';
     };
   };

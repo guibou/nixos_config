@@ -33,11 +33,9 @@ vim.pack.add({
     'https://github.com/echasnovski/mini.indentscope',
 
     -- Render image in markdown
-    --'https://github.com/3rd/image.nvim',
-    --'https://github.com/Thiago4532/mdmath.nvim',
-
-    'https://github.com/techwizrd/render-latex.nvim',
-    'https://MeanderingProgrammer/render-markdown.nvim',
+    'https://github.com/3rd/image.nvim',
+    -- Render math in markdown
+    'https://github.com/Thiago4532/mdmath.nvim',
 
     -- Treesitter
     {
@@ -174,7 +172,6 @@ vim.lsp.config('nil_ls', {
 local default_caps = {
   workspace = {
     didChangeWatchedFiles = {
-      -- Disabled because it eats a lot of CPU on linux
       dynamicRegistration = false,
     },
   },
@@ -318,7 +315,7 @@ vim.treesitter.query.set(
 -- 
 -- (ERROR) @error
 
-local ts_lang = { "haskell", "json", "vim", "python", "lua", "markdown", "latex", "glsl", "pyf"}
+local ts_lang = { "haskell", "json", "vim", "python", "lua", "markdown", "latex", "glsl", "pyf", "markdown_inline", "cpp"}
 require('nvim-treesitter').install(ts_lang)
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -428,24 +425,7 @@ watchfiles._watchfunc = function(path, opts, callback)
   end
 end
 
--- require("image").setup({
---   backend = "kitty",
---   integrations = {
---     markdown = {
---       enabled = true,
---       clear_in_insert_mode = false,
---       download_remote_images = true,
---       only_render_image_at_cursor = false,
---       filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
---     }
---   }
--- })
-
--- require("snacks").setup({
--- image = {
---     conceal = true;
--- }
--- })
+require("image").setup()
 
 require('mini.indentscope').setup(
 {
@@ -474,8 +454,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- 2
     vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = {'*.hs'},
       -- 3
-      buffer = args.buf,
+      -- buffer = args.buf,
       callback = function()
         -- 4 + 5
         vim.lsp.buf.format {async = false, id = args.data.client_id }
