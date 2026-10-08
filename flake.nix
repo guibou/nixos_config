@@ -104,7 +104,6 @@
                     nixpkgs.overlays = [
                       doctor.overlays.autoCalledPackages
                       (self: super: {
-                         novaHaskellPackages = inputs.simwork.legacyPackages.${system}.pkgs.novaHaskellPackages;
                       }
                       )
                     ];

@@ -97,7 +97,7 @@ in
     # playstation portable emul
     # ppspp-sdl
 
-    novaHaskellPackages.eventlog2html
+    haskellPackages.eventlog2html
 
     sqlite-interactive
 
