@@ -19,11 +19,11 @@
     "all-cabal-hashes-unpacked": {
       "flake": false,
       "locked": {
-        "lastModified": 1789798378,
-        "narHash": "sha256-Ei+9ab4B6ritEsCbgDTHoL0BBmwY0PN7ex5uNduHRQI=",
+        "lastModified": 1792411164,
+        "narHash": "sha256-LNTgrvjKBHATONErDNYQ2BjR9X6/4oZjkIOSMeHZ5n4=",
         "owner": "commercialhaskell",
         "repo": "all-cabal-hashes",
-        "rev": "e891bc6a5fc3a592bd8e790ef9da0f032ce3df6e",
+        "rev": "d42b91aba8ace3e5a446009762068ba4cc7295a8",
         "type": "github"
       },
       "original": {
@@ -167,10 +167,10 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1789770686,
-        "narHash": "sha256-uZkBR7yHdIKUFB5SZdfgh1qkGfI3XmYmI/lTiquxbck=",
+        "lastModified": 1792526520,
+        "narHash": "sha256-3hSJlv8mUVnZPMWK2+CM7a9O+nR6Z4mCh27NfLCmTPc=",
         "ref": "master",
-        "rev": "725ea35e410ad83be4931d1bff7e090eacaf3563",
+        "rev": "cedd626e11b635470fa6f9fdb8ad79b0075dd7f9",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/disko"
@@ -1262,10 +1262,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791306979,
-        "narHash": "sha256-KuLePuhwJM9NLt/gTLHzXaOoSZKGoB3m7NfXjiQ98HY=",
+        "lastModified": 1792605213,
+        "narHash": "sha256-J73EBU30r2hXvHCcBtaigQDAIu/GGPYk1nc6P9THcmg=",
         "ref": "master",
-        "rev": "fae6e9e42c3b762ab47635cddcfaf6f52374a61b",
+        "rev": "ab97a5d09e0f2aa7339cfd35ec5824fd6653e27c",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/home-manager"
@@ -1313,11 +1313,11 @@
     "jinko-api-vpopcalibration": {
       "flake": false,
       "locked": {
-        "lastModified": 1790005410,
-        "narHash": "sha256-KloAYcrKbnnfojg+d315d5e7ySle8HHPWTjIgvZme6Q=",
+        "lastModified": 1792582242,
+        "narHash": "sha256-OLQJoLnjN2Qv4ll62VnlgOyI7C67XFZyYFNV4HKV+jI=",
         "ref": "refs/heads/main",
-        "rev": "94a659f215dd082569c139abc574ca146a044844",
-        "revCount": 391,
+        "rev": "f9b8d5974127104e8fbd1109f08c1a12e661da6d",
+        "revCount": 428,
         "type": "git",
         "url": "ssh://git@git.novadiscovery.net/jinko/api/vpop-calibration.git"
       },
@@ -1372,10 +1372,10 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1791417820,
-        "narHash": "sha256-J2lxNdGQN/0HtxJN7hImgcKFUFkIT+/VIZLlgdnR2TY=",
+        "lastModified": 1792627401,
+        "narHash": "sha256-hLLuXcYR0vQaUBvfuKkJCUcRcW7lk8gjCe2NtcsTcxo=",
         "ref": "master",
-        "rev": "42252f1d108c3e2051539162e1fb79e76f645af3",
+        "rev": "620aaa5da3561af8fe006be898c6a6fa8acfe877",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/neovim-nightly-overlay"
@@ -1390,11 +1390,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1791362525,
-        "narHash": "sha256-Wx5IlIB6ACHNNFDfE/MQJVqe0XMX7oxwD3ghxGQlOWw=",
+        "lastModified": 1792588455,
+        "narHash": "sha256-qB1nMklYohAtHyVQF+zcFu+P6CmNDiiKX69U/F/TLu4=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "27ee55c09d088c88b6c5ab5e8e2c4eaf86d6df71",
+        "rev": "1cfebe93d5f9463acda4aa6f69e4faa244734193",
         "type": "github"
       },
       "original": {
@@ -1497,11 +1497,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1791373788,
-        "narHash": "sha256-c3oMt0QoE+4yiRk6u1m2L9ogjaUw0uTGn9yk808KkgE=",
+        "lastModified": 1792491056,
+        "narHash": "sha256-6n1Dn+WYtD8lprnSi+0k4FjbKfIVNG8lblpJ5MiiqXs=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "4bc63156b109ee7b4103e3ec30565c8c92bde435",
+        "rev": "efb6d0d5e2394c3c5416a18652808aba206c0988",
         "type": "github"
       },
       "original": {
@@ -1889,11 +1889,11 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1791336361,
-        "narHash": "sha256-o9ZUW4SlEAvFPIyJWnqChhOT/VHpHg8TAvEgmqK1fSI=",
+        "lastModified": 1792506237,
+        "narHash": "sha256-Q/8KLB6jNfpaUN1HAedE/u/Et9feE/zYSsutBLKrCFk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7dd199b0e2993e37b4775ed66b1c291699608c9f",
+        "rev": "5adc50831c259f87faeb09ddf930d43597197473",
         "type": "github"
       },
       "original": {
@@ -1918,10 +1918,10 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1791336361,
-        "narHash": "sha256-o9ZUW4SlEAvFPIyJWnqChhOT/VHpHg8TAvEgmqK1fSI=",
+        "lastModified": 1792506237,
+        "narHash": "sha256-Q/8KLB6jNfpaUN1HAedE/u/Et9feE/zYSsutBLKrCFk=",
         "ref": "nixpkgs-unstable",
-        "rev": "7dd199b0e2993e37b4775ed66b1c291699608c9f",
+        "rev": "5adc50831c259f87faeb09ddf930d43597197473",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -1989,11 +1989,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791430825,
-        "narHash": "sha256-qYGokxKEfdaJp0ZNs+t04GmpLrvIIg6eMOrmrgBtoDg=",
+        "lastModified": 1792654632,
+        "narHash": "sha256-OSiP+J6DRaKBUgIJrk0PCT0hDa8WaRPmjHWYZ8AtQWs=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "531c0d56f7039a7451c031f7c6a73a395a78a69c",
+        "rev": "b4e5f7d5440209cd144830fc996c647190fd715a",
         "type": "github"
       },
       "original": {
@@ -2101,11 +2101,11 @@
         "treefmt-nix": "treefmt-nix_5"
       },
       "locked": {
-        "lastModified": 1791431827,
-        "narHash": "sha256-uJSZpHfM1LcZVtWVuEOMmIA52nT4qeIw+0rV6YeTuPI=",
+        "lastModified": 1792650683,
+        "narHash": "sha256-ra4eqbMdVlRmzg7W6AmcFRVwX+LIDyxq0sqNm8hUH6E=",
         "ref": "origin/dev",
-        "rev": "9cb00f12ded1807608ef33a344694dc4fbaf8e4e",
-        "revCount": 25905,
+        "rev": "a06b75de618353aaeb79d121ce5c5f4f316fdf73",
+        "revCount": 25946,
         "type": "git",
         "url": "file:///home/guillaume/jinko/jinko"
       },
