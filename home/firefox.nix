@@ -66,6 +66,9 @@
           "browser.ai.control.smartTabGroups" = "blocked";
           "browser.ai.control.translations" = "blocked";
 
+          # no more nova (i.e. round corners)
+          "browser.nova.enabled" = false;
+
           # TODO: session restore + addons automatic accept + remove all "startup popup"
         };
         extensions.packages = with nur.repos.rycee.firefox-addons; [
