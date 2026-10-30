@@ -194,7 +194,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.lsp.enable('yamlls')
-vim.lsp.enable('pyright')
+vim.lsp.enable('black')
 vim.lsp.enable('cssls')
 
 vim.lsp.enable('ts_ls')
@@ -444,7 +444,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     -- Only enabling format on save for some directories
     jinko = "/home/guillaume/jinko"
-    if string.sub(args.file, 0, string.len(jinko)) == jinko
+    local v = args.file:match("%.hs$")
+    if string.sub(args.file, 0, string.len(jinko)) == jinko and v
     then
     else
       print("format on save disabled for " .. args.file)
@@ -454,9 +455,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- 2
     vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = {'*.hs'},
+      -- pattern = {'*.hs'},
       -- 3
-      -- buffer = args.buf,
+      buffer = args.buf,
       callback = function()
         -- 4 + 5
         vim.lsp.buf.format {async = false, id = args.data.client_id }
