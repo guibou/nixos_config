@@ -217,8 +217,10 @@ bindsym XF86AudioLowerVolume exec "volume-change set-sink-volume @DEFAULT_SINK@ 
 bindsym XF86AudioPlay exec "set-notification-pause toggle"
 
 mode "lock" {
-	bindsym $mod+l exec "lock-action"; mode "default"
-	bindsym $mod+s exec "lock-action; systemctl suspend;"; mode "default"
+    # no-repeat are important here, otherwise we risk locking multiple times
+    # and suspending multiple times.
+	bindsym --no-repeat $mod+l exec "lock-action"; mode "default"
+	bindsym --no-repeat $mod+s exec "lock-action; systemctl suspend;"; mode "default"
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -226,25 +228,20 @@ mode "lock" {
 bindsym $mod+l mode "lock"
 
 workspace_auto_back_and_forth yes
-# bindsym $mod+Shift+s exec "xrandr --output eDP-1 --auto --output HDMI-1 --auto --right-of eDP-1 --output VGA-1 --auto --right-of HDMI-1"
 
-bindsym $mod+Shift+s exec $screenshot
-
-# special hook for guerilla windows
-for_window [title="Node Picker"] floating enable
-for_window [title="Color Picker"] floating enable
+bindsym --no-repeat $mod+Shift+s exec $screenshot
 
 # no title bar
 default_border pixel 1
 hide_edge_borders both
 
 mode "action" {
-  bindsym w exec "wifi-menu"; mode "default"
-  bindsym b exec "bz-menu"; mode "default"
-  bindsym n exec "set-notification-pause toggle"; mode "default"
-  bindsym t exec "switch-theme"; mode "default"
-  bindsym v exec "pwvucontrol"; mode "default"
-  bindsym s exec "sound-menu"; mode "default"
+  bindsym --no-repeat w exec "wifi-menu"; mode "default"
+  bindsym --no-repeat b exec "bz-menu"; mode "default"
+  bindsym --no-repeat n exec "set-notification-pause toggle"; mode "default"
+  bindsym --no-repeat t exec "switch-theme"; mode "default"
+  bindsym --no-repeat v exec "pwvucontrol"; mode "default"
+  bindsym --no-repeat s exec "sound-menu"; mode "default"
 
   # back to normal: Enter or Escape
   bindsym Return mode "default"
