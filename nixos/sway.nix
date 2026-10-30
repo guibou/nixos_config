@@ -10,6 +10,18 @@
         swayidle
         wl-clipboard
         i3status
+        /* Interactive version
+        (pkgs.writeScriptBin "i3status-wrapper"
+          ''
+            #!/usr/bin/env sh
+            GHC=${(pkgs.haskellPackages.ghcWithPackages(p: [
+                 p.process p.async p.lens-aeson p.async p.vector p.process
+                 p.aeson-qq
+                 ]))}
+            $GHC/bin/runhaskell ~/nixos_config/i3status_wrapper/app/Main.hs
+          '')
+        */
+        (pkgs.haskell.packages.ghc912.callCabal2nix "i3status-wrapper" ../i3status_wrapper {})
       ];
     };
   };

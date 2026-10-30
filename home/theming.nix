@@ -24,6 +24,7 @@ in
 
 
           cat $resources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/set $\1 \2/' > ~/.config/theme.conf
+          cat $resources | grep '*' | sed 's/\*\(.*\): \+\(#.*\)/{"\1":"\2"}/' | jq -s 'add' > ~/.config/theme.json
           dconf write '/org/gnome/desktop/interface/color-scheme' $new_theme
 
           # force reload all nvim
