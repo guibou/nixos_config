@@ -47,9 +47,20 @@ vim.pack.add({
 
     -- Turns ansi code into nice colors
     ,'https://github.com/0xferrous/ansi.nvim'
+
+    -- 
+    , 'https://github.com/nvim-lua/plenary.nvim'
+    ,'https://github.com/nvimtools/none-ls.nvim'
+    
+    , 'https://codeberg.org/mfussenegger/nvim-dap.git'
+    , 'https://github.com/igorlfs/nvim-dap-view'
 })
 
-require('vim._core.ui2').enable()
+require('vim._core.ui2').enable({
+  msg = {
+    targets = { progress = 'msg' },
+  },
+})
 EOF
 
 " set completeopt=menuone,noselect
@@ -238,6 +249,13 @@ vim.lsp.config('hls', {
             },
         }
     }
+})
+
+null_ls = require("null-ls")
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.black,
+  },
 })
 
 require('nightfox').setup({
@@ -586,6 +604,31 @@ require('ansi').setup({
   -- Filetypes to auto-enable when auto_enable is true
   filetypes = { 'log' },
 })
+
+local dap = require('dap')
+dap.adapters["haskell-debugger"] = {
+  type = "server",
+  port = "${port}",
+  executable = {
+    command = "/home/guillaume/.local/bin/hdb",
+    args = {
+      "server", "--port", "${port}"
+    }
+  }
+}
+
+dap.configurations.haskell = {
+  {
+    type = "haskell-debugger",
+    request = "launch",
+    name = "hdb:file:main",
+    entryFile = "${file}",
+    entryPoint = "main",
+    projectRoot = "${workspaceFolder}",
+    entryArgs = {},
+    extraGhcArgs = {},
+  },
+}
 
 EOF
 

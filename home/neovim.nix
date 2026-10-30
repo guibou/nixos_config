@@ -30,7 +30,9 @@
       # fs notifications
       inotify-tools
 
+      # python lsp and formatting
       pyright
+      black
 
       # For math display
       python3Packages.pylatexenc
