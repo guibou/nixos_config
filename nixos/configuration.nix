@@ -83,9 +83,6 @@
     ssh.startAgent = true;
   };
 
-  # Automatic change screen configuration
-  services.autorandr.enable = true;
-
   services.tlp.enable = true;
 
   services = {
