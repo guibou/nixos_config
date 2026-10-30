@@ -42,7 +42,7 @@ update() {
     bluetooth_status='{"name":"bluetooth","instance":"bluetooth","color":"'"$foreground"'","markup":"none","full_text":"'"$status"'"}'
   fi
 
-  status=$(upower -i /org/freedesktop/UPower/devices/battery_ps_controller_battery_84o30o95o16o8eod8 | pcregrep -o1 'percentage:.*?([0-9]+)%')
+  status=$(upower -i /org/freedesktop/UPower/devices/battery_ps_controller_battery_84o30o95o16o8eod8 | rg -o1 'percentage:.*?([0-9]+)%')
   upower -i /org/freedesktop/UPower/devices/battery_ps_controller_battery_84o30o95o16o8eod8 | grep 'should be ignored' > /dev/null
   if [ $? -eq 0 ]
   then
