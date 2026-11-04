@@ -102,7 +102,6 @@
                 [
                   {
                     nixpkgs.overlays = [
-                      doctor.overlays.autoCalledPackages
                       (self: super: {
                       }
                       )
@@ -142,7 +141,7 @@
         in
         {
           gecko = myNixos { isNova = true; };
-          gecko_no_nova = myNixos { isNova = false; };
+          gecko_pure = myNixos { isNova = false; };
 
           family =
             nixpkgs.lib.nixosSystem
