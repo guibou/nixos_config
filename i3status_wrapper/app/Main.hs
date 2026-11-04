@@ -140,9 +140,16 @@ parseColors = do
 dunstM colors = do
   (ByteString.strip -> status) <- ByteString.pack <$> readProcess "dunstctl" ["is-paused"] ""
 
-  let (color, message)
-        | status == "true" = (colors.critical, "Notifications: OFF" :: Text)
-        | otherwise = (colors.normal, "Notifications: ON")
+  (color, message) <- if
+        | status == "true" -> do
+            (ByteString.strip -> count) <- ByteString.pack <$> readProcess "dunstctl" ["count", "waiting"] ""
+
+            if count == "0"
+            then
+                pure (colors.important, "Notifications: OFF" :: Text)
+            else
+                pure (colors.critical, "Notifications: " <> Text.pack (ByteString.unpack count))
+        | otherwise -> pure (colors.normal, "Notifications: ON")
 
   pure $ Just $ Item {name = "dunst", color = Just color, full_text = message}
 
