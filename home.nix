@@ -133,14 +133,14 @@ in
 
     (pkgs.writeScriptBin "volume-change"
       ''
-        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.dunst pkgs.ripgrep pkgs.gnugrep pkgs.coreutils-full pkgs.gnused]}
+        PATH=${pkgs.lib.makeBinPath [pkgs.pulseaudio pkgs.dunst pkgs.ack pkgs.gnugrep pkgs.coreutils-full pkgs.gnused]}
         pactl $@
 
         # Get the volume percentage
-        volume=$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o1 '([0-9]+)%' | head -n1)
+        volume=$(pactl get-sink-volume @DEFAULT_SINK@ | ack '--output=$1' '([0-9]+)%' | head -n1)
         
         # Get the mute status
-        mute_status=$(pactl get-sink-mute @DEFAULT_SINK@ | rg no)
+        mute_status=$(pactl get-sink-mute @DEFAULT_SINK@ | ack no)
         
         # Determine the volume level and store it in the icon variable
         if [ -z "$mute_status" ]; then
@@ -203,8 +203,8 @@ in
 
     (pkgs.writeScriptBin "notify-brightness-change"
       ''
-        PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.dunst pkgs.ripgrep]}
-        current=$(brightnessctl s $1 | rg -o1 '([0-9]+)%')
+        PATH=${pkgs.lib.makeBinPath [pkgs.brightnessctl pkgs.dunst pkgs.ack]}
+        current=$(brightnessctl s $1 | ack '--output=$1' '([0-9]+)%')
         dunstify -t 2000 -r 12345 -h int:value:$current -a changeBrightness \
                     -i ${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic/status/display-brightness-symbolic.svg \
                     "Brightness"
