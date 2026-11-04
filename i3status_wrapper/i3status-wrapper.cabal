@@ -17,7 +17,12 @@ common warnings
 
 executable i3status-wrapper
     import:           warnings
-    ghc-options: -threaded -rtsopts
+    
+    -- With -O, hopefully, the string allocation are removed
+    -- Wtih -I0, the "idle GC" is not running much. As a result, we save a lot
+    -- of CPU cycle, because the current process is able to run for minutes
+    -- before triggering a GC.
+    ghc-options: -threaded -rtsopts -with-rtsopts=-I0 -O
     main-is:          Main.hs
     -- other-modules:
     -- other-extensions:
