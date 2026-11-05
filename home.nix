@@ -73,6 +73,7 @@ in
     jq
     nixfmt
     ripgrep
+    pcre2
 
     nil
 
